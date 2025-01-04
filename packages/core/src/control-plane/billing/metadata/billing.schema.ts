@@ -137,6 +137,7 @@ const paymentIntentSchema = z.object({
 const CheckoutSessionInputSchema = z.object({
   userId: z.string(),
   quantity: z.number(),
+  keyId: z.string()
 });
 
 const checkoutSessionCompletedSchema = z.object({

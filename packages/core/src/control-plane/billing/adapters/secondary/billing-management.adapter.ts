@@ -1,7 +1,8 @@
 import { CheckoutSessionInput } from "@control-plane/billing/metadata/billing.schema";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, PutCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
-
+import { ClerkService } from "@utils/vendors/jwt-vendor";
+import { UpdateApiKeyCommand } from "@utils/metadata/apikey.schema";
 // @ts-ignore
 import { Resource } from "sst";
 import { randomUUID } from "crypto";
@@ -17,11 +18,19 @@ export async function createSession(params: CheckoutSessionInput): Promise<{}> {
     const redirect_success_url = process.env.REDIRECT_SUCCESS_URL;
     const redirect_failure_url = process.env.REDIRECT_FAILURE_URL;
     const idempotencyKey = randomUUID();
-
+    const updateApiKeyCommand: UpdateApiKeyCommand = {
+        keyId: params.keyId,
+        remaining: params.quantity * 500,
+        refill: {
+            interval: 'monthly',
+            amount: params.quantity * 500,
+            refillDay: 1
+        }
+    }
     try {
         const metadata = {
             userId: params.userId,
-            amount: params.quantity * 5000
+            ...updateApiKeyCommand
         }
         const session = await stripe.checkout.sessions.create({
             line_items: [

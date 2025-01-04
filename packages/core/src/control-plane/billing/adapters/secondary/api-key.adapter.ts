@@ -1,5 +1,5 @@
 import { IApiKeyManager, apiKeyManager } from "@utils/tools/api-key-manager";
-import { CreateApiKeyCommandInput, CreateApiKeyCommandOutput, DeleteApiKeyCommandInput, SaveApiKeyCommand } from "@utils/metadata/apikey.schema";
+import { CreateApiKeyCommandInput, CreateApiKeyCommandOutput, DeleteApiKeyCommandInput, SaveApiKeyCommand, UpdateApiKeyCommand, UpdateApiKeyCommandOutput } from "@utils/metadata/apikey.schema";
 import { UpdateRemainingCreditsCommand, UpdateRemainingCreditsCommandOutput } from "@utils/metadata/credit.schema";
 import { GetApiKeyCommandOutput } from "@utils/metadata/apikey.schema";
 import { Message } from "@utils/metadata/message.schema";
@@ -45,8 +45,8 @@ export class ApiKeyAdapter implements IApiKeyAdapter {
         return this.apiKeyManager.deleteApiKey(params);
     }
 
-    async updateApiKey(keyId: string, updateData: Partial<ApiKey>): Promise<ApiKey> {
-       throw new Error('Method not implemented.');
+    async updateApiKey(params: UpdateApiKeyCommand): Promise<UpdateApiKeyCommandOutput> {
+        return this.apiKeyManager.updateApiKey(params);
     }
 }
 

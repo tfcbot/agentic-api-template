@@ -22,7 +22,6 @@ export const UpdateOnboardingStatusCommand = z.object({
   params: z.object({
     publicMetadata: z.object({
       onboardingComplete: z.boolean(),
-      waitlist: z.boolean(),
     }),
   }),
 });

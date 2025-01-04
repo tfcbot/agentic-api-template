@@ -13,17 +13,14 @@ export const updateOnboardingAdapter = async (event: DynamoDBStreamEvent, contex
       if (userRecord) {
         const userId = userRecord.userId.S;
         const onboardingComplete = userRecord.onboardingComplete?.BOOL;
-        const waitlist = userRecord.waitlist?.BOOL;
        
         try {
           console.info(`Updating onboarding status for user ${userId}`);
-          console.info(`Onboarding complete: ${onboardingComplete}, Waitlist: ${waitlist}`);
           const input: UpdateOnboardingStatusCommand = {
             userId: userId || '',
             params: {
               publicMetadata: {
                 onboardingComplete: onboardingComplete ?? false,
-                waitlist: waitlist ?? true,
               },
             },
           };

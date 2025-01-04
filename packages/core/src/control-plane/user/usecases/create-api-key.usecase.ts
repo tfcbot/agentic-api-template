@@ -6,16 +6,11 @@ export const createApiKeyUseCase = async (createApiKeyCommand: CreateApiKeyComma
     const apiKeyAdapter = new ApiKeyAdapter();
     const input: CreateApiKeyCommandInput = {
       userId: createApiKeyCommand.userId,
-      remaining: 150,
-      refill: {
-        interval: "monthly", 
-        amount: 150,
-      },
+      remaining: 100,
     };
     const createdApiKey = await apiKeyAdapter.createApiKey(input);
     
     const saveApiKeyInput : SaveApiKeyCommand = {
-      apiKey: createdApiKey.key,
       keyId: createdApiKey.keyId,
       userId: createApiKeyCommand.userId,
     }

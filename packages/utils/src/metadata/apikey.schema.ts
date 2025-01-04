@@ -69,7 +69,7 @@ export const UpdateApiKeyCommandInputSchema = z.object({
 });
 
 export const UpdateApiKeyCommandOutputSchema = z.object({
-  remaining: z.number().nullable(),
+  message: z.string(),
 });
 
 export const DeleteApiKeyCommandInputSchema = z.object({
@@ -82,7 +82,6 @@ export const DeleteApiKeyCommandOutputSchema = z.object({
 
 export const SaveApiKeyCommandSchema = z.object({
   userId: z.string(),
-  apiKey: z.string(),
   keyId: z.string(),
 });
 
@@ -118,6 +117,16 @@ export const ValidateApiKeyCommandOutputSchema = z.object({
   }).optional(),
 });
 
+export const UpdateApiKeyCommandSchema = z.object({
+  keyId: z.string(),
+  remaining: z.number(),
+  refill: z.object({
+    interval: z.enum(['daily', 'monthly']),
+    amount: z.number(),
+    refillDay: z.number()
+  }).optional(),
+});
+
 
 export type ValidateApiKeyCommand = z.infer<typeof ValidateApiKeyCommandSchema>;
 export type ValidateApiKeyCommandOutput = z.infer<typeof ValidateApiKeyCommandOutputSchema>;
@@ -132,4 +141,5 @@ export type DeleteApiKeyCommandOutput = z.infer<typeof DeleteApiKeyCommandOutput
 export type SaveApiKeyCommand = z.infer<typeof SaveApiKeyCommandSchema>;
 export type SaveApiKeyCommandOutput = z.infer<typeof SaveApiKeyCommandOutputSchema>;
 export type ApiKey = z.infer<typeof ApiKeySchema>;
+export type UpdateApiKeyCommand = z.infer<typeof UpdateApiKeyCommandSchema>;
 

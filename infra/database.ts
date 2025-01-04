@@ -10,9 +10,9 @@ export const usersTable = new aws.dynamodb.Table("UsersTable", {
 
 export const apiKeysTable = new aws.dynamodb.Table("ApiKeysTable", {
     attributes: [
-        {name: "apiKey", type: "S"}
+        {name: "keyId", type: "S"}
     ],
-    hashKey: "apiKey",
+    hashKey: "keyId",
     billingMode: "PAY_PER_REQUEST",
     streamEnabled: true,
     streamViewType: "NEW_IMAGE"

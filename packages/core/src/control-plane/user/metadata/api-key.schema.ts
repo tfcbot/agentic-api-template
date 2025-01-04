@@ -41,7 +41,6 @@ export const ApiKeySchema = z.object({
 
 
 export const SaveApiKeyCommandSchema = z.object({
-  apiKey: z.string(),
   userId: z.string(),
   keyId: z.string(),
 });

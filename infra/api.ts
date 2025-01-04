@@ -60,7 +60,7 @@ const apiResources = [
 ]
 
 api.route("POST /checkout", {
-  link: [usersTable, ...secrets],
+  link: [...apiResources],
   handler: "./packages/functions/src/control-plane.api.checkout",
   environment: {
     STRIPE_SECRET_KEY: stripeSecretKey.value,
@@ -74,7 +74,7 @@ api.route("POST /checkout", {
 })
 
 api.route("POST /checkout-webhook", {
-  link: [usersTable, ...secrets], 
+  link: [...apiResources], 
   handler: "./packages/functions/src/control-plane.api.checkoutSessionWebhook", 
   environment: {
     STRIPE_WEBHOOK_SECRET: stripeWebhookSecret.value,

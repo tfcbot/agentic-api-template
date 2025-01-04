@@ -16,6 +16,7 @@ import {
   SaveApiKeyCommand,
   SaveApiKeyCommandOutput,
   ValidateApiKeyCommand,
+  UpdateApiKeyCommand,
 
 } from "@utils/metadata/apikey.schema";
 import {
@@ -51,7 +52,7 @@ export class ApiKeyRepository implements IApiKeyRepository {
   async getUserDetailsByApiKey(command: GetUserDetailsByApiKeyCommand): Promise<ValidUser> {
     try {
       const params = {
-        TableName: Resource.ApiKeys.tableName,
+        TableName: Resource.ApiKeysTable.tableName,
         IndexName: "ApiKeyIndex",
         KeyConditionExpression: "apiKey = :apiKey",
         ExpressionAttributeValues: {
@@ -79,7 +80,7 @@ export class ApiKeyRepository implements IApiKeyRepository {
   async getUserDetailsByKeyId(command: GetUserDetailsByKeyIdCommand): Promise<ValidUser> {
     try {
       const params = {
-        TableName: Resource.ApiKeys.tableName,
+        TableName: Resource.ApiKeysTable.tableName,
         KeyConditionExpression: "keyId = :keyId",
         ExpressionAttributeValues: {
           ":keyId": command.keyId
@@ -106,11 +107,10 @@ export class ApiKeyRepository implements IApiKeyRepository {
   async saveApiKey(command: SaveApiKeyCommand): Promise<void> {
     try {
       const params = {
-        TableName: Resource.ApiKeys.tableName,
+        TableName: Resource.ApiKeysTable.tableName,
         Item: {
           keyId: command.keyId,
           userId: command.userId,
-          apiKey: command.apiKey,
           apiId: this.apiId,
           createdTimestamp: new Date().toISOString()
         }
@@ -127,7 +127,7 @@ export interface IApiKeyService {
   validateApiKey(params: ValidateApiKeyCommand): Promise<boolean>
   getApiKey(params: GetApiKeyCommandInput): Promise<GetApiKeyCommandOutput>
   createApiKey(params: CreateApiKeyCommandInput): Promise<CreateApiKeyCommandOutput>
-  updateApiKey(params: UpdateApiKeyCommandInput): Promise<UpdateApiKeyCommandOutput>
+  updateApiKey(params: UpdateApiKeyCommand): Promise<UpdateApiKeyCommandOutput>
   updateRemainingCredits(params: UpdateRemainingCreditsCommand): Promise<UpdateRemainingCreditsCommandOutput>
   deleteApiKey(params: DeleteApiKeyCommandInput): Promise<Message>
   saveApiKey(params: SaveApiKeyCommand): Promise<Message>
@@ -192,10 +192,10 @@ export class ApiKeyService implements IApiKeyService {
     return result;
   }
 
-  async updateApiKey(params: UpdateApiKeyCommandInput): Promise<UpdateApiKeyCommandOutput> {
-    const { result, error } = await this.unkey.keys.updateRemaining(params);
+  async updateApiKey(params: UpdateApiKeyCommand): Promise<UpdateApiKeyCommandOutput> {
+    const { result, error } = await this.unkey.keys.update(params);
     if (error) throw new Error(error.message);
-    return result
+    return { message: "Key updated successfully" };
   }
 
   async updateRemainingCredits(params: UpdateRemainingCreditsCommand): Promise<UpdateRemainingCreditsCommandOutput> {
@@ -226,7 +226,6 @@ export class ApiKeyService implements IApiKeyService {
     await this.apiKeyRepository.saveApiKey({
       keyId: command.keyId,
       userId: command.userId,
-      apiKey: command.apiKey
     });
     return { message: "Key saved successfully" };
   }

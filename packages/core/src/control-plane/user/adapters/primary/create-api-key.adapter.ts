@@ -6,7 +6,7 @@ import { CreateApiKeyCommand } from '@control-plane/user/metadata/api-key.schema
 export const createApiKeyAdapter = async (event: DynamoDBStreamEvent, context: Context) => {
   console.log("---Create API key handler---");
   for (const record of event.Records) {
-    if (record.eventName !== 'INSERT' && record.eventName !== 'MODIFY') continue;
+    if (record.eventName !== 'INSERT') continue;
     
     const newUser = record.dynamodb?.NewImage;
     if (!newUser?.userId?.S) {
@@ -16,18 +16,6 @@ export const createApiKeyAdapter = async (event: DynamoDBStreamEvent, context: C
 
     const userId = newUser.userId.S;
     
-    // Check waitlist status
-    if (newUser.onboardingComplete?.BOOL && newUser.waitlist?.BOOL) {
-      console.info(`User ${userId} is on waitlist, skipping API key creation`);
-      return;
-    }
-
-    // Check payment status
-    const paymentStatus = newUser.paymentStatus?.S;
-    if (!paymentStatus || paymentStatus !== 'Complete') {
-      console.info(`User ${userId} is ${paymentStatus ? 'not paid' : 'missing payment status'}, skipping API key creation`);
-      return;
-    }
 
     try {
       const input: CreateApiKeyCommand = {

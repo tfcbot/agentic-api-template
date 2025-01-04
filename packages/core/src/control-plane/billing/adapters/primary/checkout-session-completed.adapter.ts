@@ -2,10 +2,10 @@ import {
    checkoutSessionCompletedSchema,
    PaymentStatus
 } from "@control-plane/billing/metadata/billing.schema";
-
 const Stripe = require('stripe');
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-
+import { checkoutSessionCompletedUseCase } from "@control-plane/billing/usecases/checkout-session-completed.usecase";
+import { UpdateApiKeyCommandSchema } from "@utils/metadata/apikey.schema";
 export const checkoutSessionWebhookAdapter = async (event: any) => {
     console.log("---Checkout session webhook adapter---");
     const signature = event.headers["stripe-signature"];
@@ -19,7 +19,9 @@ export const checkoutSessionWebhookAdapter = async (event: any) => {
     const session = stripeEvent.data.object;
     switch (stripeEvent.type) {
         case "checkout.session.completed":
-            // Implement Use Case
+            console.log("---Update user plan with credits---");
+            const updateApiKeyCommand = UpdateApiKeyCommandSchema.parse(session.metadata);
+            await checkoutSessionCompletedUseCase(updateApiKeyCommand);
             break;
     }
 
