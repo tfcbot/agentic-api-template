@@ -31,7 +31,7 @@ export const api = new sst.aws.ApiGatewayV2('BackendApi', {
       dns: sst.cloudflare.dns({
         transform: {
           record: (record) => {
-            if (record.name === apiDomainName) {
+            if (record.name === apiDomainName  && record.type !== "CAA") {
               record.proxied = true;
               record.ttl = 1;
             }
