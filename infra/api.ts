@@ -48,9 +48,15 @@ export const api = new sst.aws.ApiGatewayV2('BackendApi', {
   }); 
 
 const queues = []
+<<<<<<< Updated upstream
 const topics = [tasksTopic]
 const tables = [usersTable, websiteReviewTable]
 
+=======
+const topics = []
+const tables = [usersTable, websiteReviewTable]
+const secrets = [stripeSecretKey, stripeWebhookSecret, clerkWebhookSecret, priceId, clerkClientPublishableKey]
+>>>>>>> Stashed changes
 
 const apiResources = [
   ...queues,
@@ -94,7 +100,11 @@ api.route("GET /agents", {
 
 api.route("POST /request-website-review", {
   link: [...apiResources],
+<<<<<<< Updated upstream
   handler: "./packages/functions/src/orchestrator.api.handleRequestWebsiteReview",
+=======
+  handler: "./packages/functions/src/orchestrator.api.handleTaskRequest",
+>>>>>>> Stashed changes
 });
 
 

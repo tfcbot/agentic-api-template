@@ -1,7 +1,11 @@
 import { ApiKeyRepository, ApiKeyService, IApiKeyService } from "@utils/vendors/api-key-vendor";
 import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+<<<<<<< Updated upstream
 import { CreateApiKeyCommandInput, CreateApiKeyCommandOutput, DeleteApiKeyCommandInput, SaveApiKeyCommand, UpdateApiKeyCommand, UpdateApiKeyCommandOutput } from "@utils/metadata/apikey.schema"
+=======
+import { CreateApiKeyCommandInput, CreateApiKeyCommandOutput, DeleteApiKeyCommandInput, SaveApiKeyCommand } from "@utils/metadata/apikey.schema"
+>>>>>>> Stashed changes
 import { UpdateRemainingCreditsCommand, UpdateRemainingCreditsCommandOutput } from "@utils/metadata/credit.schema";
 import { GetApiKeyCommandOutput } from "@utils/metadata/apikey.schema";
 import { Message } from "@utils/metadata/message.schema";
@@ -12,7 +16,10 @@ export interface IApiKeyManager{
     updateRemainingCredits(params: UpdateRemainingCreditsCommand): Promise<UpdateRemainingCreditsCommandOutput>;
     getApiKeyById(keyId: string): Promise<GetApiKeyCommandOutput>;
     deleteApiKey(params: DeleteApiKeyCommandInput): Promise<Message>;
+<<<<<<< Updated upstream
     updateApiKey(params: UpdateApiKeyCommand): Promise<UpdateApiKeyCommandOutput>;
+=======
+>>>>>>> Stashed changes
 }
 
 export class ApiKeyManager implements IApiKeyManager {
@@ -60,11 +67,14 @@ export class ApiKeyManager implements IApiKeyManager {
         const result = await this.executeServiceMethod('deleteApiKey', params);
         return result;
     }
+<<<<<<< Updated upstream
 
     async updateApiKey(params: UpdateApiKeyCommand): Promise<UpdateApiKeyCommandOutput> {
         const result = await this.executeServiceMethod('updateApiKey', params);
         return result;
     }
+=======
+>>>>>>> Stashed changes
 }
 
 export const apiKeyManager = new ApiKeyManager();

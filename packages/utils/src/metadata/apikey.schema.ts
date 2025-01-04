@@ -69,7 +69,11 @@ export const UpdateApiKeyCommandInputSchema = z.object({
 });
 
 export const UpdateApiKeyCommandOutputSchema = z.object({
+<<<<<<< Updated upstream
   message: z.string(),
+=======
+  remaining: z.number().nullable(),
+>>>>>>> Stashed changes
 });
 
 export const DeleteApiKeyCommandInputSchema = z.object({
@@ -82,6 +86,10 @@ export const DeleteApiKeyCommandOutputSchema = z.object({
 
 export const SaveApiKeyCommandSchema = z.object({
   userId: z.string(),
+<<<<<<< Updated upstream
+=======
+  apiKey: z.string(),
+>>>>>>> Stashed changes
   keyId: z.string(),
 });
 
@@ -117,6 +125,7 @@ export const ValidateApiKeyCommandOutputSchema = z.object({
   }).optional(),
 });
 
+<<<<<<< Updated upstream
 export const UpdateApiKeyCommandSchema = z.object({
   keyId: z.string(),
   remaining: z.number(),
@@ -127,6 +136,8 @@ export const UpdateApiKeyCommandSchema = z.object({
   }).optional(),
 });
 
+=======
+>>>>>>> Stashed changes
 
 export type ValidateApiKeyCommand = z.infer<typeof ValidateApiKeyCommandSchema>;
 export type ValidateApiKeyCommandOutput = z.infer<typeof ValidateApiKeyCommandOutputSchema>;
@@ -141,5 +152,8 @@ export type DeleteApiKeyCommandOutput = z.infer<typeof DeleteApiKeyCommandOutput
 export type SaveApiKeyCommand = z.infer<typeof SaveApiKeyCommandSchema>;
 export type SaveApiKeyCommandOutput = z.infer<typeof SaveApiKeyCommandOutputSchema>;
 export type ApiKey = z.infer<typeof ApiKeySchema>;
+<<<<<<< Updated upstream
 export type UpdateApiKeyCommand = z.infer<typeof UpdateApiKeyCommandSchema>;
+=======
+>>>>>>> Stashed changes
 

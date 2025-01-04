@@ -41,6 +41,10 @@ export const ApiKeySchema = z.object({
 
 
 export const SaveApiKeyCommandSchema = z.object({
+<<<<<<< Updated upstream
+=======
+  apiKey: z.string(),
+>>>>>>> Stashed changes
   userId: z.string(),
   keyId: z.string(),
 });

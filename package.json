@@ -6,7 +6,11 @@
     "packages/**/*"
   ],
   "scripts": {
+<<<<<<< Updated upstream
     "sst": "3.4.49",
+=======
+    "sst": "sst",
+>>>>>>> Stashed changes
     "dev": "sst dev",
     "deploy": "sst deploy",
     "remove": "sst remove",
@@ -24,7 +28,11 @@
     "jsonwebtoken": "^9.0.2",
     "jwks-rsa": "^3.1.0",
     "openai": "^4.68.1",
+<<<<<<< Updated upstream
     "sst": "v3.3.67"
+=======
+    "sst": "^3"
+>>>>>>> Stashed changes
   },
   "license": "MIT"
 }

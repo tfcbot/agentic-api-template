@@ -3,10 +3,14 @@ import { CreateApiKeyCommandInput, CreateApiKeyCommandOutput, DeleteApiKeyComman
 import { UpdateRemainingCreditsCommand, UpdateRemainingCreditsCommandOutput } from "@utils/metadata/credit.schema";
 import { GetApiKeyCommandOutput } from "@utils/metadata/apikey.schema";
 import { Message } from "@utils/metadata/message.schema";
+<<<<<<< Updated upstream
 import { UpdateApiKeyCommand, UpdateApiKeyCommandOutput } from "@utils/metadata/apikey.schema";
 
 
 
+=======
+import { ApiKey } from "@control-plane/user/metadata/api-key.schema";
+>>>>>>> Stashed changes
 
 export interface IApiKeyAdapter {
     createApiKey(params: CreateApiKeyCommandInput): Promise<CreateApiKeyCommandOutput>;
@@ -14,7 +18,10 @@ export interface IApiKeyAdapter {
     updateRemainingCredits(params: UpdateRemainingCreditsCommand): Promise<UpdateRemainingCreditsCommandOutput>;
     getApiKeyById(keyId: string): Promise<GetApiKeyCommandOutput>;
     deleteApiKey(params: DeleteApiKeyCommandInput): Promise<Message>;
+<<<<<<< Updated upstream
     updateApiKey(params: UpdateApiKeyCommand): Promise<UpdateApiKeyCommandOutput>;
+=======
+>>>>>>> Stashed changes
 }
 
 export class ApiKeyAdapter implements IApiKeyAdapter {
@@ -49,8 +56,13 @@ export class ApiKeyAdapter implements IApiKeyAdapter {
         return this.apiKeyManager.deleteApiKey(params);
     }
 
+<<<<<<< Updated upstream
     async updateApiKey(params: UpdateApiKeyCommand): Promise<UpdateApiKeyCommandOutput> {
         return this.apiKeyManager.updateApiKey(params);
+=======
+    async updateApiKey(keyId: string, updateData: Partial<ApiKey>): Promise<ApiKey> {
+       throw new Error('Method not implemented.');
+>>>>>>> Stashed changes
     }
 }
 
