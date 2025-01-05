@@ -5,9 +5,13 @@ import { websiteReviewQueue } from "./queues"
 export const tasksTopic = new sst.aws.SnsTopic("TasksTopic")
 
 
-// Tasks Subscribers 
-tasksTopic.subscribeQueue(websiteReviewQueue.arn, {
-    filter: {
-        "queue": ["websiteReview"]
+// ... existing code ...
+tasksTopic.subscribeQueue(
+  "websiteReview", // Add name parameter
+  websiteReviewQueue.arn, 
+  {
+      filter: {
+          "queue": ["websiteReview"]
       }
-})
+  }
+)
