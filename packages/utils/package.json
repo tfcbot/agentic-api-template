@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "dependencies": {
       "@agentic-api-template/core": "*",
-      "sst": "*"
+      "sst": "v3.3.67"
     },
     "scripts": {
       "shell": "sst shell tsx"

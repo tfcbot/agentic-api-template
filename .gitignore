@@ -78,7 +78,8 @@ web_modules/
 .env.test.local
 .env.production.local
 .env.local
-
+.env.*
+.env.dev
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
@@ -144,3 +145,7 @@ dist
 
 # misc
 .DS_Store
+.env.test
+.env.development
+.env.production
+.open-next

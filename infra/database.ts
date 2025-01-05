@@ -4,12 +4,41 @@ export const usersTable = new aws.dynamodb.Table("UsersTable", {
     ],
     hashKey: "userId",
     billingMode: "PAY_PER_REQUEST",
+    streamEnabled: true,
+    streamViewType: "NEW_AND_OLD_IMAGES"
 })
 
-export const contentTable = new aws.dynamodb.Table("ContentTable", {
+<<<<<<< Updated upstream
+export const apiKeysTable = new aws.dynamodb.Table("ApiKeysTable", {
     attributes: [
-        {name: "contentId", type: "S"}
+        {name: "keyId", type: "S"}
     ],
-    hashKey: "contentId",
+    hashKey: "keyId",
     billingMode: "PAY_PER_REQUEST",
+    streamEnabled: true,
+    streamViewType: "NEW_IMAGE"
+})
+
+export const websiteReviewTable = new aws.dynamodb.Table("WebsiteReviewTable", {
+    attributes: [
+        {name: "websiteId", type: "S"}
+    ],
+    hashKey: "websiteId",
+    billingMode: "PAY_PER_REQUEST",
+})
+
+export const agentsTable = new aws.dynamodb.Table("AgentsTable", {
+    attributes: [
+        {name: "agentId", type: "S"}
+    ],
+    hashKey: "agentId",
+    billingMode: "PAY_PER_REQUEST",
+=======
+export const websiteReviewTable = new aws.dynamodb.Table("WebsiteReviewTable", {
+    attributes: [
+        {name: "websiteId", type: "S"}
+    ],
+    hashKey: "websiteId",
+    billingMode: "PAY_PER_REQUEST",
+>>>>>>> Stashed changes
 })

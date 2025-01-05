@@ -1,19 +1,27 @@
 import { 
   usersTable,
-  contentTable
+  websiteReviewTable
  } from "./database";
-import { stripeSecretKey, stripeWebhookSecret, clerkWebhookSecret, priceId, clerkClientPublishableKey, clerkClientSecretKey } from "./secrets";
+import { 
+  clerkWebhookSecret,
+  clerkClientPublishableKey,
+  clerkClientSecretKey,
+  priceId,
+  stripeSecretKey,
+  stripeWebhookSecret,
+  secrets
+ } from "./secrets";
+import { tasksTopic } from "./topic";
 
-
-const DOMAIN_NAME = process.env.DOMAIN_NAME;
+const BASE_DOMAIN = process.env.BASE_DOMAIN;
 
 export const apiDomainName = $app.stage === "prod" 
-  ? `api.${DOMAIN_NAME}`
-  : `${$app.stage}-api.${DOMAIN_NAME}`;
+  ? `api.${BASE_DOMAIN}`
+  : `${$app.stage}-api.${BASE_DOMAIN}`;
 
 export const appDomainName = $app.stage === "prod" 
-  ? `app.${DOMAIN_NAME}`
-  : `${$app.stage}-app.${DOMAIN_NAME}`; 
+  ? `app.${BASE_DOMAIN}`
+  : `${$app.stage}-app.${BASE_DOMAIN}`; 
 
 
 export const api = new sst.aws.ApiGatewayV2('BackendApi', {
@@ -23,7 +31,7 @@ export const api = new sst.aws.ApiGatewayV2('BackendApi', {
       dns: sst.cloudflare.dns({
         transform: {
           record: (record) => {
-            if (record.name === apiDomainName) {
+            if (record.name === apiDomainName  && record.type !== "CAA") {
               record.proxied = true;
               record.ttl = 1;
             }
@@ -40,9 +48,15 @@ export const api = new sst.aws.ApiGatewayV2('BackendApi', {
   }); 
 
 const queues = []
+<<<<<<< Updated upstream
+const topics = [tasksTopic]
+const tables = [usersTable, websiteReviewTable]
+
+=======
 const topics = []
-const tables = [usersTable]
+const tables = [usersTable, websiteReviewTable]
 const secrets = [stripeSecretKey, stripeWebhookSecret, clerkWebhookSecret, priceId, clerkClientPublishableKey]
+>>>>>>> Stashed changes
 
 const apiResources = [
   ...queues,
@@ -52,7 +66,7 @@ const apiResources = [
 ]
 
 api.route("POST /checkout", {
-  link: [usersTable, stripeSecretKey],
+  link: [...apiResources],
   handler: "./packages/functions/src/control-plane.api.checkout",
   environment: {
     STRIPE_SECRET_KEY: stripeSecretKey.value,
@@ -66,7 +80,7 @@ api.route("POST /checkout", {
 })
 
 api.route("POST /checkout-webhook", {
-  link: [usersTable, stripeSecretKey], 
+  link: [...apiResources], 
   handler: "./packages/functions/src/control-plane.api.checkoutSessionWebhook", 
   environment: {
     STRIPE_WEBHOOK_SECRET: stripeWebhookSecret.value,
@@ -79,15 +93,26 @@ api.route("POST /signup-webhook", {
 })
 
 
+api.route("GET /agents", {
+  link: [...apiResources],
+  handler: "./packages/functions/src/orchestrator.api.handleGetAgents",
+})
 
-api.route("GET /content", {
+api.route("POST /request-website-review", {
+  link: [...apiResources],
+<<<<<<< Updated upstream
+  handler: "./packages/functions/src/orchestrator.api.handleRequestWebsiteReview",
+=======
+  handler: "./packages/functions/src/orchestrator.api.handleTaskRequest",
+>>>>>>> Stashed changes
+});
+
+
+api.route("GET /website-reviews", {
   link: [...apiResources], 
-  handler: "./packages/functions/src/orchestrator.api.handleGetUserContentRequest",
+  handler: "./packages/functions/src/orchestrator.api.handleGetUserWebsiteReviews",
 })
 
 
 
-api.route("POST /generate-content", {
-  link: [...apiResources],
-  handler: "./packages/functions/src/orchestrator.api.handleGenerateContentRequest",
-});
+
