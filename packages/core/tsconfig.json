@@ -13,5 +13,11 @@
       }, 
      //"esModuleInterop": true
     }, 
-    "include": ["src/**/*", "test/**/*", "sst-env.d.ts"]
+    "include": [
+      "**/*.test.ts", 
+      "**/*.ts",    
+      "src/**/*", 
+      "test/**/*", 
+      "sst-env.d.ts"
+    ]
 }

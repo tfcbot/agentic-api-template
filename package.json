@@ -15,6 +15,7 @@
     "@aws-sdk/util-dynamodb": "^3.721.0",
     "@clerk/backend": "^1.21.4",
     "@unkey/api": "^0.29.0",
+    "dotenv": "^16.4.5",
     "openai": "^4.77.3",
     "sst": "3.4.3",
     "stripe": "^17.5.0",
@@ -24,7 +25,10 @@
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.0",
-    "@types/aws-lambda": "8.10.147"
+    "@types/aws-lambda": "8.10.147",
+    "@types/node": "^22.10.5",
+    "typescript": "^5.4.5"
   },
   "license": "MIT"
 }
+
