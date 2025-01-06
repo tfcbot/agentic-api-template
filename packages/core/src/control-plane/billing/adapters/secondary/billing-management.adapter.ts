@@ -50,8 +50,3 @@ export async function createSession(params: CheckoutSessionInput): Promise<{}> {
         throw new Error("Failed to create Stripe checkout session");
     }
 }
-
-export async function checkoutSessionCompletedFunction(input: any) {
-    console.log("---Checkout session completed function---");
-    console.log(input);
-}

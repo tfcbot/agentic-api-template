@@ -5,8 +5,9 @@ import { ReviewWebsiteInput } from '@orchestrator/metadata/agent-plane.schema'
 import { TopicPublisher } from '@orchestrator/adapters/secondary/topic-publisher.adapter';
 import { randomUUID } from 'crypto';
 import { Message } from '@utils/metadata/message.schema';
+import { WebsiteReviewRequestReceivedResponseBody } from '../metadata/http-responses.schema';
 
-export async function publishWebsiteReviewTaskUseCase(request: ReviewWebsiteInput): Promise<Message> {
+export async function publishWebsiteReviewTaskUseCase(request: ReviewWebsiteInput): Promise<WebsiteReviewRequestReceivedResponseBody> {
   try {
     const task: WebsiteReviewTask = {
       taskId: randomUUID(),
@@ -16,7 +17,8 @@ export async function publishWebsiteReviewTaskUseCase(request: ReviewWebsiteInpu
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       payload: {
-        websiteUrl: request.websiteUrl
+        userId: request.userId,
+        url: request.url 
       }
     }
 
@@ -24,12 +26,9 @@ export async function publishWebsiteReviewTaskUseCase(request: ReviewWebsiteInpu
     await publisher.publishTask(task);
 
     return {
-      message: 'Website review task published',
-      data: {
-        reviewId: task.taskId,
-        url: request.websiteUrl
-      }
-    }
+      reviewId: task.taskId,
+      url: request.url
+    } 
 
   } catch (error) {
     console.error('Error in scoringUseCase:', error);

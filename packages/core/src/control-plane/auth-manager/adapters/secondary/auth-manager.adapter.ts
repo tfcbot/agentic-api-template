@@ -15,7 +15,7 @@ export class AuthManagerAdapter implements IAuthManagerAdapter {
     }
 
     async updateUserProperties(command: UpdatePropertyCommandInput): Promise<string> {
-        console.log("Updating user properties via clerk service");
+    
         const result = await this.clerkService.updateUserProperties(command);
         return result;
     }

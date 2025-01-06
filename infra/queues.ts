@@ -1,5 +1,5 @@
 import { websiteReviewTable } from "./database"
-
+import { openaiApiKey } from "./secrets"
 
 export const DLQ = new sst.aws.Queue("DLQ")
 
@@ -51,7 +51,8 @@ new aws.iam.RolePolicy("QueueSubscriberPolicy", {
 websiteReviewQueue.subscribe({
         handler: "./packages/functions/src/agent-plane.api.websiteReviewHandler", 
         link: [
-           websiteReviewTable
+           websiteReviewTable, 
+           openaiApiKey
         ],
         environment: {
         }, 

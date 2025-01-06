@@ -28,7 +28,8 @@ export const TaskSchema = z.object({
 
 export const WebsiteReviewTaskSchema = TaskSchema.extend({
   payload: z.object({
-    websiteUrl: z.string(),
+    userId: z.string(),
+    url: z.string(),
   }),
 });
 

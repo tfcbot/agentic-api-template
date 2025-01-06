@@ -17,7 +17,7 @@ export const getRemainingCreditsAdapter = async (event: APIGatewayProxyEventV2):
     }
 
     const validatedInput = GetRemainingCreditsInputSchema.parse({ userId: validUser.userId });
-    console.log("Getting remaining credits for:", validatedInput);
+   
     const remainingCredits = await getRemainingCreditsUseCase(validatedInput);
 
     return OrchestratorHttpResponses.UserRemainingCredits({

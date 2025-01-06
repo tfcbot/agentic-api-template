@@ -4,7 +4,7 @@ import { GetWebsiteReviewsInput, GetWebsiteReviewsOutput } from '../metadata/age
 
 export const getWebsiteReviewsUseCase = async (input: GetWebsiteReviewsInput): Promise<GetWebsiteReviewsOutput> => {
   try {
-    console.log('Calling Adapter')
+    console.log('---Calling Website Reviews Use Case---')
     return await agentPlaneAdapter.getWebsiteReviews(input);
   } catch (error: any) {
     console.error('Error fetching user content:', error);

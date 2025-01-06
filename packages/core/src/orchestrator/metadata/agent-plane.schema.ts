@@ -13,7 +13,7 @@ export const AgentSchema = z.object({
 
 export const ReviewWebsiteInputSchema = z.object({
     userId: z.string(),
-    websiteUrl: z.string()
+    url: z.string()
 });
 
 export const GetWebsiteReviewsInputSchema = z.object({

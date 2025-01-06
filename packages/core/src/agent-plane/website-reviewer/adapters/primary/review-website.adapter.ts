@@ -1,5 +1,5 @@
 import { SQSEvent, SQSRecord } from 'aws-lambda';
-import { ReviewWebsiteInput } from '@orchestrator/metadata/agent-plane.schema';
+import { ReviewWebsiteInput, ReviewWebsiteInputSchema } from '@agent-plane/website-reviewer/metadata/website-reviewer.schema';
 import { reviewWebsiteUsecase } from 'src/agent-plane/website-reviewer/usecases/review-website.usecase';
 
 export const reviewWebsiteAdapter = async (event: SQSEvent) => {
@@ -9,13 +9,9 @@ export const reviewWebsiteAdapter = async (event: SQSEvent) => {
     }
 
     const results = await Promise.all(event.Records.map(async (record: SQSRecord) => {
-        const body = JSON.parse(record.body);
-        const reviewTask: ReviewWebsiteInput = {
-            userId: body.userId,
-            websiteUrl: body.websiteUrl,
-        };
-        console.info("Generating Website Review for: ", reviewTask);
-        return await reviewWebsiteUsecase(reviewTask);
+        const message = JSON.parse(record.body);
+        const task = ReviewWebsiteInputSchema.parse(JSON.parse(message.Message));
+        return await reviewWebsiteUsecase(task);
     }));
 
     return results;
