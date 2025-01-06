@@ -6,7 +6,7 @@ import { webTools } from "./web-tools.adapter";
 
 
 
-//@ts-ignore
+
 import { Resource } from "sst";
 import { withRetry } from "@utils/tools/retry";
 

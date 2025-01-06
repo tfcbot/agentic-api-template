@@ -1,7 +1,7 @@
 import { DynamoDBDocumentClient, QueryCommand, GetCommand, GetCommandOutput, QueryCommandOutput, PutCommand } from "@aws-sdk/lib-dynamodb";
 import { GetAgentsInput, GetAgentsOutput, GetAgentByIdInput, GetAgentByIdOutput, CreateAgentInput, CreateAgentOutput } from "@agent-plane/agent-manager/metadata/agents.schema";
 
-// @ts-ignore
+
 import { Resource } from "sst";
 
 export interface IAgentsRepository {
@@ -17,7 +17,7 @@ class AgentsRepository implements IAgentsRepository {
     console.info("Creating agent in database via AgentsRepository");
     try {
       const params = {
-        TableName: Resource.AgentsTable.tableName,
+        TableName: Resource.Agents.tableName,
         Item: input
       };
       await this.dbClient.send(new PutCommand(params));
@@ -32,7 +32,7 @@ class AgentsRepository implements IAgentsRepository {
     console.info("Getting agents from database via AgentsRepository");
     try {
       const params = {
-        TableName: Resource.AgentsTable.tableName,
+        TableName: Resource.Agents.tableName,
       };
       const agents: QueryCommandOutput = await this.dbClient.send(new QueryCommand(params));
 
@@ -48,7 +48,7 @@ class AgentsRepository implements IAgentsRepository {
     console.info("Getting agent by id from database via AgentsRepository");
     try {
       const params = {
-        TableName: Resource.AgentsTable.tableName,
+        TableName: Resource.Agents.tableName,
         Key: {
           agentId: input.agentId
         }

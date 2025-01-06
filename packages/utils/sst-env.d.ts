@@ -6,7 +6,7 @@ import "sst"
 export {}
 declare module "sst" {
   export interface Resource {
-    "AgentsTable": {
+    "Agents": {
       "tableName": string
       "type": "aws.dynamodb/table.Table"
     }
@@ -14,7 +14,7 @@ declare module "sst" {
       "name": string
       "type": "sst.aws.Function"
     }
-    "ApiKeysTable": {
+    "ApiKeys": {
       "tableName": string
       "type": "aws.dynamodb/table.Table"
     }
@@ -74,17 +74,17 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
-    "UsersTable": {
+    "Users": {
+      "tableName": string
+      "type": "aws.dynamodb/table.Table"
+    }
+    "WebsiteReview": {
       "tableName": string
       "type": "aws.dynamodb/table.Table"
     }
     "WebsiteReviewQueue": {
       "type": "sst.aws.Queue"
       "url": string
-    }
-    "WebsiteReviewTable": {
-      "tableName": string
-      "type": "aws.dynamodb/table.Table"
     }
   }
 }

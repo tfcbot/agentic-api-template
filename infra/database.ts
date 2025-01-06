@@ -1,4 +1,4 @@
-export const usersTable = new aws.dynamodb.Table("UsersTable", {
+export const usersTable = new aws.dynamodb.Table("Users", {
     attributes: [
         {name: "userId", type: "S"}
     ],
@@ -8,7 +8,7 @@ export const usersTable = new aws.dynamodb.Table("UsersTable", {
     streamViewType: "NEW_AND_OLD_IMAGES"
 })
 
-export const apiKeysTable = new aws.dynamodb.Table("ApiKeysTable", {
+export const apiKeysTable = new aws.dynamodb.Table("ApiKeys", {
     attributes: [
         {name: "keyId", type: "S"}
     ],
@@ -18,7 +18,7 @@ export const apiKeysTable = new aws.dynamodb.Table("ApiKeysTable", {
     streamViewType: "NEW_IMAGE"
 })
 
-export const websiteReviewTable = new aws.dynamodb.Table("WebsiteReviewTable", {
+export const websiteReviewTable = new aws.dynamodb.Table("WebsiteReview", {
     attributes: [
         {name: "websiteId", type: "S"}
     ],
@@ -26,7 +26,7 @@ export const websiteReviewTable = new aws.dynamodb.Table("WebsiteReviewTable", {
     billingMode: "PAY_PER_REQUEST",
 })
 
-export const agentsTable = new aws.dynamodb.Table("AgentsTable", {
+export const agentsTable = new aws.dynamodb.Table("Agents", {
     attributes: [
         {name: "agentId", type: "S"}
     ],

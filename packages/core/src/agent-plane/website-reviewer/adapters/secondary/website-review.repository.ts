@@ -1,6 +1,6 @@
 import { DynamoDBDocumentClient, PutCommand, QueryCommand, GetCommand } from "@aws-sdk/lib-dynamodb";
 import { WebsiteReview } from "@orchestrator/metadata/agent-plane.schema";
-// @ts-ignore
+
 import { Resource } from "sst";
 
 export interface IWebsiteReviewRepository {
@@ -15,7 +15,7 @@ class WebsiteReviewRepository implements IWebsiteReviewRepository {
     console.info("Saving website review to database via WebsiteReviewRepository");
     try {
       const params = {
-        TableName: Resource.WebsiteReviewTable.tableName,
+        TableName: Resource.WebsiteReview.tableName,
         Item: review
       };
       await this.dbClient.send(new PutCommand(params));
@@ -29,7 +29,7 @@ class WebsiteReviewRepository implements IWebsiteReviewRepository {
     console.info("Getting website reviews from database via WebsiteReviewRepository");
     try {
       const params = {
-        TableName: Resource.WebsiteReviewTable.tableName,
+        TableName: Resource.WebsiteReview.tableName,
         KeyConditionExpression: "userId = :userId",
         ExpressionAttributeValues: {
           ":userId": userId

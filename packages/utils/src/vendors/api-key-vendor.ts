@@ -16,10 +16,7 @@ import {
   SaveApiKeyCommand,
   SaveApiKeyCommandOutput,
   ValidateApiKeyCommand,
-<<<<<<< Updated upstream
   UpdateApiKeyCommand,
-=======
->>>>>>> Stashed changes
 
 } from "@utils/metadata/apikey.schema";
 import {
@@ -31,7 +28,7 @@ import {
   UpdateRemainingCreditsCommand,
   UpdateRemainingCreditsCommandOutput
 } from "@utils/metadata/credit.schema";
-// @ts-ignore
+
 import { Resource } from "sst";
 import { Message } from "../metadata/message.schema";
 
@@ -55,11 +52,7 @@ export class ApiKeyRepository implements IApiKeyRepository {
   async getUserDetailsByApiKey(command: GetUserDetailsByApiKeyCommand): Promise<ValidUser> {
     try {
       const params = {
-<<<<<<< Updated upstream
-        TableName: Resource.ApiKeysTable.tableName,
-=======
         TableName: Resource.ApiKeys.tableName,
->>>>>>> Stashed changes
         IndexName: "ApiKeyIndex",
         KeyConditionExpression: "apiKey = :apiKey",
         ExpressionAttributeValues: {
@@ -87,11 +80,7 @@ export class ApiKeyRepository implements IApiKeyRepository {
   async getUserDetailsByKeyId(command: GetUserDetailsByKeyIdCommand): Promise<ValidUser> {
     try {
       const params = {
-<<<<<<< Updated upstream
-        TableName: Resource.ApiKeysTable.tableName,
-=======
         TableName: Resource.ApiKeys.tableName,
->>>>>>> Stashed changes
         KeyConditionExpression: "keyId = :keyId",
         ExpressionAttributeValues: {
           ":keyId": command.keyId
@@ -118,18 +107,10 @@ export class ApiKeyRepository implements IApiKeyRepository {
   async saveApiKey(command: SaveApiKeyCommand): Promise<void> {
     try {
       const params = {
-<<<<<<< Updated upstream
-        TableName: Resource.ApiKeysTable.tableName,
-        Item: {
-          keyId: command.keyId,
-          userId: command.userId,
-=======
         TableName: Resource.ApiKeys.tableName,
         Item: {
           keyId: command.keyId,
           userId: command.userId,
-          apiKey: command.apiKey,
->>>>>>> Stashed changes
           apiId: this.apiId,
           createdTimestamp: new Date().toISOString()
         }
@@ -146,11 +127,7 @@ export interface IApiKeyService {
   validateApiKey(params: ValidateApiKeyCommand): Promise<boolean>
   getApiKey(params: GetApiKeyCommandInput): Promise<GetApiKeyCommandOutput>
   createApiKey(params: CreateApiKeyCommandInput): Promise<CreateApiKeyCommandOutput>
-<<<<<<< Updated upstream
   updateApiKey(params: UpdateApiKeyCommand): Promise<UpdateApiKeyCommandOutput>
-=======
-  updateApiKey(params: UpdateApiKeyCommandInput): Promise<UpdateApiKeyCommandOutput>
->>>>>>> Stashed changes
   updateRemainingCredits(params: UpdateRemainingCreditsCommand): Promise<UpdateRemainingCreditsCommandOutput>
   deleteApiKey(params: DeleteApiKeyCommandInput): Promise<Message>
   saveApiKey(params: SaveApiKeyCommand): Promise<Message>
@@ -215,17 +192,12 @@ export class ApiKeyService implements IApiKeyService {
     return result;
   }
 
-<<<<<<< Updated upstream
   async updateApiKey(params: UpdateApiKeyCommand): Promise<UpdateApiKeyCommandOutput> {
+    console.log("---Working on updating API key with Provider---");
     const { result, error } = await this.unkey.keys.update(params);
     if (error) throw new Error(error.message);
+    console.log("---API key updated successfully---");
     return { message: "Key updated successfully" };
-=======
-  async updateApiKey(params: UpdateApiKeyCommandInput): Promise<UpdateApiKeyCommandOutput> {
-    const { result, error } = await this.unkey.keys.updateRemaining(params);
-    if (error) throw new Error(error.message);
-    return result
->>>>>>> Stashed changes
   }
 
   async updateRemainingCredits(params: UpdateRemainingCreditsCommand): Promise<UpdateRemainingCreditsCommandOutput> {
@@ -256,10 +228,6 @@ export class ApiKeyService implements IApiKeyService {
     await this.apiKeyRepository.saveApiKey({
       keyId: command.keyId,
       userId: command.userId,
-<<<<<<< Updated upstream
-=======
-      apiKey: command.apiKey
->>>>>>> Stashed changes
     });
     return { message: "Key saved successfully" };
   }

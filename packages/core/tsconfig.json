@@ -1,8 +1,8 @@
 {
-    "extends": "@tsconfig/node20/tsconfig.json",
-    "compilerOptions": {
-      "module": "NodeNext",
-  
+  "extends": "@tsconfig/node22/tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
       "baseUrl": ".",
       "paths": {
         "@services/*": ["../../packages/core/src/services/*"],
@@ -13,8 +13,5 @@
       }, 
      //"esModuleInterop": true
     }, 
-    "include": [
-      "**/*.test.ts", 
-      "**/*.ts"
-,   ]
+    "include": ["src/**/*", "test/**/*", "sst-env.d.ts"]
 }

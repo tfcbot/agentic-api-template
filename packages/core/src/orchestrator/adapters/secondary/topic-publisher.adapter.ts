@@ -2,7 +2,7 @@ import { SNSClient, PublishCommand } from "@aws-sdk/client-sns"
 import { Task } from "@orchestrator/metadata/task.schema";
 import { Topic } from "@orchestrator/metadata/task.enum"
 
-//@ts-ignore
+
 import { Resource } from "sst";
 
 export class TopicPublisher {
