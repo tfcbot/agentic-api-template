@@ -92,13 +92,18 @@ api.route("GET /agents", {
   handler: "./packages/functions/src/orchestrator.api.handleGetAgents",
 })
 
-api.route("POST /request-website-review", {
+api.route("GET /agent/{agentId}", {
+  link: [...apiResources],
+  handler: "./packages/functions/src/orchestrator.api.handleGetAgent",
+})
+
+api.route("POST /landing-page-review", {
   link: [...apiResources],
   handler: "./packages/functions/src/orchestrator.api.handleRequestWebsiteReview",
 });
 
 
-api.route("GET /website-reviews", {
+api.route("GET /landing-page-review/deliverables", {
   link: [...apiResources], 
   handler: "./packages/functions/src/orchestrator.api.handleGetUserWebsiteReviews",
 })
