@@ -1,9 +1,6 @@
-import { websiteReviewTable } from "./database"
+import { websiteReviewTable, deliverablesTable, ordersTable } from "./database"
 import { openaiApiKey } from "./secrets"
 
-export const DLQ = new sst.aws.Queue("DLQ")
-
-export const websiteReviewQueue = new sst.aws.Queue("WebsiteReviewQueue")
 
 const subscriberRole = new aws.iam.Role("QueueSubscriberRole", {
     assumeRolePolicy: JSON.stringify({
@@ -46,6 +43,11 @@ new aws.iam.RolePolicy("QueueSubscriberPolicy", {
 });
 
 
+export const DLQ = new sst.aws.Queue("DLQ")
+export const websiteReviewQueue = new sst.aws.Queue("WebsiteReviewQueue")
+export const valueStrategyQueue = new sst.aws.Queue("ValueStrategyQueue")   
+export const techStrategyQueue = new sst.aws.Queue("TechStrategyQueue")
+export const growthStrategyQueue = new sst.aws.Queue("GrowthStrategyQueue")
 
     
 websiteReviewQueue.subscribe({
@@ -54,8 +56,6 @@ websiteReviewQueue.subscribe({
            websiteReviewTable, 
            openaiApiKey
         ],
-        environment: {
-        }, 
         permissions: [
             {
                 actions: ["dynamodb:*"], 
@@ -64,3 +64,49 @@ websiteReviewQueue.subscribe({
         ]
     }, 
 )
+
+
+valueStrategyQueue.subscribe({
+    handler: "./packages/functions/src/agent-plane.api.valueStrategyHandler", 
+    link: [
+        deliverablesTable, 
+        ordersTable, 
+        openaiApiKey, 
+    ], 
+    permissions: [
+        {
+            actions: ["dynamodb:*"], 
+            resources: [deliverablesTable.arn, ordersTable.arn]
+        }
+    ]
+})
+
+techStrategyQueue.subscribe({
+    handler: "./packages/functions/src/agent-plane.api.techStrategyHandler", 
+    link: [
+        deliverablesTable, 
+        ordersTable, 
+        openaiApiKey
+    ], 
+    permissions: [
+        {
+            actions: ["dynamodb:*"], 
+            resources: [deliverablesTable.arn, ordersTable.arn]
+        }
+    ]
+})
+
+growthStrategyQueue.subscribe({
+    handler: "./packages/functions/src/agent-plane.api.growthStrategyHandler", 
+    link: [
+        deliverablesTable, 
+        ordersTable, 
+        openaiApiKey
+    ], 
+    permissions: [
+        {
+            actions: ["dynamodb:*"], 
+            resources: [deliverablesTable.arn, ordersTable.arn]
+        }
+    ]
+})

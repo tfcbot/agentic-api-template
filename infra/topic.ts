@@ -1,4 +1,4 @@
-import { websiteReviewQueue } from "./queues"
+import { growthStrategyQueue, valueStrategyQueue, websiteReviewQueue, techStrategyQueue } from "./queues"
 
 
 // Topics
@@ -12,6 +12,37 @@ tasksTopic.subscribeQueue(
   {
       filter: {
           "queue": ["websiteReview"]
+      }
+  }
+)
+
+
+tasksTopic.subscribeQueue(
+  "valueStrategy", 
+  valueStrategyQueue.arn, 
+  {
+      filter: {
+          "queue": ["valueStrategy"]
+      }
+  }
+)
+
+tasksTopic.subscribeQueue(
+  "growthStrategy", 
+  growthStrategyQueue.arn, 
+  {
+      filter: {
+          "queue": ["growthStrategy"]
+      }
+  }
+)
+
+tasksTopic.subscribeQueue(
+  "techStrategy", 
+  techStrategyQueue.arn, 
+  {
+      filter: {
+          "queue": ["techStrategy"]
       }
   }
 )

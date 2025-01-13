@@ -2,6 +2,10 @@
 import { createHandler } from "@utils/tools/custom-handler"
 import { requestWebsiteReviewAdapter } from "@orchestrator/adapters/primary/request-website-review.adapter";
 import { getRemainingCreditsAdapter } from "@orchestrator/adapters/primary/get-remaining-credits.adapter";
+import { getOrdersAdapter } from "@orchestrator/adapters/primary/get-orders.adapter";
+import { getDeliverableAdapter } from "@orchestrator/adapters/primary/get-deliverable.adapter";
 
 export const handleRequestWebsiteReview = createHandler(requestWebsiteReviewAdapter);
 export const handleGetUserCredits = createHandler(getRemainingCreditsAdapter);
+export const handleGetOrders = createHandler(getOrdersAdapter);
+export const handleGetDeliverable = createHandler(getDeliverableAdapter);

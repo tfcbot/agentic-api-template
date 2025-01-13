@@ -11,9 +11,17 @@ export const RequestOnePageValueInputSchema = z.object({
   });
 
 
+export const DeliverableSchema = z.object({
+    userId: z.string(),
+    deliverableId: z.string(),
+    deliverableContent: z.object({}), 
+  });
+
 export const RequestOnePageValueOutputSchema = z.object({
     value: z.string(),
+    deliverableId: z.string(),
   });
 
   export type RequestOnePageValueInput = z.infer<typeof RequestOnePageValueInputSchema>;
   export type RequestOnePageValueOutput = z.infer<typeof RequestOnePageValueOutputSchema>;
+  export type Deliverable = z.infer<typeof DeliverableSchema>;

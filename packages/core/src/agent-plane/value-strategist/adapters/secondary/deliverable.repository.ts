@@ -1,6 +1,5 @@
 import { DynamoDBDocumentClient, PutCommand, QueryCommand, GetCommand } from "@aws-sdk/lib-dynamodb";
-import { Deliverable } from "@orchestrator/metadata/agent-plane.schema";
-
+import { Deliverable } from "@agent-plane/value-strategist/metadata/value-strategist.schema";
 import { Resource } from "sst";
 
 export interface IDeliverableRepository {
