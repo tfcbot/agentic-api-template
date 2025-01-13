@@ -33,3 +33,27 @@ export const agentsTable = new aws.dynamodb.Table("Agents", {
     hashKey: "agentId",
     billingMode: "PAY_PER_REQUEST",
 })
+
+export const ordersTable = new aws.dynamodb.Table("Orders", {
+    attributes: [
+        {name: "orderId", type: "S"}
+    ],
+    hashKey: "orderId",
+    billingMode: "PAY_PER_REQUEST",
+})
+
+export const deliverablesTable = new aws.dynamodb.Table("Deliverables", {
+    attributes: [
+        {name: "deliverableId", type: "S"},
+        {name: "orderId", type: "S"}
+    ],
+    hashKey: "deliverableId",
+    billingMode: "PAY_PER_REQUEST",
+    globalSecondaryIndexes: [
+        {
+            hashKey: "orderId",
+            name: "OrderDeliverables",
+            projectionType: "ALL"
+        }
+    ]
+})

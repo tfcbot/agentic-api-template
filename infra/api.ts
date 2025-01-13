@@ -109,5 +109,28 @@ api.route("GET /landing-page-review/deliverables", {
 })
 
 
+api.route("POST /one-page-growth", {
+  link: [...apiResources],
+  handler: "./packages/functions/src/orchestrator.api.handleRequestOnePageGrowth",
+})
 
+api.route("POST /one-page-value", {
+  link: [...apiResources],
+  handler: "./packages/functions/src/orchestrator.api.handleRequestOnePageValue",
+})
+
+api.route("POST /one-page-spec", {
+  link: [...apiResources],
+  handler: "./packages/functions/src/orchestrator.api.handleRequestOnePageSpec",
+})
+
+api.route("GET /orders", {
+  link: [...apiResources],
+  handler: "./packages/functions/src/orchestrator.api.handleGetOrders",
+})
+
+api.route("GET /orders/deliverables/{orderId}", {
+  link: [...apiResources],
+  handler: "./packages/functions/src/orchestrator.api.handleGetDeliverables",
+})
 

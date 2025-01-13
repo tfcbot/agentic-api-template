@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const WebsiteReviewSchema = z.object({
   userId: z.string(),
-  url: z.string(),
+  websiteUrl: z.string(),
   createdAt: z.string(),
   copywriting_analysis: z.object({
     headline_effectiveness: z.object({

@@ -1,4 +1,8 @@
 import { z } from 'zod';
+import { RequestOnePageValueInputSchema } from './agent-plane.schema';
+import { RequestOnePageGrowthInputSchema } from './agent-plane.schema';
+import { RequestOnePageSpecInputSchema } from './agent-plane.schema';
+
 export enum Status {
     Pending = 'Pending',
     InProgress = 'InProgress',
@@ -9,6 +13,9 @@ export enum Status {
 export enum Queue {
     content = 'content',
     websiteReview = 'websiteReview',
+    onePageValue = 'onePageValue',
+    onePageGrowth = 'onePageGrowth',
+    onePageSpec = 'onePageSpec',
 }
 
 export enum Topic {
@@ -34,8 +41,29 @@ export const WebsiteReviewTaskSchema = TaskSchema.extend({
 });
 
 
+export const OnePageValueTaskSchema = TaskSchema.extend({
+  payload: RequestOnePageValueInputSchema,
+});
+
+export const OnePageGrowthTaskSchema = TaskSchema.extend({
+  payload: RequestOnePageGrowthInputSchema,
+});
+
+export const OnePageSpecTaskSchema = TaskSchema.extend({
+  payload: RequestOnePageSpecInputSchema,
+});
+
+
 export type WebsiteReviewTask = z.infer<typeof WebsiteReviewTaskSchema>
 export type Task = z.infer<typeof TaskSchema>
+export type OnePageValueTask = z.infer<typeof OnePageValueTaskSchema>
+export type OnePageGrowthTask = z.infer<typeof OnePageGrowthTaskSchema>
+export type OnePageSpecTask = z.infer<typeof OnePageSpecTaskSchema>
+
+
 
 export type taskType =
-  | WebsiteReviewTask;
+  | WebsiteReviewTask
+  | OnePageValueTask
+  | OnePageGrowthTask
+  | OnePageSpecTask;

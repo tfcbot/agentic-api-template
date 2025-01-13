@@ -3,7 +3,7 @@ import { verifyToken } from "@clerk/backend";
 import { Jwt, JwtPayload } from "@clerk/types";
 import { APIGatewayProxyEventV2 } from "aws-lambda";
 import { UpdatePropertyCommandInput } from "@utils/metadata/jwt.schema";
-import jwksClient from "jwks-rsa";
+
 
 
 import { Resource } from "sst";
@@ -41,7 +41,7 @@ export class ClerkService implements IJwtService {
     const decodedToken = await verifyToken(token , {
       secretKey: this.clerkClientSecretKey,
     });
-    console.info("Token decoded")
+    console.info("Token decoded", decodedToken)
     return decodedToken;
   }
 
