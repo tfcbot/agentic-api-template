@@ -1,6 +1,6 @@
 import OpenAI from "openai";
-import { RequestOnePageGrowthInput } from "@agent-plane/growth-strategist/metadata/growth-strategist.schema";
-import { zodToJsonSchema } from "zod-to-json-schema";
+import { Deliverable, DeliverableSchema, RequestOnePageGrowthInput } from "@agent-plane/growth-strategist/metadata/growth-strategist.schema";
+import { zodResponseFormat } from "openai/helpers/zod";
 import { Resource } from "sst";
 import { withRetry } from "@utils/tools/retry";
 
@@ -10,9 +10,9 @@ const openai = new OpenAI({
 
 const growthStrategySystemPrompt = () => `You are an expert growth strategist. Your task is to create a detailed one-page growth strategy based on the provided application idea, ideal customer profile, and target annual revenue. Focus on actionable steps and realistic growth tactics.`;
 
-export const createGrowthStrategy = async (input: RequestOnePageGrowthInput): Promise<string> => {
+export const createGrowthStrategy = async (input: RequestOnePageGrowthInput): Promise<Deliverable> => {
   try {
-    const response = await openai.chat.completions.create({
+    const response = await openai.beta.chat.completions.parse({
       model: "gpt-4",
       messages: [
         { role: "system", content: growthStrategySystemPrompt() },
@@ -22,10 +22,10 @@ export const createGrowthStrategy = async (input: RequestOnePageGrowthInput): Pr
           Target Annual Revenue: $${input.targetAnnualRevenue}` }
       ],
       temperature: 0.7,
-      response_format: { type: "text" }
+      response_format: zodResponseFormat(DeliverableSchema, "deliverable")
     });
 
-    const content = response.choices[0].message.content;
+    const content = response.choices[0].message.parsed;
     if (!content) {
       throw new Error("No content generated from OpenAI API");
     }

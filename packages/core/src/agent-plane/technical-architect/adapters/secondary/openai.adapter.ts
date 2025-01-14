@@ -1,27 +1,26 @@
 import OpenAI from "openai";
-import { RequestOnePageSpecInput } from "@agent-plane/technical-architect/metadata/technical-architect.schema";
-import { zodToJsonSchema } from "zod-to-json-schema";
+import { DeliverableSchema, RequestOnePageSpecInput } from "@agent-plane/technical-architect/metadata/technical-architect.schema";
+import { zodResponseFormat } from "openai/helpers/zod";
 import { Resource } from "sst";
 import { withRetry } from "@utils/tools/retry";
-
+import { techStrategySystemPrompt } from "@agent-plane/technical-architect/metadata/technical-architect.schema";
 const openai = new OpenAI({
   apiKey: Resource.OpenAIApiKey.value
 });
 
-const techStrategySystemPrompt = () => `You are an expert technical architect. Your task is to create a detailed one-page technical specification based on the provided application requirements, technical constraints, and scalability needs. Focus on architecture decisions and implementation recommendations.`;
 
 export const createTechStrategy = async (input: RequestOnePageSpecInput): Promise<string> => {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-4o",
       messages: [
         { role: "system", content: techStrategySystemPrompt() },
         { role: "user", content: `Please create a technical specification for:
           Application Requirements: ${input.useCases}
           Technical Constraints: ${input.nonFunctional}` }
       ],
-      temperature: 0.7,
-      response_format: { type: "text" }
+      temperature: 0.0,
+      response_format: zodResponseFormat(DeliverableSchema, "deliverable")
     });
 
     const content = response.choices[0].message.content;

@@ -3,12 +3,12 @@ import { ValidUser } from '@utils/metadata/saas-identity.schema';
 import { createError, handleError } from '@utils/tools/custom-error';
 import { SaaSIdentityVendingMachine } from '@utils/tools/saas-identity';
 import { HttpStatusCode } from '@utils/tools/http-status';
-import { RequestOnePageSpecInputSchema } from "@orchestrator/metadata/agent-plane.schema"
-import { publishOnePageSpecTaskUseCase } from '@orchestrator/usecases/request-one-page-spec.usecase';
-import { OrchestratorHttpResponses } from 'src/orchestrator/metadata/http-responses.schema';
+import { RequestOnePageTechInputSchema } from "@orchestrator/metadata/agent-plane.schema"
+import { publishOnePageTechTaskUseCase } from '@orchestrator/usecases/request-one-page-tech.usecase'
+import { OrchestratorHttpResponses } from '@orchestrator/metadata/http-responses.schema';
 import { randomUUID } from 'crypto';
 
-export const requestOnePageSpecAdapter = async (
+export const requestOnePageTechAdapter = async (
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> => {
   try {
@@ -29,16 +29,16 @@ export const requestOnePageSpecAdapter = async (
       throw createError(HttpStatusCode.BAD_REQUEST, "Missing required fields");
     }
 
-    const parsedInput = RequestOnePageSpecInputSchema.parse({
+    const parsedInput = RequestOnePageTechInputSchema.parse({
       userId: validUser.userId,
       orderId: randomUUID(),
       useCases: useCases,
       nonFunctional: nonFunctional
     });
 
-    const result = await publishOnePageSpecTaskUseCase(parsedInput);
+    const result = await publishOnePageTechTaskUseCase(parsedInput);
 
-    return OrchestratorHttpResponses.OnePageSpecRequestReceived({
+    return OrchestratorHttpResponses.OnePageTechRequestReceived({
       body: result
     });
 

@@ -21,3 +21,6 @@ export const DeliverableSchema = z.object({
 
 export type RequestOnePageSpecInput = z.infer<typeof RequestOnePageSpecInputSchema>;
 export type RequestOnePageSpecOutput = z.infer<typeof RequestOnePageSpecOutputSchema>;
+export type Deliverable = z.infer<typeof DeliverableSchema>;
+
+export const techStrategySystemPrompt = () => `You are an expert technical architect. Your task is to create a detailed one-page technical specification based on the provided application requirements, technical constraints, and scalability needs. Focus on architecture decisions and implementation recommendations.`;

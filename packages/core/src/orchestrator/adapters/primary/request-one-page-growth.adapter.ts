@@ -4,7 +4,7 @@ import { createError, handleError } from '@utils/tools/custom-error';
 import { SaaSIdentityVendingMachine } from '@utils/tools/saas-identity';
 import { HttpStatusCode } from '@utils/tools/http-status';
 import { RequestOnePageGrowthInputSchema } from "@orchestrator/metadata/agent-plane.schema"
-import { publishOnePageGrowthTaskUseCase } from '@orchestrator/usecases/request-one-page-growth.usecase';
+import { publishOnePageGrowthUseCase } from '@orchestrator/usecases/request-one-page-growth.usecase';
 import { OrchestratorHttpResponses } from 'src/orchestrator/metadata/http-responses.schema';
 import { randomUUID } from 'crypto';
 
@@ -37,7 +37,7 @@ export const requestOnePageGrowthAdapter = async (
       targetAnnualRevenue: targetAnnualRevenue
     });
 
-    const result = await publishOnePageGrowthTaskUseCase(parsedInput);
+    const result = await publishOnePageGrowthUseCase(parsedInput);
 
     return OrchestratorHttpResponses.OnePageGrowthRequestReceived({
       body: result

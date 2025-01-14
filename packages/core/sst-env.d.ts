@@ -42,6 +42,14 @@ declare module "sst" {
       "type": "sst.aws.Queue"
       "url": string
     }
+    "Deliverables": {
+      "tableName": string
+      "type": "aws.dynamodb/table.Table"
+    }
+    "GrowthStrategyQueue": {
+      "type": "sst.aws.Queue"
+      "url": string
+    }
     "OnboardingStreamProcessor": {
       "name": string
       "type": "sst.aws.Function"
@@ -49,6 +57,10 @@ declare module "sst" {
     "OpenAIApiKey": {
       "type": "sst.sst.Secret"
       "value": string
+    }
+    "Orders": {
+      "tableName": string
+      "type": "aws.dynamodb/table.Table"
     }
     "PriceID": {
       "type": "sst.sst.Secret"
@@ -66,6 +78,10 @@ declare module "sst" {
       "arn": string
       "type": "sst.aws.SnsTopic"
     }
+    "TechStrategyQueue": {
+      "type": "sst.aws.Queue"
+      "url": string
+    }
     "UnkeyApiId": {
       "type": "sst.sst.Secret"
       "value": string
@@ -77,6 +93,10 @@ declare module "sst" {
     "Users": {
       "tableName": string
       "type": "aws.dynamodb/table.Table"
+    }
+    "ValueStrategyQueue": {
+      "type": "sst.aws.Queue"
+      "url": string
     }
     "WebsiteReview": {
       "tableName": string

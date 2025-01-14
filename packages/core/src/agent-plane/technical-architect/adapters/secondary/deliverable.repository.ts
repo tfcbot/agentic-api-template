@@ -1,5 +1,5 @@
-import { DynamoDBDocumentClient, PutCommand, QueryCommand, GetCommand } from "@aws-sdk/lib-dynamodb";
-import { Deliverable } from "@orchestrator/metadata/agent-plane.schema";
+import { DynamoDBDocumentClient, PutCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
+import { Deliverable } from "@agent-plane/technical-architect/metadata/technical-architect.schema";
 
 import { Resource } from "sst";
 
@@ -15,7 +15,7 @@ class DeliverableRepository implements IDeliverableRepository {
     console.info("Saving deliverable to database via DeliverableRepository");
     try {
       const params = {
-        TableName: Resource.Deliverable.tableName,
+        TableName: Resource.Deliverables.tableName,
         Item: deliverable
       };
       await this.dbClient.send(new PutCommand(params));
@@ -29,7 +29,7 @@ class DeliverableRepository implements IDeliverableRepository {
     console.info("Getting deliverables from database via DeliverableRepository");
     try {
       const params = {
-        TableName: Resource.Deliverable.tableName,
+        TableName: Resource.Deliverables.tableName,
         KeyConditionExpression: "userId = :userId",
         ExpressionAttributeValues: {
           ":userId": userId

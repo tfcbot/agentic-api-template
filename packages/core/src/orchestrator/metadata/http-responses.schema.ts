@@ -1,8 +1,7 @@
 import {z} from 'zod';
 import { HttpResponseParams, HttpStatusCode, createHttpResponse, HttpResponses } from "@utils/tools/http-status";
-import { GetOrdersOutput, GetWebsiteReviewsOutput, RequestOnePageGrowthInput, WebsiteReviewSchema } from './agent-plane.schema';
 import { GetRemainingCreditsOutput } from './credits.schema';
-
+import { GetWebsiteReviewsOutput, WebsiteReviewSchema } from './agent-plane.schema';
 
 export const WebsiteReviewRequestReceivedResponseBodySchema = z.object({
     reviewId: z.string(),
@@ -60,7 +59,7 @@ export const OrchestratorHttpResponses = {
       createHttpResponse(HttpStatusCode.OK, params),
     OnePageValueRequestReceived: (params: HttpResponseParams<OrderResponseBody>) => 
       createHttpResponse(HttpStatusCode.OK, params),
-    OnePageSpecRequestReceived: (params: HttpResponseParams<OrderResponseBody>) => 
+    OnePageTechRequestReceived: (params: HttpResponseParams<OrderResponseBody>) => 
       createHttpResponse(HttpStatusCode.OK, params),
   };  
   

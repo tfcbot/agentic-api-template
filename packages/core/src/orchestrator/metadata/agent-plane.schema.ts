@@ -97,7 +97,7 @@ export const GetDeliverableOutputSchema = z.object({
 });
 
 
-export const RequestOnePageSpecInputSchema = z.object({
+export const RequestOnePageTechInputSchema = z.object({
   userId: z.string(),
   orderId: z.string(),
   useCases: z.string(),
@@ -127,6 +127,7 @@ export const RequestOnePageGrowthInputSchema = z.object({
 
 
 
+
 export type Agent = z.infer<typeof AgentSchema>;
 export type ReviewWebsiteInput = z.infer<typeof ReviewWebsiteInputSchema>;
 export type ReviewWebsiteOutput = z.infer<typeof ReviewWebsiteOutputSchema>;
@@ -135,7 +136,7 @@ export type GetWebsiteReviewsOutput = z.infer<typeof GetWebsiteReviewsOutputSche
 export type WebsiteReview = z.infer<typeof WebsiteReviewSchema>;
 export type RequestOnePageGrowthInput = z.infer<typeof RequestOnePageGrowthInputSchema>;
 export type RequestOnePageValueInput = z.infer<typeof RequestOnePageValueInputSchema>;
-export type RequestOnePageSpecInput = z.infer<typeof RequestOnePageSpecInputSchema>;
+export type RequestOnePageTechInput = z.infer<typeof RequestOnePageTechInputSchema>;
 export type GetDeliverableInput = z.infer<typeof GetDeliverableInputSchema>;
 export type GetDeliverableOutput = z.infer<typeof GetDeliverableOutputSchema>;
 export type GetOrdersInput = z.infer<typeof GetOrdersInputSchema>;

@@ -1,17 +1,18 @@
 import OpenAI from "openai";
-import { RequestOnePageValueInput } from "@agent-plane/value-strategist/metadata/value-strategist.schema";
+import { Deliverable, DeliverableDTO, DeliverableSchema, RequestOnePageValueInput } from "@agent-plane/value-strategist/metadata/value-strategist.schema";
+import { zodResponseFormat } from "openai/helpers/zod";
 import { Resource } from "sst";
 import { withRetry } from "@utils/tools/retry";
-
+import { ValueStrategySchema } from "@agent-plane/value-strategist/metadata/value-strategist.schema";
+import { valueStrategySystemPrompt } from "@agent-plane/value-strategist/metadata/value-stategist.prompts";
 const openai = new OpenAI({
   apiKey: Resource.OpenAIApiKey.value
 });
 
-const valueStrategySystemPrompt = () => `You are an expert value strategist. Your task is to create a detailed one-page value proposition based on the provided application idea, target customer, problem, and proposed solution. Focus on articulating the unique value and competitive advantages.`;
 
-export const createValueStrategy = async (input: RequestOnePageValueInput): Promise<string> => {
+export const createValueStrategy = async (input: RequestOnePageValueInput): Promise<Deliverable> => {
   try {
-    const response = await openai.chat.completions.create({
+    const response = await openai.beta.chat.completions.parse({
       model: "gpt-4",
       messages: [
         { role: "system", content: valueStrategySystemPrompt() },
@@ -22,10 +23,10 @@ export const createValueStrategy = async (input: RequestOnePageValueInput): Prom
           Solution: ${input.solution}` }
       ],
       temperature: 0.7,
-      response_format: { type: "text" }
+      response_format: zodResponseFormat(DeliverableSchema, "deliverable")
     });
 
-    const content = response.choices[0].message.content;
+    const content = response.choices[0].message.parsed;
     if (!content) {
       throw new Error("No content generated from OpenAI API");
     }

@@ -1,6 +1,7 @@
 import { DynamoDBDocumentClient, GetCommand, GetCommandOutput, PutCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
 import { Resource } from "sst";
 import { GetDeliverableInput, GetDeliverableOutput } from "@agent-plane/order-manager/metadata/deliverable.schema";
+import { DeliverableDTO } from "@agent-plane/growth-strategist/metadata/growth-strategist.schema";
 
 export interface IDeliverableRepository {
   getDeliverable(input: GetDeliverableInput): Promise<GetDeliverableOutput>;
