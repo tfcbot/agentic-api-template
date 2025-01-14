@@ -1,6 +1,6 @@
-import { Deliverable, RequestOnePageSpecInput } from '@agent-plane/technical-architect/metadata/technical-architect.schema'
-import { runTechStrategy } from '@agent-plane/technical-architect/adapters/secondary/openai.adapter';
-import { deliverableRepository } from '@agent-plane/technical-architect/adapters/secondary/datastore.adapter';
+import { Deliverable, RequestOnePageSpecInput } from 'src/agent-plane/technical-strategist/metadata/technical-architect.schema'
+import { runTechStrategy } from 'src/agent-plane/technical-strategist/adapters/secondary/openai.adapter';
+import { deliverableRepository } from 'src/agent-plane/technical-strategist/adapters/secondary/datastore.adapter';
 import { randomUUID } from 'crypto';
 import { Message } from '@utils/metadata/message.schema';
 

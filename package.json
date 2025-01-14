@@ -16,6 +16,7 @@
     "@clerk/backend": "^1.21.4",
     "@unkey/api": "^0.29.0",
     "dotenv": "^16.4.5",
+    "mermaid": "^11.4.1",
     "openai": "^4.77.3",
     "sst": "3.4.3",
     "stripe": "^17.5.0",
@@ -31,4 +32,3 @@
   },
   "license": "MIT"
 }
-

@@ -1,5 +1,5 @@
 import { DynamoDBDocumentClient, PutCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
-import { Deliverable } from "@agent-plane/technical-architect/metadata/technical-architect.schema";
+import { Deliverable } from "src/agent-plane/technical-strategist/metadata/technical-architect.schema";
 
 import { Resource } from "sst";
 

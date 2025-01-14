@@ -1,6 +1,6 @@
 import { SQSEvent, SQSRecord } from 'aws-lambda';
-import { RequestOnePageSpecInputSchema } from '@agent-plane/technical-architect/metadata/technical-architect.schema';
-import { createTechStrategyUsecase } from '@agent-plane/technical-architect/usecases/create-tech-strategy.usecase';
+import { RequestOnePageSpecInputSchema } from 'src/agent-plane/technical-strategist/metadata/technical-architect.schema';
+import { createTechStrategyUsecase } from 'src/agent-plane/technical-strategist/usecases/create-tech-strategy.usecase';
 
 export const createTechStrategyAdapter = async (event: SQSEvent) => {
     console.info("--- Tech Strategy Queue Adapter ---");

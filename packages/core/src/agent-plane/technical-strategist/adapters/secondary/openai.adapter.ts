@@ -1,17 +1,17 @@
 import OpenAI from "openai";
-import { DeliverableSchema, RequestOnePageSpecInput } from "@agent-plane/technical-architect/metadata/technical-architect.schema";
+import { Deliverable, DeliverableSchema, RequestOnePageSpecInput } from "@agent-plane/technical-strategist/metadata/technical-architect.schema";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { Resource } from "sst";
 import { withRetry } from "@utils/tools/retry";
-import { techStrategySystemPrompt } from "@agent-plane/technical-architect/metadata/technical-architect.schema";
+import { techStrategySystemPrompt } from "@agent-plane/technical-strategist/metadata/technical-strategist.prompt";
 const openai = new OpenAI({
   apiKey: Resource.OpenAIApiKey.value
 });
+  
 
-
-export const createTechStrategy = async (input: RequestOnePageSpecInput): Promise<string> => {
+export const createTechStrategy = async (input: RequestOnePageSpecInput): Promise<Deliverable> => {
   try {
-    const response = await openai.chat.completions.create({
+    const response = await openai.beta.chat.completions.parse({
       model: "gpt-4o",
       messages: [
         { role: "system", content: techStrategySystemPrompt() },
@@ -23,12 +23,12 @@ export const createTechStrategy = async (input: RequestOnePageSpecInput): Promis
       response_format: zodResponseFormat(DeliverableSchema, "deliverable")
     });
 
-    const content = response.choices[0].message.content;
+    const content = response.choices[0].message.parsed;
     if (!content) {
       throw new Error("No content generated from OpenAI API");
     }
-
-    return content;
+    const validatedContent = await DeliverableSchema.parseAsync(content);
+    return validatedContent;
   } catch (error) {
     console.error('Error generating technical strategy:', error);
     throw error;
