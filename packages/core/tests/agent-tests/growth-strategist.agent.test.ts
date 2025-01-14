@@ -19,7 +19,7 @@ describe('Growth Strategist Agent', () => {
 
   it('should generate a growth strategy', async () => {
     const strategy = await runGrowthStrategy(testInput);
-
+    console.log(strategy);
     // Verify the strategy structure matches the schema
     expect(() => GrowthStrategySchema.parse(strategy.deliverableContent)).not.toThrow();
 

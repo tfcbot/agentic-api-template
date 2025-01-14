@@ -10,24 +10,27 @@ jest.mock('sst', () => ({
 
 describe('Value Strategist Agent', () => {
   const testInput = {
-    userId: 'test_user_123',
-    orderId: 'test_order_123',
-    businessModel: 'SaaS subscription',
-    targetMarket: 'Enterprise software companies',
-    competitorAnalysis: 'Main competitors include Slack and Microsoft Teams'
+    problem: 'Fragmented team communication',
+    applicationIdea: 'Business communication platform',
+    idealCustomer: 'Enterprise software companies',
+    solution: 'Integrated messaging and collaboration platform'
   };
 
   it('should generate a value strategy', async () => {
     const strategy = await runValueStrategy(testInput);
-
+    console.log(strategy);
     // Verify the strategy structure matches the schema
     expect(() => ValueStrategySchema.parse(strategy.deliverableContent)).not.toThrow();
 
     // Verify required sections
-    expect(strategy.deliverableContent.valueProposition).toBeDefined();
-    expect(strategy.deliverableContent.pricingStrategy).toBeDefined();
-    expect(strategy.deliverableContent.marketPositioning).toBeDefined();
-    expect(strategy.deliverableContent.competitiveAdvantages).toBeDefined();
-    expect(strategy.deliverableContent.revenueModel).toBeDefined();
+    expect(strategy.deliverableContent.value_proposition).toBeDefined();
+    expect(strategy.deliverableContent.profit_proposition).toBeDefined();
+    expect(strategy.deliverableContent.people_proposition).toBeDefined();
+    expect(strategy.deliverableContent.core_benefit).toBeDefined();
+    expect(strategy.deliverableContent.core_feature).toBeDefined();
+    expect(strategy.deliverableContent.solution_overview).toBeDefined();
+    expect(strategy.deliverableContent.benefit_breakdown).toBeDefined();
+    expect(strategy.deliverableContent.first_order).toBeDefined();
+    expect(strategy.deliverableContent.second_order).toBeDefined();
   }, 30000);
 }); 

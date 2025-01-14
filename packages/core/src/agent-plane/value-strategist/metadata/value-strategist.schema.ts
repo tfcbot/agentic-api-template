@@ -16,9 +16,6 @@ export const ValueStrategySchema = z.object({
 
 
 export const RequestOnePageValueInputSchema = z.object({
-  userId: z.string(),
-  orderId: z.string(),
-  deliverableId: z.string(),
   applicationIdea: z.string(),
   idealCustomer: z.string(),
   problem: z.string(),

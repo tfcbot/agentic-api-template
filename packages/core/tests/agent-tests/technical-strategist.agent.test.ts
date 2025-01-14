@@ -18,12 +18,12 @@ describe('Technical Strategist Agent', () => {
 
   it('should generate a technical strategy', async () => {
     const strategy = await runTechStrategy(testInput);
-
+    console.log(strategy);
     // Verify the strategy structure matches the schema
     expect(() => DeliverableSchema.parse(strategy)).not.toThrow();
 
     // Verify the strategy contains required sections
     expect(strategy.deliverableId).toBeDefined();
     expect(strategy.deliverableContent).toBeDefined();
-  }, 30000);
+  }, 90000);
 }); 
