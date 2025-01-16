@@ -34,32 +34,32 @@ export const TechStrategySchema = z.object({
   deployment: z.string()
 });
 
-
-export const RequestOnePageSpecInputSchema = z.object({
+export const BasePayloadSchema = z.object({
   userId: z.string(),
   orderId: z.string(),
+  deliverableId: z.string(),
+});
+
+export const RequestTechStrategyInputSchema = BasePayloadSchema.extend({
   useCases: z.string(),
   nonFunctional: z.string(),
 });
 
 
-export const RequestOnePageSpecOutputSchema = z.object({
+export const RequestTechStrategyOutputSchema = z.object({
   spec: z.string(),
 });
 
 
 export const DeliverableSchema = z.object({
-  deliverableId: z.string(),
   deliverableContent: TechStrategySchema,
 });
 
-export const DeliverableDTOSchema = z.object({  
-  userId: z.string(),
-  deliverableId: z.string(),
+export const DeliverableDTOSchema = BasePayloadSchema.extend({
   deliverableContent: TechStrategySchema,
 });
 
-export type RequestOnePageSpecInput = z.infer<typeof RequestOnePageSpecInputSchema>;
-export type RequestOnePageSpecOutput = z.infer<typeof RequestOnePageSpecOutputSchema>;
+export type RequestTechStrategyInput = z.infer<typeof RequestTechStrategyInputSchema>;
+export type RequestTechStrategyOutput = z.infer<typeof RequestTechStrategyOutputSchema>;
 export type Deliverable = z.infer<typeof DeliverableSchema>;
 export type DeliverableDTO = z.infer<typeof DeliverableDTOSchema>;

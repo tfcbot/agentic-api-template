@@ -11,7 +11,7 @@ export enum Queue {
     content = 'content',
 }
 
-export interface Task {
+export interface Order {
     taskId: UUID;
     userId: string;
     status: Status;

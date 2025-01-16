@@ -1,12 +1,14 @@
-import { growthStrategyQueue, valueStrategyQueue, websiteReviewQueue, techStrategyQueue } from "./queues"
+import { growthStrategyQueue, valueStrategyQueue, websiteReviewQueue, techStrategyQueue, orderManagerQueue } from "./queues"
 
 
 // Topics
-export const tasksTopic = new sst.aws.SnsTopic("TasksTopic")
+export const orderTopic = new sst.aws.SnsTopic("OrderTopic", {
+  fifo: true
+})
 
 
 // ... existing code ...
-tasksTopic.subscribeQueue(
+orderTopic.subscribeQueue(
   "websiteReview", // Add name parameter
   websiteReviewQueue.arn, 
   {
@@ -17,7 +19,7 @@ tasksTopic.subscribeQueue(
 )
 
 
-tasksTopic.subscribeQueue(
+orderTopic.subscribeQueue(
   "valueStrategy", 
   valueStrategyQueue.arn, 
   {
@@ -27,7 +29,7 @@ tasksTopic.subscribeQueue(
   }
 )
 
-tasksTopic.subscribeQueue(
+orderTopic.subscribeQueue(
   "growthStrategy", 
   growthStrategyQueue.arn, 
   {
@@ -37,12 +39,12 @@ tasksTopic.subscribeQueue(
   }
 )
 
-tasksTopic.subscribeQueue(
+orderTopic.subscribeQueue(
   "techStrategy", 
   techStrategyQueue.arn, 
   {
       filter: {
           "queue": ["techStrategy"]
-      }
+      }, 
   }
 )

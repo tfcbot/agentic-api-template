@@ -58,6 +58,14 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
+    "OrderManagerQueue": {
+      "type": "sst.aws.Queue"
+      "url": string
+    }
+    "OrderTopic": {
+      "arn": string
+      "type": "sst.aws.SnsTopic"
+    }
     "Orders": {
       "tableName": string
       "type": "aws.dynamodb/table.Table"
@@ -66,6 +74,10 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
+    "ProcessDeliverableStreamProcessor": {
+      "name": string
+      "type": "sst.aws.Function"
+    }
     "StripeSecretKey": {
       "type": "sst.sst.Secret"
       "value": string
@@ -73,10 +85,6 @@ declare module "sst" {
     "StripeWebhookSecret": {
       "type": "sst.sst.Secret"
       "value": string
-    }
-    "TasksTopic": {
-      "arn": string
-      "type": "sst.aws.SnsTopic"
     }
     "TechStrategyQueue": {
       "type": "sst.aws.Queue"

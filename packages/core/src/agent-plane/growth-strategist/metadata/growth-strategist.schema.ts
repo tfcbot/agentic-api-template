@@ -9,11 +9,13 @@ export const GrowthStrategySchema = z.object({
   growthStrategies: z.string()
 });
 
+export const BasePayloadSchema = z.object({ 
+  userId: z.string(),
+  orderId: z.string(),
+  deliverableId: z.string(),
+});
 
-
-export const RequestOnePageGrowthInputSchema = z.object({
-    userId: z.string(),
-    orderId: z.string(),
+export const RequestGrowthStrategyInputSchema = BasePayloadSchema.extend({
     applicationIdea: z.string(),
     idealCustomer: z.string(),
     targetAnnualRevenue: z.number()
@@ -21,23 +23,20 @@ export const RequestOnePageGrowthInputSchema = z.object({
   
   
 
-export const RequestOnePageGrowthOutputSchema = z.object({
+export const RequestGrowthStrategyOutputSchema = z.object({
   strategy: z.string(),
 });
 
 
 export const DeliverableSchema = z.object({
-  deliverableId: z.string(),
   deliverableContent: GrowthStrategySchema, 
 });
 
-export const DeliverableDTOSchema = z.object({
-  userId: z.string(),
-  deliverableId: z.string(),
+export const DeliverableDTOSchema = BasePayloadSchema.extend({
   deliverableContent: GrowthStrategySchema, 
 });
 
-export type RequestOnePageGrowthInput = z.infer<typeof RequestOnePageGrowthInputSchema>;
-export type RequestOnePageGrowthOutput = z.infer<typeof RequestOnePageGrowthOutputSchema>;
+export type RequestGrowthStrategyInput = z.infer<typeof RequestGrowthStrategyInputSchema>;
+export type RequestGrowthStrategyOutput = z.infer<typeof RequestGrowthStrategyOutputSchema>;
 export type Deliverable = z.infer<typeof DeliverableSchema>;
 export type DeliverableDTO = z.infer<typeof DeliverableDTOSchema>;

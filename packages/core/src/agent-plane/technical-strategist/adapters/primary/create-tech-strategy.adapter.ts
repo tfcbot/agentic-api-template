@@ -1,6 +1,6 @@
 import { SQSEvent, SQSRecord } from 'aws-lambda';
-import { RequestOnePageSpecInputSchema } from 'src/agent-plane/technical-strategist/metadata/technical-architect.schema';
-import { createTechStrategyUsecase } from 'src/agent-plane/technical-strategist/usecases/create-tech-strategy.usecase';
+import { RequestTechStrategyInputSchema } from '@agent-plane/technical-strategist/metadata/technical-architect.schema';
+import { createTechStrategyUsecase } from '@agent-plane/technical-strategist/usecases/create-tech-strategy.usecase';
 
 export const createTechStrategyAdapter = async (event: SQSEvent) => {
     console.info("--- Tech Strategy Queue Adapter ---");
@@ -10,8 +10,8 @@ export const createTechStrategyAdapter = async (event: SQSEvent) => {
 
     const results = await Promise.all(event.Records.map(async (record: SQSRecord) => {
         const message = JSON.parse(record.body);
-        const task = RequestOnePageSpecInputSchema.parse(JSON.parse(message.Message));
-        return await createTechStrategyUsecase(task);
+        const order = RequestTechStrategyInputSchema.parse(JSON.parse(message.Message));
+        return await createTechStrategyUsecase(order);
     }));
 
     return results;

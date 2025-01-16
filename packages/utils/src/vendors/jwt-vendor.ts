@@ -41,7 +41,7 @@ export class ClerkService implements IJwtService {
     const decodedToken = await verifyToken(token , {
       secretKey: this.clerkClientSecretKey,
     });
-    console.info("Token decoded", decodedToken)
+    console.info("Token decoded")
     return decodedToken;
   }
 

@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { Status, Queue } from "@orchestrator/metadata/orchestrator.schema";
 import { HttpResponses, createHttpResponse, HttpResponseParams, HttpStatusCode } from '@utils/tools/http-status';
 import { Message } from '@utils/metadata/message.schema';
-import { ContentSchema } from './task.schema';
+import { ContentSchema } from './order.schema';
 
 
 export const GenerateContentInputSchema = z.object({

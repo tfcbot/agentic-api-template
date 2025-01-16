@@ -3,12 +3,12 @@ import { ValidUser } from '@utils/metadata/saas-identity.schema';
 import { createError, handleError } from '@utils/tools/custom-error';
 import { SaaSIdentityVendingMachine } from '@utils/tools/saas-identity';
 import { HttpStatusCode } from '@utils/tools/http-status';
-import { RequestOnePageValueInputSchema } from "@orchestrator/metadata/agent-plane.schema"
-import { publishOnePageValueTaskUseCase } from '@orchestrator/usecases/request-one-page-value.usecase';
-import { OrchestratorHttpResponses } from 'src/orchestrator/metadata/http-responses.schema';
+import { RequestGrowthStrategyInputSchema } from "@orchestrator/metadata/agent-plane.schema"
+import { publishGrowthStrategyUseCase } from '@orchestrator/usecases/request-growth-strategy.usecase';
+import { OrchestratorHttpResponses } from '@orchestrator/metadata/http-responses.schema';
 import { randomUUID } from 'crypto';
 
-export const requestOnePageValueAdapter = async (
+export const requestGrowthStrategyAdapter = async (
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> => {
   try {
@@ -23,25 +23,24 @@ export const requestOnePageValueAdapter = async (
       throw createError(HttpStatusCode.BAD_REQUEST, "Missing request body");
     }
    
-    const { applicationIdea, idealCustomer, problem, solution } = JSON.parse(event.body);
+    const { applicationIdea, idealCustomer, targetAnnualRevenue } = JSON.parse(event.body);
     
-    if (!applicationIdea || !idealCustomer || !problem || !solution) {
+    if (!applicationIdea || !idealCustomer || !targetAnnualRevenue) {
       throw createError(HttpStatusCode.BAD_REQUEST, "Missing required fields");
     }
 
-    const parsedInput = RequestOnePageValueInputSchema.parse({
+    const parsedInput = RequestGrowthStrategyInputSchema.parse({
       userId: validUser.userId,
       orderId: randomUUID(),
       deliverableId: randomUUID(),
       applicationIdea: applicationIdea,
       idealCustomer: idealCustomer,
-      problem: problem,
-      solution: solution
+      targetAnnualRevenue: targetAnnualRevenue
     });
 
-    const result = await publishOnePageValueTaskUseCase(parsedInput);
+    const result = await publishGrowthStrategyUseCase(parsedInput);
 
-    return OrchestratorHttpResponses.OnePageValueRequestReceived({
+    return OrchestratorHttpResponses.GrowthStrategyRequestReceived({
       body: result
     });
 

@@ -10,7 +10,7 @@ export const reviewWebsiteAdapter = async (event: SQSEvent) => {
 
     const results = await Promise.all(event.Records.map(async (record: SQSRecord) => {
         const message = JSON.parse(record.body);
-        const task = ReviewWebsiteInputSchema.parse(JSON.parse(message.Message));
+        const order = ReviewWebsiteInputSchema.parse(JSON.parse(message.Message));
         return await reviewWebsiteUsecase(task);
     }));
 

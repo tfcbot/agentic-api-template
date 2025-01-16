@@ -1,5 +1,5 @@
 import { SQSEvent, SQSRecord } from 'aws-lambda';
-import { RequestOnePageGrowthInput, RequestOnePageGrowthInputSchema } from '@orchestrator/metadata/agent-plane.schema';
+import { RequestGrowthStrategyInput, RequestGrowthStrategyInputSchema } from '@agent-plane/growth-strategist/metadata/growth-strategist.schema';
 import { createStrategyUsecase } from '@agent-plane/growth-strategist/usecases/create-strategy.usecase';
 
 export const createStrategyAdapter = async (event: SQSEvent) => {
@@ -10,8 +10,8 @@ export const createStrategyAdapter = async (event: SQSEvent) => {
 
     const results = await Promise.all(event.Records.map(async (record: SQSRecord) => {
         const message = JSON.parse(record.body);
-        const task = RequestOnePageGrowthInputSchema.parse(JSON.parse(message.Message));
-        return await createStrategyUsecase(task);
+        const order = RequestGrowthStrategyInputSchema.parse(JSON.parse(message.Message));
+        return await createStrategyUsecase(order);
     }));
 
     return results;

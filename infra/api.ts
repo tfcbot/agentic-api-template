@@ -1,6 +1,8 @@
 import { 
   usersTable,
-  websiteReviewTable
+  websiteReviewTable,
+  ordersTable,
+  deliverablesTable
  } from "./database";
 import { 
   clerkWebhookSecret,
@@ -11,7 +13,7 @@ import {
   stripeWebhookSecret,
   secrets
  } from "./secrets";
-import { tasksTopic } from "./topic";
+import { orderTopic } from "./topic";
 
 const BASE_DOMAIN = process.env.BASE_DOMAIN;
 
@@ -48,8 +50,8 @@ export const api = new sst.aws.ApiGatewayV2('BackendApi', {
   }); 
 
 const queues = []
-const topics = [tasksTopic]
-const tables = [usersTable, websiteReviewTable]
+const topics = [orderTopic]
+const tables = [usersTable, websiteReviewTable, ordersTable, deliverablesTable]
 
 
 const apiResources = [
@@ -87,16 +89,6 @@ api.route("POST /signup-webhook", {
 })
 
 
-api.route("GET /agents", {
-  link: [...apiResources],
-  handler: "./packages/functions/src/orchestrator.api.handleGetAgents",
-})
-
-api.route("GET /agent/{agentId}", {
-  link: [...apiResources],
-  handler: "./packages/functions/src/orchestrator.api.handleGetAgent",
-})
-
 api.route("POST /landing-page-review", {
   link: [...apiResources],
   handler: "./packages/functions/src/orchestrator.api.handleRequestWebsiteReview",
@@ -111,17 +103,17 @@ api.route("GET /landing-page-review/deliverables", {
 
 api.route("POST /one-page-growth", {
   link: [...apiResources],
-  handler: "./packages/functions/src/orchestrator.api.handleRequestOnePageGrowth",
+  handler: "./packages/functions/src/orchestrator.api.handleRequestGrowthStrategy",
 })
 
 api.route("POST /one-page-value", {
   link: [...apiResources],
-  handler: "./packages/functions/src/orchestrator.api.handleRequestOnePageValue",
+  handler: "./packages/functions/src/orchestrator.api.handleRequestValueStrategy",
 })
 
-api.route("POST /one-page-spec", {
+api.route("POST /one-page-tech", {
   link: [...apiResources],
-  handler: "./packages/functions/src/orchestrator.api.handleRequestOnePageSpec",
+  handler: "./packages/functions/src/orchestrator.api.handleRequestTechStrategy",
 })
 
 api.route("GET /orders", {
@@ -131,6 +123,6 @@ api.route("GET /orders", {
 
 api.route("GET /orders/deliverables/{orderId}", {
   link: [...apiResources],
-  handler: "./packages/functions/src/orchestrator.api.handleGetDeliverables",
+  handler: "./packages/functions/src/orchestrator.api.handleGetDeliverable",
 })
 

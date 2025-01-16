@@ -32,7 +32,7 @@ export const GetOrdersResponseBodySchema = z.object({
 });
 
 export const GetDeliverableResponseBodySchema = z.object({
-    deliverable: DeliverableResponseBodySchema,
+    data: DeliverableResponseBodySchema,
 });
 
 export type WebsiteReviewRequestReceivedResponseBody = z.infer<typeof WebsiteReviewRequestReceivedResponseBodySchema>;
@@ -55,11 +55,11 @@ export const OrchestratorHttpResponses = {
       createHttpResponse(HttpStatusCode.OK, params),
     GetDeliverableOutput: (params: HttpResponseParams<GetDeliverableResponseBody>) => 
       createHttpResponse(HttpStatusCode.OK, params),
-    OnePageGrowthRequestReceived: (params: HttpResponseParams<OrderResponseBody>) => 
-      createHttpResponse(HttpStatusCode.OK, params),
-    OnePageValueRequestReceived: (params: HttpResponseParams<OrderResponseBody>) => 
-      createHttpResponse(HttpStatusCode.OK, params),
-    OnePageTechRequestReceived: (params: HttpResponseParams<OrderResponseBody>) => 
-      createHttpResponse(HttpStatusCode.OK, params),
+    GrowthStrategyRequestReceived: (params: HttpResponseParams<OrderResponseBody>) => 
+      createHttpResponse(HttpStatusCode.CREATED, params),
+    ValueStrategyRequestReceived: (params: HttpResponseParams<OrderResponseBody>) => 
+      createHttpResponse(HttpStatusCode.CREATED, params),
+    TechStrategyRequestReceived: (params: HttpResponseParams<OrderResponseBody>) => 
+      createHttpResponse(HttpStatusCode.CREATED, params),
   };  
   

@@ -1,5 +1,5 @@
 import { websiteReviewTable, deliverablesTable, ordersTable } from "./database"
-import { openaiApiKey } from "./secrets"
+import { openaiApiKey, secrets } from "./secrets"
 
 
 const subscriberRole = new aws.iam.Role("QueueSubscriberRole", {
@@ -44,10 +44,22 @@ new aws.iam.RolePolicy("QueueSubscriberPolicy", {
 
 
 export const DLQ = new sst.aws.Queue("DLQ")
-export const websiteReviewQueue = new sst.aws.Queue("WebsiteReviewQueue")
-export const valueStrategyQueue = new sst.aws.Queue("ValueStrategyQueue")   
-export const techStrategyQueue = new sst.aws.Queue("TechStrategyQueue")
-export const growthStrategyQueue = new sst.aws.Queue("GrowthStrategyQueue")
+export const websiteReviewQueue = new sst.aws.Queue("WebsiteReviewQueue", {
+    fifo: true
+})
+export const valueStrategyQueue = new sst.aws.Queue("ValueStrategyQueue", {
+    fifo: true
+})   
+export const techStrategyQueue = new sst.aws.Queue("TechStrategyQueue", {
+    fifo: true
+})
+export const growthStrategyQueue = new sst.aws.Queue("GrowthStrategyQueue", {
+    fifo: true
+})
+
+export const orderManagerQueue = new sst.aws.Queue("OrderManagerQueue", {
+    fifo: true
+})
 
     
 websiteReviewQueue.subscribe({
@@ -108,5 +120,6 @@ growthStrategyQueue.subscribe({
             actions: ["dynamodb:*"], 
             resources: [deliverablesTable.arn, ordersTable.arn]
         }
-    ]
+    ], 
 })
+

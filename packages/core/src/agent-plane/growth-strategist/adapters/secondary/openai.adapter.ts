@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { Deliverable, DeliverableSchema, RequestOnePageGrowthInput } from "@agent-plane/growth-strategist/metadata/growth-strategist.schema";
+import { Deliverable, DeliverableSchema, RequestGrowthStrategyInput } from "@agent-plane/growth-strategist/metadata/growth-strategist.schema";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { Resource } from "sst";
 import { withRetry } from "@utils/tools/retry";
@@ -9,9 +9,10 @@ const client = new OpenAI({
   apiKey: Resource.OpenAIApiKey.value
 });
 
-const growthStrategySystemPrompt = () => `You are an expert growth strategist. Your task is to create a detailed one-page growth strategy based on the provided application idea, ideal customer profile, and target annual revenue. Focus on actionable steps and realistic growth tactics.`;
+const growthStrategySystemPrompt = () => `You are an expert growth strategist. Your order is to create a detailed one-page growth strategy based on the provided application idea, ideal customer profile, and target annual revenue. Focus on actionable steps and realistic growth tactics.`;
 
-export const createGrowthStrategy = async (input: RequestOnePageGrowthInput): Promise<Deliverable> => {
+export const createGrowthStrategy = async (input: RequestGrowthStrategyInput): Promise<Deliverable> => {
+  
   try {
     // Create an Assistant
     const assistant = await client.beta.assistants.create({
@@ -36,37 +37,42 @@ export const createGrowthStrategy = async (input: RequestOnePageGrowthInput): Pr
         Ideal Customer: ${input.idealCustomer}
         Target Annual Revenue: $${input.targetAnnualRevenue}`
     });
-
+    console.info("Added user message to thread");
     // Run the Assistant and wait for completion
     const run = await client.beta.threads.runs.create(thread.id, {
       assistant_id: assistant.id
     });
-
+    console.info("Created run");
     // Wait for completion with proper status handling
     const completedRun = await waitForRunCompletion(client, thread.id, run.id);
-    
+    console.info("Completed run");  
     // Get the messages
     const messages = await client.beta.threads.messages.list(thread.id);
+    console.info("Got messages");
     const lastMessage = messages.data[0];
+    console.info("Got last message");
 
     if (!lastMessage.content || lastMessage.content.length === 0) {
       throw new Error("No content generated from OpenAI API");
     }
-
+    console.info("Got content");
     // Check if the content is of type 'text'
     const textContent = lastMessage.content.find(c => c.type === 'text');
     if (!textContent) {
       throw new Error("No text content found in the response");
     }
-
+    console.info("Got text content");
     // Parse and validate the response
     const content = JSON.parse(textContent.text.value);
+    console.info("Parsed content");
     const validatedContent = await DeliverableSchema.parseAsync(content);
+    console.info("Validated content");
     
     // Cleanup
     await client.beta.assistants.del(assistant.id);
+    console.info("Deleted assistant");
     await client.beta.threads.del(thread.id);
-
+    console.info("Deleted thread");
     return validatedContent;
   } catch (error) {
     console.error('Error generating growth strategy:', error);

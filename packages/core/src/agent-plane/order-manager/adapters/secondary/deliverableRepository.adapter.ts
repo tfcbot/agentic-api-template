@@ -16,15 +16,19 @@ class DeliverableRepository implements IDeliverableRepository {
     try {
       const params = {
         TableName: Resource.Deliverables.tableName,
-        Key: {
-          deliverableId: input.deliverableId
-        }
+        IndexName: "OrderIdIndex",
+        KeyConditionExpression: "orderId = :orderId",
+        ExpressionAttributeValues: {
+          ":orderId": input.orderId
+        },
       };
-      const deliverable: GetCommandOutput = await this.dbClient.send(new GetCommand(params));
-      if (!deliverable.Item) {
+      
+      const result = await this.dbClient.send(new QueryCommand(params));
+      
+      if (!result.Items || result.Items.length === 0) {
         throw new Error("Deliverable not found");
       }
-      return deliverable.Item as GetDeliverableOutput;
+      return result.Items[0] as GetDeliverableOutput;
     } catch (error) {
       console.error("Error getting deliverable:", error);
       throw new Error("Failed to get deliverable");

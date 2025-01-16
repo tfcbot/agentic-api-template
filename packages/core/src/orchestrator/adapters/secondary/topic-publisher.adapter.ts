@@ -1,6 +1,5 @@
 import { SNSClient, PublishCommand } from "@aws-sdk/client-sns"
-import { Task } from "@orchestrator/metadata/task.schema";
-import { Topic } from "@orchestrator/metadata/task.enum"
+import { Order, Topic } from "@orchestrator/metadata/order.schema"
 
 
 import { Resource } from "sst";
@@ -12,22 +11,25 @@ export class TopicPublisher {
   constructor() {
     this.snsClient = new SNSClient({});
     this.topicArns = {
-      [Topic.tasks]: Resource.TasksTopic.arn,
+      [Topic.orders]: Resource.OrderTopic.arn,
     };
   }
 
-  async publishTask(task: Task): Promise<void> {
-    const topicArn = this.topicArns[task.topic];
+  async publishOrder(order: Order): Promise<void> {
+    const topicArn = this.topicArns[order.topic];
+    console.log("--- Publishing order to topic ---");
     try {
       await this.snsClient.send(new PublishCommand({
         TopicArn: topicArn,
-        Message: JSON.stringify(task.payload),
+        Message: JSON.stringify(order.payload),
         MessageAttributes: {
           queue: {
             DataType: 'String',
-            StringValue: task.queue
+            StringValue: order.queue
           }
-        }
+        }, 
+        MessageGroupId: order.queue,
+        MessageDeduplicationId: order.payload.orderId
       }));
     } catch (error) {
       console.error('Error publishing to topic:', error);

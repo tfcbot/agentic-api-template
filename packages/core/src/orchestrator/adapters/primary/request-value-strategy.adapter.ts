@@ -3,12 +3,12 @@ import { ValidUser } from '@utils/metadata/saas-identity.schema';
 import { createError, handleError } from '@utils/tools/custom-error';
 import { SaaSIdentityVendingMachine } from '@utils/tools/saas-identity';
 import { HttpStatusCode } from '@utils/tools/http-status';
-import { RequestOnePageGrowthInputSchema } from "@orchestrator/metadata/agent-plane.schema"
-import { publishOnePageGrowthUseCase } from '@orchestrator/usecases/request-one-page-growth.usecase';
-import { OrchestratorHttpResponses } from 'src/orchestrator/metadata/http-responses.schema';
+import { RequestValueStrategyInputSchema } from "@orchestrator/metadata/agent-plane.schema"
+import { publishValueStrategyUseCase } from '@orchestrator/usecases/request-value-strategy.usecase';
+import { OrchestratorHttpResponses } from '@orchestrator/metadata/http-responses.schema';
 import { randomUUID } from 'crypto';
 
-export const requestOnePageGrowthAdapter = async (
+export const requestValueStrategyAdapter = async (
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> => {
   try {
@@ -23,23 +23,25 @@ export const requestOnePageGrowthAdapter = async (
       throw createError(HttpStatusCode.BAD_REQUEST, "Missing request body");
     }
    
-    const { applicationIdea, idealCustomer, targetAnnualRevenue } = JSON.parse(event.body);
+    const { applicationIdea, idealCustomer, problem, solution } = JSON.parse(event.body);
     
-    if (!applicationIdea || !idealCustomer || !targetAnnualRevenue) {
+    if (!applicationIdea || !idealCustomer || !problem || !solution) {
       throw createError(HttpStatusCode.BAD_REQUEST, "Missing required fields");
     }
 
-    const parsedInput = RequestOnePageGrowthInputSchema.parse({
+    const parsedInput = RequestValueStrategyInputSchema.parse({
       userId: validUser.userId,
       orderId: randomUUID(),
+      deliverableId: randomUUID(),
       applicationIdea: applicationIdea,
       idealCustomer: idealCustomer,
-      targetAnnualRevenue: targetAnnualRevenue
+      problem: problem,
+      solution: solution
     });
 
-    const result = await publishOnePageGrowthUseCase(parsedInput);
+    const result = await publishValueStrategyUseCase(parsedInput);
 
-    return OrchestratorHttpResponses.OnePageGrowthRequestReceived({
+    return OrchestratorHttpResponses.ValueStrategyRequestReceived({
       body: result
     });
 

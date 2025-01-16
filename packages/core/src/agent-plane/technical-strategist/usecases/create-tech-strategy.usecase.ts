@@ -1,18 +1,19 @@
-import { Deliverable, RequestOnePageSpecInput } from 'src/agent-plane/technical-strategist/metadata/technical-architect.schema'
-import { runTechStrategy } from 'src/agent-plane/technical-strategist/adapters/secondary/openai.adapter';
-import { deliverableRepository } from 'src/agent-plane/technical-strategist/adapters/secondary/datastore.adapter';
+import { Deliverable, DeliverableDTO, RequestTechStrategyInput } from '@agent-plane/technical-strategist/metadata/technical-architect.schema'
+import { runTechStrategy } from '@agent-plane/technical-strategist/adapters/secondary/openai.adapter';
+import { deliverableRepository } from '@agent-plane/technical-strategist/adapters/secondary/datastore.adapter';
 import { randomUUID } from 'crypto';
 import { Message } from '@utils/metadata/message.schema';
 
-export const createTechStrategyUsecase = async (input: RequestOnePageSpecInput): Promise<Message> => {
-  console.info("Creating technical strategy for User: ", input.userId);
+export const createTechStrategyUsecase = async (input: RequestTechStrategyInput): Promise<Message> => {
+  console.info("--- Creating Technical Strategy via Usecase ---");
 
   try {
     const result = await runTechStrategy(input);
-    const deliverable: Deliverable = {
+    const deliverable: DeliverableDTO = {
       userId: input.userId,
-      deliverableId: randomUUID(),
-      deliverableContent: result
+      orderId: input.orderId,
+      deliverableId: input.deliverableId,
+      ...result
     };
     await deliverableRepository.saveDeliverable(deliverable);
 

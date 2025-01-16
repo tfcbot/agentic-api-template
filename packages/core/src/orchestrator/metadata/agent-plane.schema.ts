@@ -75,6 +75,7 @@ export const OrderSchema = z.object({
   orderStatus: z.string(),
   orderCreatedAt: z.string(),
   orderUpdatedAt: z.string(),
+  deliverableId: z.string(),
 });
 
 export const GetOrdersInputSchema = z.object({
@@ -87,7 +88,6 @@ export const GetOrdersOutputSchema = z.object({
 
 export const GetDeliverableInputSchema = z.object({
   orderId: z.string(),
-  deliverableId: z.string()
 });
 
 
@@ -97,27 +97,26 @@ export const GetDeliverableOutputSchema = z.object({
 });
 
 
-export const RequestOnePageTechInputSchema = z.object({
-  userId: z.string(),
+export const BasePayloadSchema = z.object({
   orderId: z.string(),
+  userId: z.string(),
+  deliverableId: z.string(),
+});
+
+export const RequestTechStrategyInputSchema = BasePayloadSchema.extend({
   useCases: z.string(),
   nonFunctional: z.string(),
 });
 
 
-export const RequestOnePageValueInputSchema = z.object({
-  userId: z.string(),
-  orderId: z.string(),
-  deliverableId: z.string(),
+export const RequestValueStrategyInputSchema = BasePayloadSchema.extend({
   applicationIdea: z.string(),
   idealCustomer: z.string(),
   problem: z.string(),
   solution: z.string()
 });
 
-export const RequestOnePageGrowthInputSchema = z.object({
-  userId: z.string(),
-  orderId: z.string(),
+export const RequestGrowthStrategyInputSchema = BasePayloadSchema.extend({
   applicationIdea: z.string(),
   idealCustomer: z.string(),
   targetAnnualRevenue: z.number()
@@ -134,9 +133,9 @@ export type ReviewWebsiteOutput = z.infer<typeof ReviewWebsiteOutputSchema>;
 export type GetWebsiteReviewsInput = z.infer<typeof GetWebsiteReviewsInputSchema>;
 export type GetWebsiteReviewsOutput = z.infer<typeof GetWebsiteReviewsOutputSchema>;
 export type WebsiteReview = z.infer<typeof WebsiteReviewSchema>;
-export type RequestOnePageGrowthInput = z.infer<typeof RequestOnePageGrowthInputSchema>;
-export type RequestOnePageValueInput = z.infer<typeof RequestOnePageValueInputSchema>;
-export type RequestOnePageTechInput = z.infer<typeof RequestOnePageTechInputSchema>;
+export type RequestGrowthStrategyInput = z.infer<typeof RequestGrowthStrategyInputSchema>;
+export type RequestValueStrategyInput = z.infer<typeof RequestValueStrategyInputSchema>;
+export type RequestTechStrategyInput = z.infer<typeof RequestTechStrategyInputSchema>;
 export type GetDeliverableInput = z.infer<typeof GetDeliverableInputSchema>;
 export type GetDeliverableOutput = z.infer<typeof GetDeliverableOutputSchema>;
 export type GetOrdersInput = z.infer<typeof GetOrdersInputSchema>;

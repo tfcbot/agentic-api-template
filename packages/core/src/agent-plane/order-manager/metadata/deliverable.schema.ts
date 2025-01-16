@@ -2,7 +2,6 @@ import { z } from 'zod';
 
 export const GetDeliverableInputSchema = z.object({
     orderId: z.string(),
-    deliverableId: z.string()
   });
   
   

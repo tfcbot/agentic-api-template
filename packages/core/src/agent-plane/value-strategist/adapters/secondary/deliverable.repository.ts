@@ -11,7 +11,7 @@ class DeliverableRepository implements IDeliverableRepository {
   constructor(private dbClient: DynamoDBDocumentClient) {}
 
   async saveDeliverable(deliverable: DeliverableDTO): Promise<void> {
-    console.info("Saving deliverable to database via DeliverableRepository");
+    console.info("--- Saving Value Strategy Deliverable ---");
     try {
       const params = {
         TableName: Resource.Deliverables.tableName,

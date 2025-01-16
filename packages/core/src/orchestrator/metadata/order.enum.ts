@@ -12,5 +12,5 @@ export enum Queue {
 }
 
 export enum Topic {
-    tasks = 'tasks',
+    orders = 'orders',
 }

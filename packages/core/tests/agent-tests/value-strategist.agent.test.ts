@@ -17,7 +17,10 @@ describe('Value Strategist Agent', () => {
   };
 
   it('should generate a value strategy', async () => {
-    const strategy = await runValueStrategy(testInput);
+    const strategy = await runValueStrategy({
+      ...testInput,
+      userId: '123'
+    });
     console.log(strategy);
     // Verify the strategy structure matches the schema
     expect(() => ValueStrategySchema.parse(strategy.deliverableContent)).not.toThrow();

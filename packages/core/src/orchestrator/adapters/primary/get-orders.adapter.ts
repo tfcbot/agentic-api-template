@@ -17,11 +17,6 @@ export const getOrdersAdapter = async (event: APIGatewayProxyEventV2): Promise<A
     }
 
     // Get orderId from path parameters
-    const orderId = event.pathParameters?.orderId;
-    if (!orderId) {
-      throw createError(HttpStatusCode.BAD_REQUEST, "Missing order id");
-    }
-
     const validatedInput = GetOrdersInputSchema.parse({ 
       userId: validUser.userId 
     });

@@ -3,12 +3,12 @@ import { ValidUser } from '@utils/metadata/saas-identity.schema';
 import { createError, handleError } from '@utils/tools/custom-error';
 import { SaaSIdentityVendingMachine } from '@utils/tools/saas-identity';
 import { HttpStatusCode } from '@utils/tools/http-status';
-import { RequestOnePageTechInputSchema } from "@orchestrator/metadata/agent-plane.schema"
-import { publishOnePageTechTaskUseCase } from '@orchestrator/usecases/request-one-page-tech.usecase'
+import { RequestTechStrategyInputSchema } from "@orchestrator/metadata/agent-plane.schema"
+import { publishTechStrategyUseCase } from '@orchestrator/usecases/request-tech-strategy.usecase'
 import { OrchestratorHttpResponses } from '@orchestrator/metadata/http-responses.schema';
 import { randomUUID } from 'crypto';
 
-export const requestOnePageTechAdapter = async (
+export const requestTechStrategyAdapter = async (
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> => {
   try {
@@ -29,16 +29,17 @@ export const requestOnePageTechAdapter = async (
       throw createError(HttpStatusCode.BAD_REQUEST, "Missing required fields");
     }
 
-    const parsedInput = RequestOnePageTechInputSchema.parse({
+    const parsedInput = RequestTechStrategyInputSchema.parse({
       userId: validUser.userId,
       orderId: randomUUID(),
+      deliverableId: randomUUID(),
       useCases: useCases,
       nonFunctional: nonFunctional
     });
 
-    const result = await publishOnePageTechTaskUseCase(parsedInput);
+    const result = await publishTechStrategyUseCase(parsedInput);
 
-    return OrchestratorHttpResponses.OnePageTechRequestReceived({
+    return OrchestratorHttpResponses.TechStrategyRequestReceived({
       body: result
     });
 

@@ -36,10 +36,18 @@ export const agentsTable = new aws.dynamodb.Table("Agents", {
 
 export const ordersTable = new aws.dynamodb.Table("Orders", {
     attributes: [
-        {name: "orderId", type: "S"}
+        {name: "orderId", type: "S"},
+        {name: "userId", type: "S"}
     ],
     hashKey: "orderId",
     billingMode: "PAY_PER_REQUEST",
+    globalSecondaryIndexes: [
+        {
+            hashKey: "userId",
+            name: "UserIdIndex",
+            projectionType: "ALL"
+        }
+    ]
 })
 
 export const deliverablesTable = new aws.dynamodb.Table("Deliverables", {
@@ -52,8 +60,10 @@ export const deliverablesTable = new aws.dynamodb.Table("Deliverables", {
     globalSecondaryIndexes: [
         {
             hashKey: "orderId",
-            name: "OrderDeliverables",
+            name: "OrderIdIndex",
             projectionType: "ALL"
         }
-    ]
+    ],
+    streamEnabled: true,
+    streamViewType: "NEW_AND_OLD_IMAGES"
 })

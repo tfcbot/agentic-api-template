@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { Deliverable, DeliverableSchema, RequestOnePageSpecInput } from "@agent-plane/technical-strategist/metadata/technical-architect.schema";
+import { Deliverable, DeliverableSchema, RequestTechStrategyInput } from "@agent-plane/technical-strategist/metadata/technical-architect.schema";
 import { Resource } from "sst";
 import { withRetry } from "@utils/tools/retry";
 import { techStrategySystemPrompt } from "../../metadata/technical-strategist.prompt";
@@ -10,7 +10,8 @@ const client = new OpenAI({
   apiKey: Resource.OpenAIApiKey.value
 });
 
-export const createTechStrategy = async (input: RequestOnePageSpecInput): Promise<Deliverable> => {
+export const createTechStrategy = async (input: RequestTechStrategyInput): Promise<Deliverable> => {
+  console.info("--- Creating Technical Strategy via Agent ---");
   try {
     // Create an Assistant
     const assistant = await client.beta.assistants.create({
@@ -54,6 +55,7 @@ export const createTechStrategy = async (input: RequestOnePageSpecInput): Promis
     const validatedContent = await DeliverableSchema.parseAsync(content);
     
     // Cleanup
+    console.info("--- Cleaning Up Agent Instance ---");
     await client.beta.assistants.del(assistant.id);
     await client.beta.threads.del(thread.id);
 

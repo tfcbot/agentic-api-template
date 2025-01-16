@@ -1,16 +1,17 @@
-import { DeliverableDTO, RequestOnePageValueInput } from '@agent-plane/value-strategist/metadata/value-strategist.schema'
+import { DeliverableDTO, RequestValueStrategyInput } from '@agent-plane/value-strategist/metadata/value-strategist.schema'
 import { runValueStrategy } from '@agent-plane/value-strategist/adapters/secondary/openai.adapter';
 import { Message } from '@utils/metadata/message.schema';
 import { randomUUID } from 'crypto';
 import { deliverableRepository } from '@agent-plane/value-strategist/adapters/secondary/datasotre.adapter';
 
-export const createValueSpecUsecase = async (input: RequestOnePageValueInput): Promise<Message> => {
-  console.info("Creating value strategy for User: ", input.userId);
-
+export const createValueStrategyUsecase = async (input: RequestValueStrategyInput): Promise<Message> => {
+  console.log("--- Create Value Strategy Usecase ---");
   try {
     const deliverableContent = await runValueStrategy(input);
     const deliverable: DeliverableDTO = {
       userId: input.userId,
+      orderId: input.orderId,
+      deliverableId: input.deliverableId,
       ...deliverableContent
     };
     await deliverableRepository.saveDeliverable(deliverable);

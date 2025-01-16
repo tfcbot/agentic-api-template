@@ -4,6 +4,8 @@ import { CreditsAdapter, creditsAdapter } from '@control-plane/billing/adapters/
 import { GetRemainingCreditsOutput, GetRemainingCreditsInput } from '@control-plane/billing/metadata/credits.schema';
 import { getOrdersAdapter, GetOrdersAdapter } from '@agent-plane/order-manager/adapters/primary/get-orders.adapter';
 import { getDeliverableAdapter, GetDeliverableAdapter } from '@agent-plane/order-manager/adapters/primary/get-deliverable.adapter';
+import { SaveOrderOutput, SaveOrderInput } from '@agent-plane/order-manager/metadata/order.schema';
+import { SaveOrderAdapter, saveOrderAdapter } from '@agent-plane/order-manager/adapters/primary/save-order.adapter';
 
 export interface IAgentPlaneAdapter {
   getWebsiteReviews(input: GetWebsiteReviewsInput): Promise<GetWebsiteReviewsOutput>;
@@ -17,12 +19,15 @@ class AgentPlaneAdapter implements IAgentPlaneAdapter {
   private creditsAdapter: CreditsAdapter;
   private getOrdersAdapter: GetOrdersAdapter;
   private getDeliverableAdapter: GetDeliverableAdapter;
+  private saveOrderAdapter: SaveOrderAdapter;
+
 
   constructor() {
     this.getWebsiteReviewsAdapter = new GetWebsiteReviewsAdapter();
     this.creditsAdapter = creditsAdapter;
     this.getOrdersAdapter = getOrdersAdapter;
     this.getDeliverableAdapter = getDeliverableAdapter;
+    this.saveOrderAdapter = saveOrderAdapter;
   }
 
 
@@ -40,6 +45,10 @@ class AgentPlaneAdapter implements IAgentPlaneAdapter {
 
   async getDeliverable(input: GetDeliverableInput): Promise<GetDeliverableOutput> {
     return this.getDeliverableAdapter.execute(input);
+  }
+
+  async saveOrder(input: SaveOrderInput): Promise<SaveOrderOutput> {
+    return this.saveOrderAdapter.execute(input);
   }
 }
 

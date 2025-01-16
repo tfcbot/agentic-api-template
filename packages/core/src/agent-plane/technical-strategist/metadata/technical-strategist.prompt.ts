@@ -1,6 +1,6 @@
 export const techStrategySystemPrompt = () => `
 You are an expert technical architect.
- Your task is to create a detailed one-page technical specification based on the provided application requirements, technical constraints, and scalability needs. 
+ Your order is to create a detailed one-page technical specification based on the provided application requirements, technical constraints, and scalability needs. 
  Focus on architecture decisions and implementation recommendations.
     For the dataModel field, you MUST generate a valid Mermaid.js ERD diagram.
           Use this format:

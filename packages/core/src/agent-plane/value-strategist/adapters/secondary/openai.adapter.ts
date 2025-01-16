@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { Deliverable, DeliverableSchema, RequestOnePageValueInput } from "@agent-plane/value-strategist/metadata/value-strategist.schema";
+import { Deliverable, DeliverableSchema, RequestValueStrategyInput } from "@agent-plane/value-strategist/metadata/value-strategist.schema";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { Resource } from "sst";
 import { withRetry } from "@utils/tools/retry";
@@ -10,7 +10,8 @@ const client = new OpenAI({
   apiKey: Resource.OpenAIApiKey.value
 });
 
-export const createValueStrategy = async (input: RequestOnePageValueInput): Promise<Deliverable> => {
+export const createValueStrategy = async (input: RequestValueStrategyInput): Promise<Deliverable> => {
+ console.info("--- Running Agent ---");
   try {
     // Create an Assistant
     const assistant = await client.beta.assistants.create({

@@ -14,8 +14,13 @@ export const ValueStrategySchema = z.object({
   second_order: z.string(),
 });
 
+export const BasePayloadSchema = z.object({
+  userId: z.string(),
+  orderId: z.string(),
+  deliverableId: z.string(),
+});
 
-export const RequestOnePageValueInputSchema = z.object({
+export const RequestValueStrategyInputSchema = BasePayloadSchema.extend({
   applicationIdea: z.string(),
   idealCustomer: z.string(),
   problem: z.string(),
@@ -24,24 +29,20 @@ export const RequestOnePageValueInputSchema = z.object({
 
 
 export const DeliverableSchema = z.object({
-  deliverableId: z.string(),
   deliverableContent: ValueStrategySchema,
 });
 
 
-export const DeliverableDTO = z.object({
-  userId: z.string(),
-  deliverableId: z.string(),
+export const DeliverableDTO = BasePayloadSchema.extend({
   deliverableContent: ValueStrategySchema
 });
 
-export const RequestOnePageValueOutputSchema = z.object({
+export const RequestValueStrategyOutputSchema = z.object({
   value: z.string(),
-  deliverableId: z.string(),
 });
 
-export type RequestOnePageValueInput = z.infer<typeof RequestOnePageValueInputSchema>;
-export type RequestOnePageValueOutput = z.infer<typeof RequestOnePageValueOutputSchema>;
+export type RequestValueStrategyInput = z.infer<typeof RequestValueStrategyInputSchema>;
+export type RequestValueStrategyOutput = z.infer<typeof RequestValueStrategyOutputSchema>;
 export type Deliverable = z.infer<typeof DeliverableSchema>;
 export type DeliverableDTO = z.infer<typeof DeliverableDTO>;
 
