@@ -23,7 +23,7 @@ export const getOrdersAdapter = async (event: APIGatewayProxyEventV2): Promise<A
 
     const orders = await getOrdersUseCase(validatedInput);
 
-    return OrchestratorHttpResponses.OrderCreated({
+    return OrchestratorHttpResponses.GetOrdersResponse({
       body: orders
     });
 

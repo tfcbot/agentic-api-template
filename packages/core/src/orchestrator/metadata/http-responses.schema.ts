@@ -28,7 +28,7 @@ export const DeliverableResponseBodySchema = z.object({
 });
 
 export const GetOrdersResponseBodySchema = z.object({
-    orders: z.array(OrderResponseBodySchema),
+    data: z.array(OrderResponseBodySchema),
 });
 
 export const GetDeliverableResponseBodySchema = z.object({
@@ -53,7 +53,9 @@ export const OrchestratorHttpResponses = {
       createHttpResponse(HttpStatusCode.OK, params),
     OrderCreated: (params: HttpResponseParams<GetOrdersResponseBody>) => 
       createHttpResponse(HttpStatusCode.OK, params),
-    GetDeliverableOutput: (params: HttpResponseParams<GetDeliverableResponseBody>) => 
+    GetDeliverableResponse: (params: HttpResponseParams<GetDeliverableResponseBody>) => 
+      createHttpResponse(HttpStatusCode.OK, params),
+    GetOrdersResponse: (params: HttpResponseParams<GetOrdersResponseBody>) => 
       createHttpResponse(HttpStatusCode.OK, params),
     GrowthStrategyRequestReceived: (params: HttpResponseParams<OrderResponseBody>) => 
       createHttpResponse(HttpStatusCode.CREATED, params),

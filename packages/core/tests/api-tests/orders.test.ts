@@ -1,4 +1,4 @@
-import { OrderResponseBody, DeliverableResponseBody, GetDeliverableResponseBody } from '@orchestrator/metadata/http-responses.schema';
+import { OrderResponseBody, DeliverableResponseBody, GetDeliverableResponseBody, GetOrdersResponseBody } from '@orchestrator/metadata/http-responses.schema';
 
 const API_URL = process.env.API_URL;
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
@@ -17,10 +17,10 @@ describe('Orders API Tests', () => {
     });
 
     expect(response.status).toBe(200);
-    const data = await response.json() as { orders: OrderResponseBody[] };
-    expect(Array.isArray(data.orders)).toBe(true);
-    if (data.orders.length > 0) {
-      const order = data.orders[0];
+    const parsedOrdersResponse = await response.json() as GetOrdersResponseBody;
+    expect(Array.isArray(parsedOrdersResponse.data)).toBe(true);
+    if (parsedOrdersResponse.data.length > 0) {
+      const order = parsedOrdersResponse.data[0];
       expect(order).toHaveProperty('orderId');
       expect(order).toHaveProperty('userId');
       expect(order).toHaveProperty('orderStatus');
@@ -35,8 +35,8 @@ describe('Orders API Tests', () => {
       method: 'GET',
       headers,
     });
-    const orders = await ordersResponse.json() as { orders: OrderResponseBody[] };
-    const orderId = orders.orders[0].orderId;
+    const parsedOrdersResponse = await ordersResponse.json() as GetOrdersResponseBody;
+    const orderId = parsedOrdersResponse.data[0].orderId;
 
     if (orderId) {
       const response = await fetch(`${API_URL}/orders/deliverables/${orderId}`, {

@@ -89,29 +89,18 @@ api.route("POST /signup-webhook", {
 })
 
 
-api.route("POST /landing-page-review", {
-  link: [...apiResources],
-  handler: "./packages/functions/src/orchestrator.api.handleRequestWebsiteReview",
-});
 
-
-api.route("GET /landing-page-review/deliverables", {
-  link: [...apiResources], 
-  handler: "./packages/functions/src/orchestrator.api.handleGetUserWebsiteReviews",
-})
-
-
-api.route("POST /one-page-growth", {
+api.route("POST /growth-strategy", {
   link: [...apiResources],
   handler: "./packages/functions/src/orchestrator.api.handleRequestGrowthStrategy",
 })
 
-api.route("POST /one-page-value", {
+api.route("POST /value-strategy", {
   link: [...apiResources],
   handler: "./packages/functions/src/orchestrator.api.handleRequestValueStrategy",
 })
 
-api.route("POST /one-page-tech", {
+api.route("POST /tech-strategy", {
   link: [...apiResources],
   handler: "./packages/functions/src/orchestrator.api.handleRequestTechStrategy",
 })

@@ -19,7 +19,7 @@ export const GetOrdersInputSchema = z.object({
 });
 
 export const GetOrdersOutputSchema = z.object({
-    orders: z.array(OrderSchema)
+    data: z.array(OrderSchema)
 });
 
 export const SaveOrderInputSchema = OrderSchema.extend({

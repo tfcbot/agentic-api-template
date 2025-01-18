@@ -26,7 +26,7 @@ export const getDeliverableAdapter = async (event: APIGatewayProxyEventV2): Prom
 
     const deliverable = await getDeliverableUseCase(validatedInput);    
 
-    return OrchestratorHttpResponses.GetDeliverableOutput({
+    return OrchestratorHttpResponses.GetDeliverableResponse({
       body: {
        data: deliverable
       }

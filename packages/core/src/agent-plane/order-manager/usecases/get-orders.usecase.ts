@@ -7,7 +7,7 @@ export const getOrdersUseCase = async (input: GetOrdersInput): Promise<GetOrders
 
   try {
     const orders = await orderRepository.getOrders(input.userId);
-    return { orders };
+    return { data: orders };
   } catch (error) {
     console.error('Error retrieving orders:', error);
     throw new Error('Failed to retrieve orders');
