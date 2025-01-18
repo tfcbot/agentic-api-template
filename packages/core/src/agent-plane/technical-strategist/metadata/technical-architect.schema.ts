@@ -16,22 +16,66 @@ const validateMermaid = (value: string): boolean => {
 };
 
 export const TechStrategySchema = z.object({
-  useCases: z.array(z.string()),
-  nonFunctional: z.array(z.string()),
-  dataModel: z.string().refine(
-    (val) => validateMermaid(val),
-    { message: "Invalid Mermaid ERD diagram" }
-  ),
-  domainModel: z.string().refine(
-    (val) => validateMermaid(val),
-    { message: "Invalid Mermaid class diagram" }
-  ),
-  servicesDesign: z.string().refine(
-    (val) => validateMermaid(val),
-    { message: "Invalid Mermaid service diagram" }
-  ),
-  apiDesign: z.string(),
-  deployment: z.string()
+  sections: z.object({
+    useCases: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('list'),
+      description: z.string().optional(),
+      data: z.array(z.string())
+    }),
+    nonFunctional: z.object({
+      id: z.string(), 
+      label: z.string(),
+      type: z.literal('list'),
+      description: z.string().optional(),
+      data: z.array(z.string())
+    }),
+    dataModel: z.object({
+      id: z.string(),
+      label: z.string(), 
+      type: z.literal('diagram'),
+      description: z.string().optional(),
+      data: z.string().refine(
+        (val) => validateMermaid(val),
+        { message: "Invalid Mermaid ERD diagram" }
+      )
+    }),
+    domainModel: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('diagram'),
+      description: z.string().optional(),
+      data: z.string().refine(
+        (val) => validateMermaid(val),
+        { message: "Invalid Mermaid class diagram" }
+      )
+    }),
+    servicesDesign: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('diagram'),
+      description: z.string().optional(),
+      data: z.string().refine(
+        (val) => validateMermaid(val),
+        { message: "Invalid Mermaid service diagram" }
+      )
+    }),
+    apiDesign: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string()
+    }),
+    deployment: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string()
+    })
+  })
 });
 
 export const BasePayloadSchema = z.object({
@@ -52,10 +96,12 @@ export const RequestTechStrategyOutputSchema = z.object({
 
 
 export const DeliverableSchema = z.object({
+  deliverableTitle: z.string(),
   deliverableContent: TechStrategySchema,
 });
 
 export const DeliverableDTOSchema = BasePayloadSchema.extend({
+  deliverableTitle: z.string(),
   deliverableContent: TechStrategySchema,
 });
 

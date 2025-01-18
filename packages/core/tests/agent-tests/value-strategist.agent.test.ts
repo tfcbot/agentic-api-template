@@ -19,21 +19,23 @@ describe('Value Strategist Agent', () => {
   it('should generate a value strategy', async () => {
     const strategy = await runValueStrategy({
       ...testInput,
-      userId: '123'
+      userId: '123',
+      orderId: '123',
+      deliverableId: '123'
     });
     console.log(strategy);
     // Verify the strategy structure matches the schema
     expect(() => ValueStrategySchema.parse(strategy.deliverableContent)).not.toThrow();
 
     // Verify required sections
-    expect(strategy.deliverableContent.value_proposition).toBeDefined();
-    expect(strategy.deliverableContent.profit_proposition).toBeDefined();
-    expect(strategy.deliverableContent.people_proposition).toBeDefined();
-    expect(strategy.deliverableContent.core_benefit).toBeDefined();
-    expect(strategy.deliverableContent.core_feature).toBeDefined();
-    expect(strategy.deliverableContent.solution_overview).toBeDefined();
-    expect(strategy.deliverableContent.benefit_breakdown).toBeDefined();
-    expect(strategy.deliverableContent.first_order).toBeDefined();
-    expect(strategy.deliverableContent.second_order).toBeDefined();
-  }, 30000);
+    expect(strategy.deliverableContent.sections.valueProposition).toBeDefined();
+    expect(strategy.deliverableContent.sections.profitProposition).toBeDefined();
+    expect(strategy.deliverableContent.sections.peopleProposition).toBeDefined();
+    expect(strategy.deliverableContent.sections.coreBenefit).toBeDefined();
+    expect(strategy.deliverableContent.sections.coreFeature).toBeDefined();
+    expect(strategy.deliverableContent.sections.solutionOverview).toBeDefined();
+    expect(strategy.deliverableContent.sections.benefitBreakdown).toBeDefined();
+    expect(strategy.deliverableContent.sections.firstOrder).toBeDefined();
+      expect(strategy.deliverableContent.sections.secondOrder).toBeDefined();
+  }, 100000);
 }); 

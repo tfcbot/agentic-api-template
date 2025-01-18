@@ -12,6 +12,7 @@ describe('Growth Strategist Agent', () => {
   const testInput = {
     userId: 'test_user_123',
     orderId: 'test_order_123',
+    deliverableId: 'test_deliverable_123',
     applicationIdea: 'A SaaS platform for managing remote teams',
     idealCustomer: 'Small to medium-sized tech companies',
     targetAnnualRevenue: 1000000
@@ -24,10 +25,10 @@ describe('Growth Strategist Agent', () => {
     expect(() => GrowthStrategySchema.parse(strategy.deliverableContent)).not.toThrow();
 
     // Verify required sections
-    expect(strategy.deliverableContent.distributionChannels).toBeDefined();
-    expect(strategy.deliverableContent.customerJourney).toBeDefined();
-    expect(strategy.deliverableContent.firstTenCustomers).toBeDefined();
-    expect(strategy.deliverableContent.firstHundredCustomers).toBeDefined();
-    expect(strategy.deliverableContent.growthStrategies).toBeDefined();
-  }, 30000);
+    expect(strategy.deliverableContent.sections.distributionChannels).toBeDefined();
+    expect(strategy.deliverableContent.sections.customerJourney).toBeDefined();
+    expect(strategy.deliverableContent.sections.firstTenCustomers).toBeDefined();
+    expect(strategy.deliverableContent.sections.firstHundredCustomers).toBeDefined();
+    expect(strategy.deliverableContent.sections.growthStrategies).toBeDefined();
+  }, 100000);
 }); 

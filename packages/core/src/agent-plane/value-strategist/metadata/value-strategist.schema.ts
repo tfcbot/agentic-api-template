@@ -1,17 +1,85 @@
 import { z } from "zod";
 
 export const ValueStrategySchema = z.object({
-  ideal_customer: z.string(),
-  problem: z.string(),
-  value_proposition: z.string(),
-  profit_proposition: z.string(),
-  people_proposition: z.string(),
-  core_benefit: z.string(),
-  core_feature: z.string(),
-  solution_overview: z.string(),
-  benefit_breakdown: z.array(z.string()),
-  first_order: z.string(),
-  second_order: z.string(),
+  sections: z.object({
+    idealCustomer: z.object({
+      id: z.string(),
+      label: z.string(), 
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string()
+    }),
+    problem: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('text'), 
+      description: z.string().optional(),
+      data: z.string()
+    }),
+    valueProposition: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string()
+    }),
+    profitProposition: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string()
+    }),
+    peopleProposition: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string()
+    }),
+    coreBenefit: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string()
+    }),
+    coreFeature: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string()
+    }),
+    solutionOverview: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string()
+    }),
+    benefitBreakdown: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('list'),
+      description: z.string().optional(),
+      data: z.array(z.string())
+    }),
+    firstOrder: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string()
+    }),
+    secondOrder: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string()
+    })
+  })
 });
 
 export const BasePayloadSchema = z.object({
@@ -29,11 +97,12 @@ export const RequestValueStrategyInputSchema = BasePayloadSchema.extend({
 
 
 export const DeliverableSchema = z.object({
+  deliverableTitle: z.string(),
   deliverableContent: ValueStrategySchema,
 });
 
 
-export const DeliverableDTO = BasePayloadSchema.extend({
+export const DeliverableDTOSchema = BasePayloadSchema.extend({
   deliverableContent: ValueStrategySchema
 });
 
@@ -44,5 +113,5 @@ export const RequestValueStrategyOutputSchema = z.object({
 export type RequestValueStrategyInput = z.infer<typeof RequestValueStrategyInputSchema>;
 export type RequestValueStrategyOutput = z.infer<typeof RequestValueStrategyOutputSchema>;
 export type Deliverable = z.infer<typeof DeliverableSchema>;
-export type DeliverableDTO = z.infer<typeof DeliverableDTO>;
+export type DeliverableDTO = z.infer<typeof DeliverableDTOSchema>;
 

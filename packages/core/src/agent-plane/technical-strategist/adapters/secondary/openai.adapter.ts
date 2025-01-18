@@ -14,9 +14,10 @@ export const createTechStrategy = async (input: RequestTechStrategyInput): Promi
   console.info("--- Creating Technical Strategy via Agent ---");
   try {
     // Create an Assistant
+    
     const assistant = await client.beta.assistants.create({
       name: "Technical Strategist",
-      instructions: techStrategySystemPrompt(),
+      instructions: techStrategySystemPrompt(input),
       model: "gpt-4o",
       response_format: zodResponseFormat(DeliverableSchema, "deliverable"),
       tools: [{ type: "function", function: {

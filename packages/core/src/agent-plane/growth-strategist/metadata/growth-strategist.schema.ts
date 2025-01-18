@@ -2,11 +2,43 @@ import { z } from 'zod';
 
 
 export const GrowthStrategySchema = z.object({
-  distributionChannels: z.array(z.string()),
-  customerJourney: z.string(),
-  firstTenCustomers: z.string(),
-  firstHundredCustomers: z.string(),
-  growthStrategies: z.string()
+  sections: z.object({
+    distributionChannels: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('list'),
+      description: z.string().optional(),
+      data: z.array(z.string())
+    }),
+    customerJourney: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string()
+    }),
+    firstTenCustomers: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string()
+    }),
+    firstHundredCustomers: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string()
+    }),
+    growthStrategies: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string()
+    })
+  })
 });
 
 export const BasePayloadSchema = z.object({ 
@@ -29,10 +61,12 @@ export const RequestGrowthStrategyOutputSchema = z.object({
 
 
 export const DeliverableSchema = z.object({
+  deliverableTitle: z.string(),
   deliverableContent: GrowthStrategySchema, 
 });
 
 export const DeliverableDTOSchema = BasePayloadSchema.extend({
+  deliverableTitle: z.string(),
   deliverableContent: GrowthStrategySchema, 
 });
 

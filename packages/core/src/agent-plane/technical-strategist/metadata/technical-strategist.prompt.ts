@@ -1,6 +1,9 @@
-export const techStrategySystemPrompt = () => `
+import { RequestTechStrategyInput } from "src/orchestrator/metadata/agent-plane.schema";
+
+export const techStrategySystemPrompt = (input: RequestTechStrategyInput) => `
 You are an expert technical architect.
- Your order is to create a detailed one-page technical specification based on the provided application requirements, technical constraints, and scalability needs. 
+ Your order is to create a detailed one-page technical specification based on the provided application requirements, technical constraints, and scalability needs For the following input:
+ ${JSON.stringify(input)}
  Focus on architecture decisions and implementation recommendations.
     For the dataModel field, you MUST generate a valid Mermaid.js ERD diagram.
           Use this format:

@@ -1,4 +1,5 @@
 import { DeliverableSchema } from '@agent-plane/technical-strategist/metadata/technical-architect.schema';
+import { RequestTechStrategyInput } from '@agent-plane/technical-strategist/metadata/technical-architect.schema';
 import { runTechStrategy } from '@agent-plane/technical-strategist/adapters/secondary/openai.adapter';
 
 // Mock SST Resource
@@ -9,9 +10,10 @@ jest.mock('sst', () => ({
 }));
 
 describe('Technical Strategist Agent', () => {
-  const testInput = {
+  const testInput: RequestTechStrategyInput = {
     userId: 'test_user_123',
     orderId: 'test_order_123',
+    deliverableId: 'test_deliverable_123',
     useCases: 'User authentication, real-time chat, file sharing',
     nonFunctional: 'High availability, scalable to 10k users, GDPR compliant'
   };
@@ -23,7 +25,9 @@ describe('Technical Strategist Agent', () => {
     expect(() => DeliverableSchema.parse(strategy)).not.toThrow();
 
     // Verify the strategy contains required sections
-    expect(strategy.deliverableId).toBeDefined();
-    expect(strategy.deliverableContent).toBeDefined();
-  }, 90000);
+    expect(strategy.deliverableContent.sections.useCases).toBeDefined();
+    expect(strategy.deliverableContent.sections.nonFunctional).toBeDefined();
+    expect(strategy.deliverableContent.sections.apiDesign).toBeDefined();
+    expect(strategy.deliverableContent.sections.deployment).toBeDefined();
+  }, 100000);
 }); 
