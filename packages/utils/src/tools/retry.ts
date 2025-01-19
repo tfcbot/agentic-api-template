@@ -11,6 +11,7 @@ export function withRetry<T extends (...args: any[]) => Promise<any>>(
     config: RetryConfig
 ) {
     return async (...args: Parameters<T>): Promise<ReturnType<T>> => {
+        console.log('--- Retrying Agent Service---');
         for (let attempt = 1; attempt <= config.retries; attempt++) {
             try {
                 return await fn(...args);
