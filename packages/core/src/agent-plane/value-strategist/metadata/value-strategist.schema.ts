@@ -3,82 +3,98 @@ import { z } from "zod";
 export const ValueStrategySchema = z.object({
   deliverableName: z.string(),
   sections: z.object({
+    applicationIdea: z.object({
+      id: z.string(),
+      label: z.string(), 
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string(),
+    }),
     idealCustomer: z.object({
       id: z.string(),
       label: z.string(), 
       type: z.literal('text'),
       description: z.string().optional(),
-      data: z.string()
+      data: z.string(),
     }),
     problem: z.object({
       id: z.string(),
       label: z.string(),
       type: z.literal('text'), 
       description: z.string().optional(),
-      data: z.string()
+      data: z.string(),
     }),
     valueProposition: z.object({
       id: z.string(),
       label: z.string(),
       type: z.literal('text'),
       description: z.string().optional(),
-      data: z.string()
+      data: z.string(),
+
     }),
     profitProposition: z.object({
       id: z.string(),
       label: z.string(),
       type: z.literal('text'),
       description: z.string().optional(),
-      data: z.string()
+      data: z.string(),
+
     }),
     peopleProposition: z.object({
       id: z.string(),
       label: z.string(),
       type: z.literal('text'),
       description: z.string().optional(),
-      data: z.string()
+      data: z.string(),
+      
     }),
     coreBenefit: z.object({
       id: z.string(),
       label: z.string(),
       type: z.literal('text'),
       description: z.string().optional(),
-      data: z.string()
+      data: z.string(),
+
     }),
     coreFeature: z.object({
       id: z.string(),
       label: z.string(),
       type: z.literal('text'),
       description: z.string().optional(),
-      data: z.string()
+      data: z.string(),
+
     }),
     solutionOverview: z.object({
       id: z.string(),
       label: z.string(),
       type: z.literal('text'),
       description: z.string().optional(),
-      data: z.string()
+      data: z.string(),
+
     }),
     benefitBreakdown: z.object({
       id: z.string(),
       label: z.string(),
       type: z.literal('list'),
       description: z.string().optional(),
-      data: z.array(z.string())
+      data: z.array(z.string()),
+
     }),
-    firstOrder: z.object({
+    firstOrderConsequence: z.object({
       id: z.string(),
       label: z.string(),
       type: z.literal('text'),
       description: z.string().optional(),
-      data: z.string()
+      data: z.string(),
+
     }),
-    secondOrder: z.object({
+    secondOrderConsequence: z.object({
       id: z.string(),
       label: z.string(),
       type: z.literal('text'),
       description: z.string().optional(),
-      data: z.string()
+      data: z.string(),
+
     })
   })
 });
@@ -88,6 +104,7 @@ export const BasePayloadSchema = z.object({
   orderId: z.string(),
   deliverableId: z.string(),
   deliverableName: z.string(),
+  agentId: z.string(),
 });
 
 export const RequestValueStrategyInputSchema = BasePayloadSchema.extend({

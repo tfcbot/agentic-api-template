@@ -31,6 +31,7 @@ export enum Topic {
       orderId: z.string(),
       userId: z.string(),
       deliverableId: z.string(),
+      agentId: z.string(),
     })
 })
 

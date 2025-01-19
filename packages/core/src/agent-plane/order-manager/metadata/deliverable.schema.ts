@@ -7,7 +7,9 @@ export const GetDeliverableInputSchema = z.object({
   
   export const GetDeliverableOutputSchema = z.object({
     deliverableId: z.string(),
-    deliverableContent: z.string()
+    deliverableContent: z.string(),
+    deliverableName: z.string(),
+    agentId: z.string()
   });
   
 

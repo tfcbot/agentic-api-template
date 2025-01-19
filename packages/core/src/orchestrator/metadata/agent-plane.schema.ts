@@ -103,6 +103,7 @@ export const BasePayloadSchema = z.object({
   keyId: z.string(),
   userId: z.string(),
   deliverableId: z.string(),
+  agentId: z.string(),
 });
 
 export const RequestTechStrategyInputSchema = BasePayloadSchema.extend({

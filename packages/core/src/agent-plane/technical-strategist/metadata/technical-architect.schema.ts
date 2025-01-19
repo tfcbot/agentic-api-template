@@ -22,14 +22,16 @@ export const TechStrategySchema = z.object({
       label: z.string(),
       type: z.literal('list'),
       description: z.string().optional(),
-      data: z.array(z.string())
+      data: z.array(z.string()),
+
     }),
     nonFunctional: z.object({
       id: z.string(), 
       label: z.string(),
       type: z.literal('list'),
       description: z.string().optional(),
-      data: z.array(z.string())
+      data: z.array(z.string()),
+
     }),
     dataModel: z.object({
       id: z.string(),
@@ -39,7 +41,8 @@ export const TechStrategySchema = z.object({
       data: z.string().refine(
         (val) => validateMermaid(val),
         { message: "Invalid Mermaid ERD diagram" }
-      )
+      ),
+     
     }),
     domainModel: z.object({
       id: z.string(),
@@ -49,7 +52,8 @@ export const TechStrategySchema = z.object({
       data: z.string().refine(
         (val) => validateMermaid(val),
         { message: "Invalid Mermaid class diagram" }
-      )
+      ),
+
     }),
     servicesDesign: z.object({
       id: z.string(),
@@ -59,21 +63,24 @@ export const TechStrategySchema = z.object({
       data: z.string().refine(
         (val) => validateMermaid(val),
         { message: "Invalid Mermaid service diagram" }
-      )
+      ),
+   
     }),
     apiDesign: z.object({
       id: z.string(),
       label: z.string(),
       type: z.literal('text'),
       description: z.string().optional(),
-      data: z.string()
+      data: z.string(),
+
     }),
     deployment: z.object({
       id: z.string(),
       label: z.string(),
       type: z.literal('text'),
       description: z.string().optional(),
-      data: z.string()
+      data: z.string(),
+
     })
   })
 });
@@ -83,6 +90,7 @@ export const BasePayloadSchema = z.object({
   orderId: z.string(),
   deliverableId: z.string(),
   deliverableName: z.string(),
+  agentId: z.string(),
 });
 
 export const RequestTechStrategyInputSchema = BasePayloadSchema.extend({

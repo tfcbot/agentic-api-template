@@ -21,6 +21,7 @@ export async function publishTechStrategyUseCase(request: RequestTechStrategyInp
         userId: request.userId,
         deliverableId: request.deliverableId,
         deliverableName: request.deliverableName,
+        agentId: request.agentId,
         useCases: request.useCases,
         nonFunctional: request.nonFunctional
       }

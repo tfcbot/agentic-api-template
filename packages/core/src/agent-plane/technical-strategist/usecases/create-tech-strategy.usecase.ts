@@ -14,6 +14,7 @@ export const createTechStrategyUsecase = async (input: RequestTechStrategyInput)
       orderId: input.orderId,
       deliverableId: input.deliverableId,
       deliverableName: input.deliverableName,
+      agentId: input.agentId,
       ...result
     };
     await deliverableRepository.saveDeliverable(deliverable);

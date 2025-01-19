@@ -3,40 +3,61 @@ import { z } from 'zod';
 
 export const GrowthStrategySchema = z.object({
   sections: z.object({
+    applicationIdea: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string(),
+
+    }),
+    idealCustomer: z.object({
+      id: z.string(),
+      label: z.string(),
+      type: z.literal('text'),
+      description: z.string().optional(),
+      data: z.string(),
+
+    }),
     distributionChannels: z.object({
       id: z.string(),
       label: z.string(),
       type: z.literal('list'),
       description: z.string().optional(),
-      data: z.array(z.string())
+      data: z.array(z.string()),
+
     }),
     customerJourney: z.object({
       id: z.string(),
       label: z.string(),
       type: z.literal('text'),
       description: z.string().optional(),
-      data: z.string()
+      data: z.string(),
+
     }),
     firstTenCustomers: z.object({
       id: z.string(),
       label: z.string(),
       type: z.literal('text'),
       description: z.string().optional(),
-      data: z.string()
+      data: z.string(),
+
     }),
     firstHundredCustomers: z.object({
       id: z.string(),
       label: z.string(),
       type: z.literal('text'),
       description: z.string().optional(),
-      data: z.string()
+      data: z.string(),
+
     }),
     growthStrategies: z.object({
       id: z.string(),
       label: z.string(),
       type: z.literal('text'),
       description: z.string().optional(),
-      data: z.string()
+      data: z.string(),
+
     })
   })
 });
@@ -46,6 +67,7 @@ export const BasePayloadSchema = z.object({
   orderId: z.string(),
   deliverableId: z.string(),
   deliverableName: z.string(),
+  agentId: z.string(),
 });
 
 export const RequestGrowthStrategyInputSchema = BasePayloadSchema.extend({

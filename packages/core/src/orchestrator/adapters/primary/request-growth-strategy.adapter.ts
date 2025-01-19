@@ -23,7 +23,7 @@ export const requestGrowthStrategyAdapter = async (
       throw createError(HttpStatusCode.BAD_REQUEST, "Missing request body");
     }
    
-    const { applicationIdea, idealCustomer, targetAnnualRevenue , deliverableName} = JSON.parse(event.body);
+    const { applicationIdea, idealCustomer, targetAnnualRevenue , deliverableName, agentId} = JSON.parse(event.body);
     
     if (!applicationIdea || !idealCustomer || !targetAnnualRevenue) {
       throw createError(HttpStatusCode.BAD_REQUEST, "Missing required fields");
@@ -34,6 +34,7 @@ export const requestGrowthStrategyAdapter = async (
       keyId: validUser.keyId,
       orderId: randomUUID(),
       deliverableId: randomUUID(),
+      agentId: agentId,
       deliverableName: deliverableName,
       applicationIdea: applicationIdea,
       idealCustomer: idealCustomer,

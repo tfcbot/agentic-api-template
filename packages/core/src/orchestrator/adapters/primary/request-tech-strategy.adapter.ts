@@ -23,7 +23,7 @@ export const requestTechStrategyAdapter = async (
       throw createError(HttpStatusCode.BAD_REQUEST, "Missing request body");
     }
    
-    const { useCases, nonFunctional, deliverableName } = JSON.parse(event.body);
+    const { useCases, nonFunctional, deliverableName, agentId } = JSON.parse(event.body);
     
     if (!useCases || !nonFunctional) {
       throw createError(HttpStatusCode.BAD_REQUEST, "Missing required fields");
@@ -36,7 +36,8 @@ export const requestTechStrategyAdapter = async (
       deliverableId: randomUUID(),
       useCases: useCases,
       nonFunctional: nonFunctional,
-      deliverableName: deliverableName
+      deliverableName: deliverableName,
+      agentId: agentId
     });
 
     const result = await publishTechStrategyUseCase(parsedInput);

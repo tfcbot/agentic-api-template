@@ -19,6 +19,7 @@ export async function publishValueStrategyUseCase(request: RequestValueStrategyI
         keyId: request.keyId,
         userId: request.userId,
         deliverableId: request.deliverableId,
+        agentId: request.agentId,
         deliverableName: request.deliverableName,
         applicationIdea: request.applicationIdea,
         idealCustomer: request.idealCustomer,

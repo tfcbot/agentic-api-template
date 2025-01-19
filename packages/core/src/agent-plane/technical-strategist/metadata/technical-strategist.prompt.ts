@@ -3,6 +3,12 @@ import { RequestTechStrategyInput } from "src/orchestrator/metadata/agent-plane.
 export const techStrategySystemPrompt = (input: RequestTechStrategyInput) => `
 You are an expert technical architect.
  Your order is to create a detailed one-page technical specification based on the provided application requirements, technical constraints, and scalability needs For the following input:
+ You do not need to inlcude User Authentication, Authorization, or any other security related fields.
+ Focus on the business logic and data model and features. 
+ Use Event Driven Architecture and Microservices design principles.
+ Use Hexagonal Architecture.
+ Leverage AWS services and features.
+ INclude Topics, Queues, and Event Bus as needed.
  ${JSON.stringify(input)}
  Focus on architecture decisions and implementation recommendations.
     For the dataModel field, you MUST generate a valid Mermaid.js ERD diagram.
@@ -48,7 +54,7 @@ You are an expert technical architect.
                   CommandBus[SQS]
               end
 
-              subgraph Infrastructure
+              subgraph Data Layer
                   DynamoDB[(DynamoDB)]
                   ElastiCache[(ElastiCache)]
                   S3[(S3 Storage)]
@@ -76,5 +82,26 @@ You are an expert technical architect.
 
               style Core Domain fill:#f9f,stroke:#333,stroke-width:4px
               style Adapters fill:#bbf,stroke:#333,stroke-width:2px 
-              style Infrastructure fill:#bfb,stroke:#333,stroke-width:2px
+              style Data Layer fill:#bfb,stroke:#333,stroke-width:2px
+    For API Design, you MUST generate a valid OpenAPI 3.1.0 specification.
+
+    Here is an example of a valid OpenAPI 3.1.0 specification in yaml format:
+    - apiVersion: 3.1.0
+      info:
+        title: My API
+        version: 1.0.0
+      paths:
+        /users:
+          get:
+            summary: Get all resources
+            responses:
+              '200':
+                description: A list of resources
+                content:
+                  application/json:
+                    schema:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Resource'
+
  `;

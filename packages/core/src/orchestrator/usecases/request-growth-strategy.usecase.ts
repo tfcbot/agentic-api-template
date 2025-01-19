@@ -23,6 +23,7 @@ export async function publishGrowthStrategyUseCase(request: RequestGrowthStrateg
         keyId: request.keyId,
         deliverableId: request.deliverableId,
         deliverableName: request.deliverableName,
+        agentId: request.agentId,
         applicationIdea: request.applicationIdea,
         idealCustomer: request.idealCustomer,
         targetAnnualRevenue: request.targetAnnualRevenue
