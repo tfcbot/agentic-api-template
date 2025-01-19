@@ -45,6 +45,7 @@ export const BasePayloadSchema = z.object({
   userId: z.string(),
   orderId: z.string(),
   deliverableId: z.string(),
+  deliverableName: z.string(),
 });
 
 export const RequestGrowthStrategyInputSchema = BasePayloadSchema.extend({
@@ -61,12 +62,10 @@ export const RequestGrowthStrategyOutputSchema = z.object({
 
 
 export const DeliverableSchema = z.object({
-  deliverableTitle: z.string(),
   deliverableContent: GrowthStrategySchema, 
 });
 
 export const DeliverableDTOSchema = BasePayloadSchema.extend({
-  deliverableTitle: z.string(),
   deliverableContent: GrowthStrategySchema, 
 });
 

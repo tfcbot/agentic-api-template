@@ -23,7 +23,7 @@ export const requestValueStrategyAdapter = async (
       throw createError(HttpStatusCode.BAD_REQUEST, "Missing request body");
     }
    
-    const { applicationIdea, idealCustomer, problem, solution } = JSON.parse(event.body);
+    const { applicationIdea, idealCustomer, problem, solution, deliverableName } = JSON.parse(event.body);
     
     if (!applicationIdea || !idealCustomer || !problem || !solution) {
       throw createError(HttpStatusCode.BAD_REQUEST, "Missing required fields");
@@ -31,12 +31,14 @@ export const requestValueStrategyAdapter = async (
 
     const parsedInput = RequestValueStrategyInputSchema.parse({
       userId: validUser.userId,
+      keyId: validUser.keyId,
       orderId: randomUUID(),
       deliverableId: randomUUID(),
       applicationIdea: applicationIdea,
       idealCustomer: idealCustomer,
       problem: problem,
-      solution: solution
+      solution: solution,
+      deliverableName: deliverableName
     });
 
     const result = await publishValueStrategyUseCase(parsedInput);

@@ -76,6 +76,7 @@ export const OrderSchema = z.object({
   orderCreatedAt: z.string(),
   orderUpdatedAt: z.string(),
   deliverableId: z.string(),
+  deliverableName: z.string(),
 });
 
 export const GetOrdersInputSchema = z.object({
@@ -99,6 +100,7 @@ export const GetDeliverableOutputSchema = z.object({
 
 export const BasePayloadSchema = z.object({
   orderId: z.string(),
+  keyId: z.string(),
   userId: z.string(),
   deliverableId: z.string(),
 });
@@ -106,6 +108,7 @@ export const BasePayloadSchema = z.object({
 export const RequestTechStrategyInputSchema = BasePayloadSchema.extend({
   useCases: z.string(),
   nonFunctional: z.string(),
+  deliverableName: z.string()
 });
 
 
@@ -113,13 +116,15 @@ export const RequestValueStrategyInputSchema = BasePayloadSchema.extend({
   applicationIdea: z.string(),
   idealCustomer: z.string(),
   problem: z.string(),
-  solution: z.string()
+  solution: z.string(),
+  deliverableName: z.string()
 });
 
 export const RequestGrowthStrategyInputSchema = BasePayloadSchema.extend({
   applicationIdea: z.string(),
   idealCustomer: z.string(),
-  targetAnnualRevenue: z.number()
+  targetAnnualRevenue: z.number(),
+  deliverableName: z.string()
 });
 
 

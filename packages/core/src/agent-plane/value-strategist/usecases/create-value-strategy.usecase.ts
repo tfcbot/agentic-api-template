@@ -12,6 +12,7 @@ export const createValueStrategyUsecase = async (input: RequestValueStrategyInpu
       userId: input.userId,
       orderId: input.orderId,
       deliverableId: input.deliverableId,
+      deliverableName: input.deliverableName,
       ...deliverableContent
     };
     await deliverableRepository.saveDeliverable(deliverable);

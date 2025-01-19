@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const ValueStrategySchema = z.object({
+  deliverableName: z.string(),
   sections: z.object({
     idealCustomer: z.object({
       id: z.string(),
@@ -86,6 +87,7 @@ export const BasePayloadSchema = z.object({
   userId: z.string(),
   orderId: z.string(),
   deliverableId: z.string(),
+  deliverableName: z.string(),
 });
 
 export const RequestValueStrategyInputSchema = BasePayloadSchema.extend({
@@ -97,7 +99,6 @@ export const RequestValueStrategyInputSchema = BasePayloadSchema.extend({
 
 
 export const DeliverableSchema = z.object({
-  deliverableTitle: z.string(),
   deliverableContent: ValueStrategySchema,
 });
 

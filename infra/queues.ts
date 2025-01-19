@@ -90,7 +90,8 @@ valueStrategyQueue.subscribe({
             actions: ["dynamodb:*"], 
             resources: [deliverablesTable.arn, ordersTable.arn]
         }
-    ]
+    ],
+    timeout: "10 minutes"
 })
 
 techStrategyQueue.subscribe({
@@ -105,7 +106,8 @@ techStrategyQueue.subscribe({
             actions: ["dynamodb:*"], 
             resources: [deliverablesTable.arn, ordersTable.arn]
         }
-    ]
+    ],
+    timeout: "10 minutes"
 })
 
 growthStrategyQueue.subscribe({
@@ -121,5 +123,6 @@ growthStrategyQueue.subscribe({
             resources: [deliverablesTable.arn, ordersTable.arn]
         }
     ], 
+    timeout: "10 minutes"
 })
 

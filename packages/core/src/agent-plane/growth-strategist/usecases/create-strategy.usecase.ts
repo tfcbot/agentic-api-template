@@ -14,6 +14,7 @@ export const createStrategyUsecase = async (input: RequestGrowthStrategyInput): 
       userId: input.userId,
       orderId: input.orderId,
       deliverableId: input.deliverableId,
+      deliverableName: input.deliverableName,
       ...content
     };
     await deliverableRepository.saveDeliverable(deliverable);

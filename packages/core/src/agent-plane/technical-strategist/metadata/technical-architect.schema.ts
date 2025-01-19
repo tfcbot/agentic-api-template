@@ -82,6 +82,7 @@ export const BasePayloadSchema = z.object({
   userId: z.string(),
   orderId: z.string(),
   deliverableId: z.string(),
+  deliverableName: z.string(),
 });
 
 export const RequestTechStrategyInputSchema = BasePayloadSchema.extend({
@@ -96,12 +97,10 @@ export const RequestTechStrategyOutputSchema = z.object({
 
 
 export const DeliverableSchema = z.object({
-  deliverableTitle: z.string(),
   deliverableContent: TechStrategySchema,
 });
 
 export const DeliverableDTOSchema = BasePayloadSchema.extend({
-  deliverableTitle: z.string(),
   deliverableContent: TechStrategySchema,
 });
 

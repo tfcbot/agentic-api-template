@@ -28,7 +28,6 @@ class DeliverableRepository implements IDeliverableRepository {
       if (!result.Items || result.Items.length === 0) {
         throw new Error("Deliverable not found");
       }
-      console.info("Deliverable found:", result.Items[0]);
       return result.Items[0] as GetDeliverableOutput;
     } catch (error) {
       console.error("Error getting deliverable:", error);

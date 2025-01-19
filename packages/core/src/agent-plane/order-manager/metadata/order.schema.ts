@@ -12,6 +12,7 @@ export const OrderSchema = z.object({
     orderStatus: z.string(),
     orderCreatedAt: z.string(),
     orderUpdatedAt: z.string(),
+    deliverableName: z.string(),
 });
 
 export const GetOrdersInputSchema = z.object({
