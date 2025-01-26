@@ -1,4 +1,4 @@
-import { Deliverable, DeliverableDTO, RequestTechStrategyInput } from '@agent-plane/technical-strategist/metadata/technical-architect.schema'
+import { Deliverable, DeliverableDTO, RequestTechStrategyInput } from 'src/agent-plane/technical-strategist/metadata/technical-strategist.schema'
 import { runTechStrategy } from '@agent-plane/technical-strategist/adapters/secondary/openai.adapter';
 import { deliverableRepository } from '@agent-plane/technical-strategist/adapters/secondary/datastore.adapter';
 import { randomUUID } from 'crypto';

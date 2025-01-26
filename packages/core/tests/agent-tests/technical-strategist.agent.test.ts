@@ -1,5 +1,5 @@
-import { DeliverableSchema } from '@agent-plane/technical-strategist/metadata/technical-architect.schema';
-import { RequestTechStrategyInput } from '@agent-plane/technical-strategist/metadata/technical-architect.schema';
+import { DeliverableSchema } from 'src/agent-plane/technical-strategist/metadata/technical-strategist.schema';
+import { RequestTechStrategyInput } from 'src/agent-plane/technical-strategist/metadata/technical-strategist.schema';
 import { runTechStrategy } from '@agent-plane/technical-strategist/adapters/secondary/openai.adapter';
 
 // Mock SST Resource

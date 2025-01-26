@@ -1,5 +1,5 @@
 import { SQSEvent, SQSRecord } from 'aws-lambda';
-import { RequestTechStrategyInputSchema } from '@agent-plane/technical-strategist/metadata/technical-architect.schema';
+import { RequestTechStrategyInputSchema } from 'src/agent-plane/technical-strategist/metadata/technical-strategist.schema';
 import { createTechStrategyUsecase } from '@agent-plane/technical-strategist/usecases/create-tech-strategy.usecase';
 
 export const createTechStrategyAdapter = async (event: SQSEvent) => {

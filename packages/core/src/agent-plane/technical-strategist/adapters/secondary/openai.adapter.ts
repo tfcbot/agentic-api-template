@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { Deliverable, DeliverableSchema, RequestTechStrategyInput } from "@agent-plane/technical-strategist/metadata/technical-architect.schema";
+import { Deliverable, DeliverableSchema, RequestTechStrategyInput } from "src/agent-plane/technical-strategist/metadata/technical-strategist.schema";
 import { Resource } from "sst";
 import { withRetry } from "@utils/tools/retry";
 import { techStrategySystemPrompt } from "../../metadata/technical-strategist.prompt";
