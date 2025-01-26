@@ -1,15 +1,10 @@
 import { CheckoutSessionInput } from "@control-plane/billing/metadata/billing.schema";
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, PutCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
-import { ClerkService } from "@utils/vendors/jwt-vendor";
-import { MetadataRefill, MetadataRefillSchema } from "@utils/metadata/apikey.schema";
+import { MetadataRefill } from "@utils/metadata/apikey.schema";
 
 import { Resource } from "sst";
 import { randomUUID } from "crypto";
 
 
-const client = new DynamoDBClient({});
-const dynamoClient = DynamoDBDocumentClient.from(client);
 const Stripe = require('stripe');
 const stripe = Stripe(Resource.StripeSecretKey.value);
 

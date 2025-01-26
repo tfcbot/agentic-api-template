@@ -8,7 +8,7 @@ import {
   clerkWebhookSecret,
   clerkClientPublishableKey,
   clerkClientSecretKey,
-  priceId,
+  stripePriceId,
   stripeSecretKey,
   stripeWebhookSecret,
   secrets
@@ -68,7 +68,7 @@ api.route("POST /checkout", {
     STRIPE_SECRET_KEY: stripeSecretKey.value,
     REDIRECT_SUCCESS_URL: `https://${appDomainName}`,
     REDIRECT_FAILURE_URL: `https://${appDomainName}`,
-    PRICE_ID: priceId.value,
+    STRIPE_PRICE_ID: stripePriceId.value,
     CLERK_CLIENT_PUBLISHABLE_KEY: clerkClientPublishableKey.value,
     CLERK_CLIENT_SECRET_KEY: clerkClientSecretKey.value,
     CLERK_WEBHOOK_SECRET: clerkWebhookSecret.value,
