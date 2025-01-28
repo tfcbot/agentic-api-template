@@ -70,13 +70,13 @@ declare module "sst" {
       "tableName": string
       "type": "aws.dynamodb/table.Table"
     }
-    "PriceID": {
-      "type": "sst.sst.Secret"
-      "value": string
-    }
     "ProcessDeliverableStreamProcessor": {
       "name": string
       "type": "sst.aws.Function"
+    }
+    "StripePriceId": {
+      "type": "sst.sst.Secret"
+      "value": string
     }
     "StripeSecretKey": {
       "type": "sst.sst.Secret"
