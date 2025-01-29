@@ -16,8 +16,8 @@ export const getRemainingCreditsAdapter = async (event: APIGatewayProxyEventV2):
       throw createError(HttpStatusCode.BAD_REQUEST, "Missing user id");
     }
 
-    const validatedInput = GetRemainingCreditsInputSchema.parse({ userId: validUser.userId });
-    console.log("Getting remaining credits for:", validatedInput);
+    const validatedInput = GetRemainingCreditsInputSchema.parse(validUser);
+   
     const remainingCredits = await getRemainingCreditsUseCase(validatedInput);
 
     return OrchestratorHttpResponses.UserRemainingCredits({

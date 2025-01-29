@@ -12,7 +12,7 @@ export const onboardingAdapter = async (event: SQSEvent): Promise<void> => {
       
       // Process the onboarding message
       const status = await updateUserOnboardingDetailsUseCase(validatedPayload);
-      console.info("Onboarding status", status);
+
     }
   } catch (error) {
     console.error('Error in onboardingAdapter:', error);

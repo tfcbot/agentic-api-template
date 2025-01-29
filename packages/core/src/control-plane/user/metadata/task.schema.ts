@@ -36,7 +36,7 @@ export const TaskSchema = z.object({
     payload: z.object({})
 })
 
-export type Task = z.infer<typeof TaskSchema>;
+export type Order = z.infer<typeof TaskSchema>;
 
 
 

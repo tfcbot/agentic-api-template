@@ -6,7 +6,7 @@ import { webTools } from "./web-tools.adapter";
 
 
 
-//@ts-ignore
+
 import { Resource } from "sst";
 import { withRetry } from "@utils/tools/retry";
 
@@ -19,6 +19,7 @@ const openai = new OpenAI({
 export const reviewWebsite = async (url: string): Promise<WebsiteReview> => {
   try {
     // Convert URL to markdown first
+   
     const markdown = await webTools.urlToMarkdown(url);
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
@@ -48,6 +49,7 @@ export const reviewWebsite = async (url: string): Promise<WebsiteReview> => {
       const toolCall = response.choices[0].message.tool_calls[0];
       if (toolCall.function.name === 'generate_website_review') {
         const review = JSON.parse(toolCall.function.arguments);
+     
         return review;
       }
     }
@@ -60,7 +62,7 @@ export const reviewWebsite = async (url: string): Promise<WebsiteReview> => {
 
     // Parse the JSON response
     const analysis = JSON.parse(content);
-
+  
     return analysis;
   } catch (error) {
     console.error('Error in website review:', error);

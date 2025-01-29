@@ -1,36 +1,28 @@
 import { CheckoutSessionInput } from "@control-plane/billing/metadata/billing.schema";
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, PutCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
-import { ClerkService } from "@utils/vendors/jwt-vendor";
-import { UpdateApiKeyCommand } from "@utils/metadata/apikey.schema";
-// @ts-ignore
+import { MetadataRefill } from "@utils/metadata/apikey.schema";
+
 import { Resource } from "sst";
 import { randomUUID } from "crypto";
 
 
-const client = new DynamoDBClient({});
-const dynamoClient = DynamoDBDocumentClient.from(client);
 const Stripe = require('stripe');
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = Stripe(Resource.StripeSecretKey.value);
 
 
 export async function createSession(params: CheckoutSessionInput): Promise<{}> {
     const redirect_success_url = process.env.REDIRECT_SUCCESS_URL;
     const redirect_failure_url = process.env.REDIRECT_FAILURE_URL;
     const idempotencyKey = randomUUID();
-    const updateApiKeyCommand: UpdateApiKeyCommand = {
+    const metadataRefill: MetadataRefill = {
         keyId: params.keyId,
-        remaining: params.quantity * 500,
-        refill: {
-            interval: 'monthly',
-            amount: params.quantity * 500,
-            refillDay: 1
-        }
+        interval: 'monthly',
+        amount: "500",
+        refillDay: "1"
     }
     try {
         const metadata = {
             userId: params.userId,
-            ...updateApiKeyCommand
+            ...metadataRefill
         }
         const session = await stripe.checkout.sessions.create({
             line_items: [
@@ -52,9 +44,4 @@ export async function createSession(params: CheckoutSessionInput): Promise<{}> {
         console.error("Error creating Stripe checkout session:", error);
         throw new Error("Failed to create Stripe checkout session");
     }
-}
-
-export async function checkoutSessionCompletedFunction(input: any) {
-    console.log("---Checkout session completed function---");
-    console.log(input);
 }

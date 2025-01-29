@@ -1,17 +1,19 @@
 import { 
   usersTable,
-  websiteReviewTable
+  websiteReviewTable,
+  ordersTable,
+  deliverablesTable
  } from "./database";
 import { 
   clerkWebhookSecret,
   clerkClientPublishableKey,
   clerkClientSecretKey,
-  priceId,
+  stripePriceId,
   stripeSecretKey,
   stripeWebhookSecret,
   secrets
  } from "./secrets";
-import { tasksTopic } from "./topic";
+import { orderTopic } from "./topic";
 
 const BASE_DOMAIN = process.env.BASE_DOMAIN;
 
@@ -48,15 +50,9 @@ export const api = new sst.aws.ApiGatewayV2('BackendApi', {
   }); 
 
 const queues = []
-<<<<<<< Updated upstream
-const topics = [tasksTopic]
-const tables = [usersTable, websiteReviewTable]
+const topics = [orderTopic]
+const tables = [usersTable, websiteReviewTable, ordersTable, deliverablesTable]
 
-=======
-const topics = []
-const tables = [usersTable, websiteReviewTable]
-const secrets = [stripeSecretKey, stripeWebhookSecret, clerkWebhookSecret, priceId, clerkClientPublishableKey]
->>>>>>> Stashed changes
 
 const apiResources = [
   ...queues,
@@ -72,7 +68,7 @@ api.route("POST /checkout", {
     STRIPE_SECRET_KEY: stripeSecretKey.value,
     REDIRECT_SUCCESS_URL: `https://${appDomainName}`,
     REDIRECT_FAILURE_URL: `https://${appDomainName}`,
-    PRICE_ID: priceId.value,
+    STRIPE_PRICE_ID: stripePriceId.value,
     CLERK_CLIENT_PUBLISHABLE_KEY: clerkClientPublishableKey.value,
     CLERK_CLIENT_SECRET_KEY: clerkClientSecretKey.value,
     CLERK_WEBHOOK_SECRET: clerkWebhookSecret.value,
@@ -90,29 +86,44 @@ api.route("POST /checkout-webhook", {
 api.route("POST /signup-webhook", {
   link: [...apiResources], 
   handler: "./packages/functions/src/control-plane.api.handleUserSignup", 
+  timeout: "900 seconds"
 })
 
 
-api.route("GET /agents", {
+
+api.route("POST /growth-strategy", {
   link: [...apiResources],
-  handler: "./packages/functions/src/orchestrator.api.handleGetAgents",
+  handler: "./packages/functions/src/orchestrator.api.handleRequestGrowthStrategy",
+  timeout: "900 seconds"
 })
 
-api.route("POST /request-website-review", {
+api.route("POST /value-strategy", {
   link: [...apiResources],
-<<<<<<< Updated upstream
-  handler: "./packages/functions/src/orchestrator.api.handleRequestWebsiteReview",
-=======
-  handler: "./packages/functions/src/orchestrator.api.handleTaskRequest",
->>>>>>> Stashed changes
-});
-
-
-api.route("GET /website-reviews", {
-  link: [...apiResources], 
-  handler: "./packages/functions/src/orchestrator.api.handleGetUserWebsiteReviews",
+  handler: "./packages/functions/src/orchestrator.api.handleRequestValueStrategy",
+  timeout: "900 seconds"
 })
 
+api.route("POST /tech-strategy", {
+  link: [...apiResources],
+  handler: "./packages/functions/src/orchestrator.api.handleRequestTechStrategy",
+  timeout: "900 seconds"
+})
 
+api.route("GET /orders", {
+  link: [...apiResources],
+  handler: "./packages/functions/src/orchestrator.api.handleGetOrders",
+  timeout: "900 seconds"
+})
 
+api.route("GET /orders/deliverables/{orderId}", {
+  link: [...apiResources],
+  handler: "./packages/functions/src/orchestrator.api.handleGetDeliverable",
+  timeout: "900 seconds"
+  })
+
+api.route("GET /user/credits", {
+  link: [...apiResources],
+  handler: "./packages/functions/src/orchestrator.api.handleGetUserCredits",
+  timeout: "900 seconds"
+})
 

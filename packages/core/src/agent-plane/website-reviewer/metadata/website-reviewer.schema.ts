@@ -50,7 +50,7 @@ export const GetWebsiteReviewsOutputSchema = z.object({
 
 export const ReviewWebsiteInputSchema = z.object({
   userId: z.string(),
-  websiteUrl: z.string()
+  url: z.string()
 });
 
 export const ReviewWebsiteOutputSchema = z.object({

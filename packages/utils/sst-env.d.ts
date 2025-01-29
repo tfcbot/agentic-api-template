@@ -6,7 +6,7 @@ import "sst"
 export {}
 declare module "sst" {
   export interface Resource {
-    "AgentsTable": {
+    "Agents": {
       "tableName": string
       "type": "aws.dynamodb/table.Table"
     }
@@ -14,7 +14,7 @@ declare module "sst" {
       "name": string
       "type": "sst.aws.Function"
     }
-    "ApiKeysTable": {
+    "ApiKeys": {
       "tableName": string
       "type": "aws.dynamodb/table.Table"
     }
@@ -42,6 +42,14 @@ declare module "sst" {
       "type": "sst.aws.Queue"
       "url": string
     }
+    "Deliverables": {
+      "tableName": string
+      "type": "aws.dynamodb/table.Table"
+    }
+    "GrowthStrategyQueue": {
+      "type": "sst.aws.Queue"
+      "url": string
+    }
     "OnboardingStreamProcessor": {
       "name": string
       "type": "sst.aws.Function"
@@ -50,7 +58,23 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
-    "PriceID": {
+    "OrderManagerQueue": {
+      "type": "sst.aws.Queue"
+      "url": string
+    }
+    "OrderTopic": {
+      "arn": string
+      "type": "sst.aws.SnsTopic"
+    }
+    "Orders": {
+      "tableName": string
+      "type": "aws.dynamodb/table.Table"
+    }
+    "ProcessDeliverableStreamProcessor": {
+      "name": string
+      "type": "sst.aws.Function"
+    }
+    "StripePriceId": {
       "type": "sst.sst.Secret"
       "value": string
     }
@@ -62,9 +86,9 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
-    "TasksTopic": {
-      "arn": string
-      "type": "sst.aws.SnsTopic"
+    "TechStrategyQueue": {
+      "type": "sst.aws.Queue"
+      "url": string
     }
     "UnkeyApiId": {
       "type": "sst.sst.Secret"
@@ -74,17 +98,21 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
-    "UsersTable": {
+    "Users": {
+      "tableName": string
+      "type": "aws.dynamodb/table.Table"
+    }
+    "ValueStrategyQueue": {
+      "type": "sst.aws.Queue"
+      "url": string
+    }
+    "WebsiteReview": {
       "tableName": string
       "type": "aws.dynamodb/table.Table"
     }
     "WebsiteReviewQueue": {
       "type": "sst.aws.Queue"
       "url": string
-    }
-    "WebsiteReviewTable": {
-      "tableName": string
-      "type": "aws.dynamodb/table.Table"
     }
   }
 }

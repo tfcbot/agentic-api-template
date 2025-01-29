@@ -1,75 +1,54 @@
-<<<<<<< Updated upstream
-import { GetWebsiteReviewsInput, GetWebsiteReviewsOutput } from '@orchestrator/metadata/agent-plane.schema';
+import { GetDeliverableInput, GetDeliverableOutput, GetOrdersInput, GetOrdersOutput, GetWebsiteReviewsInput, GetWebsiteReviewsOutput } from '@orchestrator/metadata/agent-plane.schema';
 import {GetWebsiteReviewsAdapter} from "@agent-plane/website-reviewer/adapters/primary/get-website-reviews.adapter"
 import { CreditsAdapter, creditsAdapter } from '@control-plane/billing/adapters/primary/get-remaining-credits.adapter';
 import { GetRemainingCreditsOutput, GetRemainingCreditsInput } from '@control-plane/billing/metadata/credits.schema';
-
+import { getOrdersAdapter, GetOrdersAdapter } from '@agent-plane/order-manager/adapters/primary/get-orders.adapter';
+import { getDeliverableAdapter, GetDeliverableAdapter } from '@agent-plane/order-manager/adapters/primary/get-deliverable.adapter';
+import { SaveOrderOutput, SaveOrderInput } from '@agent-plane/order-manager/metadata/order.schema';
+import { SaveOrderAdapter, saveOrderAdapter } from '@agent-plane/order-manager/adapters/primary/save-order.adapter';
 
 export interface IAgentPlaneAdapter {
   getWebsiteReviews(input: GetWebsiteReviewsInput): Promise<GetWebsiteReviewsOutput>;
-=======
-import { GetAgentsInput, GetAgentsOutput } from '@orchestrator/metadata/agent.schema';
-import { ReviewWebsiteInput, ReviewWebsiteOutput } from '@orchestrator/metadata/agent.schema';
-import { GetWebsiteReviewsInput, GetWebsiteReviewsOutput } from '@orchestrator/metadata/agent.schema';
-import { GetRemainingCreditsInput, GetRemainingCreditsOutput } from '@orchestrator/metadata/agent.schema';
-import {GetAgentsAdapter } from "@agent-plane/adapters/primary/get-agents.adapter"
-import {ReviewWebsiteAdapter} from "@agent-plane/adapters/primary/review-website.adapter"
-import {GetWebsiteReviewsAdapter} from "@agent-plane/adapters/primary/get-website-rewiews.adapter"
-import { userAdapter } from '@control-plane/user/adapters/primary/get-remaining-credits';
-import { IUserAdapter } from '@orchestrator/metadata/user.schema';
-
-export interface IAgentPlaneAdapter {
-  getAgents(getAgentsInput: GetAgentsInput): Promise<GetAgentsOutput[]>;
-  reviewWebsite(input: ReviewWebsiteInput): Promise<ReviewWebsiteOutput[]>;
-  getWebsiteReviews(input: GetWebsiteReviewsInput): Promise<GetWebsiteReviewsOutput[]>;
->>>>>>> Stashed changes
   getRemainingCredits(input: GetRemainingCreditsInput): Promise<GetRemainingCreditsOutput>;
+  getOrders(input: GetOrdersInput): Promise<GetOrdersOutput>;
+  getDeliverable(input: GetDeliverableInput): Promise<GetDeliverableOutput>;
 }
 
 class AgentPlaneAdapter implements IAgentPlaneAdapter {
-<<<<<<< Updated upstream
   private getWebsiteReviewsAdapter: GetWebsiteReviewsAdapter;
   private creditsAdapter: CreditsAdapter;
+  private getOrdersAdapter: GetOrdersAdapter;
+  private getDeliverableAdapter: GetDeliverableAdapter;
+  private saveOrderAdapter: SaveOrderAdapter;
+
 
   constructor() {
     this.getWebsiteReviewsAdapter = new GetWebsiteReviewsAdapter();
     this.creditsAdapter = creditsAdapter;
+    this.getOrdersAdapter = getOrdersAdapter;
+    this.getDeliverableAdapter = getDeliverableAdapter;
+    this.saveOrderAdapter = saveOrderAdapter;
   }
 
 
   async getWebsiteReviews(input: GetWebsiteReviewsInput): Promise<GetWebsiteReviewsOutput> {
-=======
-  private getAgentsAdapter: GetAgentsAdapter;
-  private reviewWebsiteAdapter: ReviewWebsiteAdapter;
-  private getWebsiteReviewsAdapter: GetWebsiteReviewsAdapter;
-  private userAdapter: IUserAdapter;
-
-  constructor() {
-    this.getAgentsAdapter = new GetAgentsAdapter();
-    this.reviewWebsiteAdapter = new ReviewWebsiteAdapter();
-    this.getWebsiteReviewsAdapter = new GetWebsiteReviewsAdapter();
-    this.userAdapter = userAdapter;
-  }
-
-  async getAgents(input: GetAgentsInput): Promise<GetAgentsOutput[]> {  
-    return this.getAgentsAdapter.execute(input);
-  }
-
-  async reviewWebsite(input: ReviewWebsiteInput): Promise<ReviewWebsiteOutput[]> {
-    return this.reviewWebsiteAdapter.execute(input);
-  }
-
-  async getWebsiteReviews(input: GetWebsiteReviewsInput): Promise<GetWebsiteReviewsOutput[]> {
->>>>>>> Stashed changes
     return this.getWebsiteReviewsAdapter.execute(input);
   }
 
   async getRemainingCredits(input: GetRemainingCreditsInput): Promise<GetRemainingCreditsOutput> {
-<<<<<<< Updated upstream
     return this.creditsAdapter.getRemainingCredits(input);
-=======
-    return this.userAdapter.getRemainingCredits(input);
->>>>>>> Stashed changes
+  }
+
+  async getOrders(input: GetOrdersInput): Promise<GetOrdersOutput> {
+    return this.getOrdersAdapter.execute(input);
+  }
+
+  async getDeliverable(input: GetDeliverableInput): Promise<GetDeliverableOutput> {
+    return this.getDeliverableAdapter.execute(input);
+  }
+
+  async saveOrder(input: SaveOrderInput): Promise<SaveOrderOutput> {
+    return this.saveOrderAdapter.execute(input);
   }
 }
 

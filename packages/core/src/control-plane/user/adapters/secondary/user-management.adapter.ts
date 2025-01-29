@@ -4,7 +4,7 @@ import { NewUser, UpdateUserOnboardingDetailsInput } from '@control-plane/user/m
 import { User } from '@control-plane/user/metadata/user.schema';
 
 
-// @ts-ignore
+
 import { Resource } from 'sst';
 
 
@@ -26,7 +26,7 @@ export class UserAdapter implements IUserAdapter {
     console.info("Registering user in dynamo");
     try {
       const command = new PutCommand({
-        TableName: Resource.UsersTable.tableName,
+        TableName: Resource.Users.tableName,
         Item: user,
       });
     
@@ -41,7 +41,7 @@ export class UserAdapter implements IUserAdapter {
   async getUserData(userId: string): Promise<User | null> {
     try {
       const command = new GetCommand({
-        TableName: Resource.UsersTable.tableName,
+        TableName: Resource.Users.tableName,
         Key: { userId: userId }
       });
 
@@ -76,7 +76,7 @@ export class UserAdapter implements IUserAdapter {
       });
 
       const command = new UpdateCommand({
-        TableName: Resource.UsersTable.tableName,
+        TableName: Resource.Users.tableName,
         Key: { userId },
         UpdateExpression: `SET ${updateExpressionParts.join(', ')}`,
         ExpressionAttributeValues: expressionAttributeValues,

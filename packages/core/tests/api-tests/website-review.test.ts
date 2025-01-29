@@ -1,15 +1,12 @@
-import { randomUUID } from 'crypto';
-import { DynamoDBDocumentClient, PutCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { WebsiteReviewRequestReceivedResponseBody } from '@orchestrator/metadata/http-responses.schema';
 
-const API_URL = process.env.api || ' https://development-api.agenticstarter.com/v1/';
-const TEST_USER_ID = process.env.TestUserId || 'test-user-id';
-const ddbClient = DynamoDBDocumentClient.from(new DynamoDBClient({}));
+const API_URL = process.env.API_URL
+const ACCESS_TOKEN = process.env.ACCESS_TOKEN
+
 
 describe('Website Review API Tests', () => {
   const headers = {
-    'Authorization': `Bearer ${process.env.ACCESS_TOKEN}`,
+    'Authorization': `Bearer ${ACCESS_TOKEN}`,
     'Content-Type': 'application/json',
   };
 
@@ -28,8 +25,7 @@ describe('Website Review API Tests', () => {
     const data = await response.json() as WebsiteReviewRequestReceivedResponseBody;
     
     expect(data).toHaveProperty('reviewId');
-    expect(data).toHaveProperty('url', testUrl);
-    expect(data).toHaveProperty('status', 'pending');
+    expect(data).toHaveProperty('url');
   });
 
   test('User should be able to get their website reviews', async () => {

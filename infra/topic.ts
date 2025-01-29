@@ -1,13 +1,50 @@
-import { websiteReviewQueue } from "./queues"
+import { growthStrategyQueue, valueStrategyQueue, websiteReviewQueue, techStrategyQueue, orderManagerQueue } from "./queues"
 
 
 // Topics
-export const tasksTopic = new sst.aws.SnsTopic("TasksTopic")
-
-
-// Tasks Subscribers 
-tasksTopic.subscribeQueue(websiteReviewQueue.arn, {
-    filter: {
-        "queue": ["websiteReview"]
-      }
+export const orderTopic = new sst.aws.SnsTopic("OrderTopic", {
+  fifo: true
 })
+
+
+// ... existing code ...
+orderTopic.subscribeQueue(
+  "websiteReview", // Add name parameter
+  websiteReviewQueue.arn, 
+  {
+      filter: {
+          "queue": ["websiteReview"]
+      }
+  }
+)
+
+
+orderTopic.subscribeQueue(
+  "valueStrategy", 
+  valueStrategyQueue.arn, 
+  {
+      filter: {
+          "queue": ["valueStrategy"]
+      }
+  }
+)
+
+orderTopic.subscribeQueue(
+  "growthStrategy", 
+  growthStrategyQueue.arn, 
+  {
+      filter: {
+          "queue": ["growthStrategy"]
+      }
+  }
+)
+
+orderTopic.subscribeQueue(
+  "techStrategy", 
+  techStrategyQueue.arn, 
+  {
+      filter: {
+          "queue": ["techStrategy"]
+      }, 
+  }
+)

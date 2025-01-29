@@ -1,6 +1,6 @@
-import { getWebsiteReview, reviewWebsite } from '@agent-plane/website-reviewer/adapters/secondary/openai.adapter';
 import { WebsiteReviewSchema } from '@agent-plane/website-reviewer/metadata/website-reviewer.schema';
-import { webTools } from '@agent-plane/website-reviewer/adapters/secondary/web-tools.adapter';
+import { runWebsiteReview } from '@agent-plane/website-reviewer/adapters/secondary/openai.adapter';
+
 
 // Mock SST Resource
 jest.mock('sst', () => ({
@@ -31,7 +31,7 @@ describe('Website Review Agent', () => {
   const testUrl = 'https://thumbagents.com';
 
   it('should generate a website review', async () => {
-    const review = await getWebsiteReview(testUrl);
+    const review = await runWebsiteReview(testUrl);
 
     // Verify the review structure matches the schema
     expect(() => WebsiteReviewSchema.parse(review)).not.toThrow();

@@ -1,9 +1,6 @@
-import { websiteReviewTable } from "./database"
+import { websiteReviewTable, deliverablesTable, ordersTable } from "./database"
+import { openaiApiKey, secrets } from "./secrets"
 
-
-export const DLQ = new sst.aws.Queue("DLQ")
-
-export const websiteReviewQueue = new sst.aws.Queue("WebsiteReviewQueue")
 
 const subscriberRole = new aws.iam.Role("QueueSubscriberRole", {
     assumeRolePolicy: JSON.stringify({
@@ -46,15 +43,31 @@ new aws.iam.RolePolicy("QueueSubscriberPolicy", {
 });
 
 
+export const DLQ = new sst.aws.Queue("DLQ")
+export const websiteReviewQueue = new sst.aws.Queue("WebsiteReviewQueue", {
+    fifo: true
+})
+export const valueStrategyQueue = new sst.aws.Queue("ValueStrategyQueue", {
+    fifo: true
+})   
+export const techStrategyQueue = new sst.aws.Queue("TechStrategyQueue", {
+    fifo: true
+})
+export const growthStrategyQueue = new sst.aws.Queue("GrowthStrategyQueue", {
+    fifo: true
+})
+
+export const orderManagerQueue = new sst.aws.Queue("OrderManagerQueue", {
+    fifo: true
+})
 
     
 websiteReviewQueue.subscribe({
         handler: "./packages/functions/src/agent-plane.api.websiteReviewHandler", 
         link: [
-           websiteReviewTable
+           websiteReviewTable, 
+           openaiApiKey
         ],
-        environment: {
-        }, 
         permissions: [
             {
                 actions: ["dynamodb:*"], 
@@ -63,3 +76,53 @@ websiteReviewQueue.subscribe({
         ]
     }, 
 )
+
+
+valueStrategyQueue.subscribe({
+    handler: "./packages/functions/src/agent-plane.api.valueStrategyHandler", 
+    link: [
+        deliverablesTable, 
+        ordersTable, 
+        openaiApiKey, 
+    ], 
+    permissions: [
+        {
+            actions: ["dynamodb:*"], 
+            resources: [deliverablesTable.arn, ordersTable.arn]
+        }
+    ],
+    timeout: "10 minutes"
+})
+
+techStrategyQueue.subscribe({
+    handler: "./packages/functions/src/agent-plane.api.techStrategyHandler", 
+    link: [
+        deliverablesTable, 
+        ordersTable, 
+        openaiApiKey
+    ], 
+    permissions: [
+        {
+            actions: ["dynamodb:*"], 
+            resources: [deliverablesTable.arn, ordersTable.arn]
+        }
+    ],
+    timeout: "10 minutes"
+})
+
+growthStrategyQueue.subscribe({
+    handler: "./packages/functions/src/agent-plane.api.growthStrategyHandler", 
+    link: [
+        deliverablesTable, 
+        ordersTable, 
+        openaiApiKey
+    ], 
+    permissions: [
+        {
+            actions: ["dynamodb:*"], 
+            resources: [deliverablesTable.arn, ordersTable.arn]
+        }
+    ], 
+    timeout: "10 minutes"
+})
+

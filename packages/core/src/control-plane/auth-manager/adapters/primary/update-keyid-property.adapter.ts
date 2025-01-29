@@ -32,7 +32,7 @@ export const updateTokenKeyIdAdapter = async (event: DynamoDBStreamEvent, contex
           },
         };
         const message = await updateTokenKeyIdUseCase(input);
-          console.info('User details:', message);
+
         } catch (error) {
           console.error(`Failed to retrieve user details for API key ${keyId}:`, error);
         }

@@ -1,5 +1,7 @@
 import {
     apiKeysTable,
+    deliverablesTable,
+    ordersTable,
     usersTable
 } from "./database";
 import { secrets } from "./secrets";
@@ -71,6 +73,27 @@ const updateTokenKeyIdStreamProcessorEventSourceMapping = new aws.lambda.EventSo
     maximumBatchingWindowInSeconds: 10,
     startingPosition: "LATEST"
 })
+
+const processDeliverableStreamProcessor = new sst.aws.Function("ProcessDeliverableStreamProcessor", {
+    handler: "./packages/functions/src/agent-plane.api.processDeliverableStreamHandler",
+    link: [ordersTable, deliverablesTable, ...secrets], 
+    permissions: [
+        {
+            actions: ["dynamodb:*"],
+            resources: [ordersTable.arn, deliverablesTable.streamArn]
+        }
+    ]
+})
+
+
+const processDeliverableStreamProcessorEventSourceMapping = new aws.lambda.EventSourceMapping("processDeliverableStreamProcessorEventSourceMapping", {
+    eventSourceArn: deliverablesTable.streamArn, 
+    functionName: processDeliverableStreamProcessor.arn,
+    batchSize: 100,
+    maximumBatchingWindowInSeconds: 10,
+    startingPosition: "LATEST"
+})
+
 
 
 export const streams = [
