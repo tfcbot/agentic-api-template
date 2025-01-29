@@ -26,7 +26,7 @@ export class UserAdapter implements IUserAdapter {
     console.info("Registering user in dynamo");
     try {
       const command = new PutCommand({
-        TableName: Resource.Users.tableName,
+        TableName: Resource.Users.name,
         Item: user,
       });
     
@@ -41,7 +41,7 @@ export class UserAdapter implements IUserAdapter {
   async getUserData(userId: string): Promise<User | null> {
     try {
       const command = new GetCommand({
-        TableName: Resource.Users.tableName,
+        TableName: Resource.Users.name,
         Key: { userId: userId }
       });
 
@@ -76,7 +76,7 @@ export class UserAdapter implements IUserAdapter {
       });
 
       const command = new UpdateCommand({
-        TableName: Resource.Users.tableName,
+        TableName: Resource.Users.name,
         Key: { userId },
         UpdateExpression: `SET ${updateExpressionParts.join(', ')}`,
         ExpressionAttributeValues: expressionAttributeValues,

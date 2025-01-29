@@ -17,7 +17,7 @@ class AgentsRepository implements IAgentsRepository {
     console.info("Creating agent in database via AgentsRepository");
     try {
       const params = {
-        TableName: Resource.Agents.tableName,
+        TableName: Resource.Agents.name,
         Item: input
       };
       await this.dbClient.send(new PutCommand(params));
@@ -32,7 +32,7 @@ class AgentsRepository implements IAgentsRepository {
     console.info("Getting agents from database via AgentsRepository");
     try {
       const params = {
-        TableName: Resource.Agents.tableName,
+        TableName: Resource.Agents.name,
       };
       const agents: QueryCommandOutput = await this.dbClient.send(new QueryCommand(params));
 
@@ -48,7 +48,7 @@ class AgentsRepository implements IAgentsRepository {
     console.info("Getting agent by id from database via AgentsRepository");
     try {
       const params = {
-        TableName: Resource.Agents.tableName,
+        TableName: Resource.Agents.name,
         Key: {
           agentId: input.agentId
         }

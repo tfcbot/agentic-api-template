@@ -15,7 +15,7 @@ class DeliverableRepository implements IDeliverableRepository {
     console.info("--- Saving Deliverable ---");
     try {
       const params = {
-        TableName: Resource.Deliverables.tableName,
+        TableName: Resource.Deliverables.name,
         Item: deliverable
       };
       await this.dbClient.send(new PutCommand(params));
@@ -29,7 +29,7 @@ class DeliverableRepository implements IDeliverableRepository {
     console.info("Getting deliverables from database via DeliverableRepository");
     try {
       const params = {
-        TableName: Resource.Deliverables.tableName,
+        TableName: Resource.Deliverables.name,
         KeyConditionExpression: "userId = :userId",
         ExpressionAttributeValues: {
           ":userId": userId

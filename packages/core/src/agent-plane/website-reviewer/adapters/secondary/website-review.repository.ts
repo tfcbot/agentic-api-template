@@ -15,7 +15,7 @@ class WebsiteReviewRepository implements IWebsiteReviewRepository {
     console.info("Saving website review to database via WebsiteReviewRepository");
     try {
       const params = {
-        TableName: Resource.WebsiteReview.tableName,
+        TableName: Resource.WebsiteReview.name,
         Item: review
       };
       await this.dbClient.send(new PutCommand(params));
@@ -29,7 +29,7 @@ class WebsiteReviewRepository implements IWebsiteReviewRepository {
     console.info("Getting website reviews from database via WebsiteReviewRepository");
     try {
       const params = {
-        TableName: Resource.WebsiteReview.tableName,
+        TableName: Resource.WebsiteReview.name,
         KeyConditionExpression: "userId = :userId",
         ExpressionAttributeValues: {
           ":userId": userId
