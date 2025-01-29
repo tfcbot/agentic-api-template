@@ -1,11 +1,8 @@
-import { contentTable } from "./database"
+import { websiteReviewTable, deliverablesTable, ordersTable } from "./database"
+import { openaiApiKey, secrets } from "./secrets"
 
 
-export const DLQ = new sst.aws.Queue("ContentDLQ")
-
-export const contentQueue = new sst.aws.Queue("ContentQueue")
-
-const subscriberRole = new aws.iam.Role("ContentQueueSubscriberRole", {
+const subscriberRole = new aws.iam.Role("QueueSubscriberRole", {
     assumeRolePolicy: JSON.stringify({
         Version: "2012-10-17",
         Statement: [
@@ -20,7 +17,7 @@ const subscriberRole = new aws.iam.Role("ContentQueueSubscriberRole", {
     }),
 });
 
-new aws.iam.RolePolicy("ContentQueueSubscriberPolicy", {
+new aws.iam.RolePolicy("QueueSubscriberPolicy", {
     role: subscriberRole.id,
     policy: JSON.stringify({
         Version: "2012-10-17",
@@ -46,20 +43,86 @@ new aws.iam.RolePolicy("ContentQueueSubscriberPolicy", {
 });
 
 
+export const DLQ = new sst.aws.Queue("DLQ")
+export const websiteReviewQueue = new sst.aws.Queue("WebsiteReviewQueue", {
+    fifo: true
+})
+export const valueStrategyQueue = new sst.aws.Queue("ValueStrategyQueue", {
+    fifo: true
+})   
+export const techStrategyQueue = new sst.aws.Queue("TechStrategyQueue", {
+    fifo: true
+})
+export const growthStrategyQueue = new sst.aws.Queue("GrowthStrategyQueue", {
+    fifo: true
+})
+
+export const orderManagerQueue = new sst.aws.Queue("OrderManagerQueue", {
+    fifo: true
+})
 
     
-contentQueue.subscribe({
-        handler: "./packages/functions/src/agent-plane.api.contentGenerationHandler", 
+websiteReviewQueue.subscribe({
+        handler: "./packages/functions/src/agent-plane.api.websiteReviewHandler", 
         link: [
-           contentTable
+           websiteReviewTable, 
+           openaiApiKey
         ],
-        environment: {
-        }, 
         permissions: [
             {
                 actions: ["dynamodb:*"], 
-                resources: [contentTable.arn]
+                resources: [websiteReviewTable.arn]
             }
         ]
     }, 
 )
+
+
+valueStrategyQueue.subscribe({
+    handler: "./packages/functions/src/agent-plane.api.valueStrategyHandler", 
+    link: [
+        deliverablesTable, 
+        ordersTable, 
+        openaiApiKey, 
+    ], 
+    permissions: [
+        {
+            actions: ["dynamodb:*"], 
+            resources: [deliverablesTable.arn, ordersTable.arn]
+        }
+    ],
+    timeout: "10 minutes"
+})
+
+techStrategyQueue.subscribe({
+    handler: "./packages/functions/src/agent-plane.api.techStrategyHandler", 
+    link: [
+        deliverablesTable, 
+        ordersTable, 
+        openaiApiKey
+    ], 
+    permissions: [
+        {
+            actions: ["dynamodb:*"], 
+            resources: [deliverablesTable.arn, ordersTable.arn]
+        }
+    ],
+    timeout: "10 minutes"
+})
+
+growthStrategyQueue.subscribe({
+    handler: "./packages/functions/src/agent-plane.api.growthStrategyHandler", 
+    link: [
+        deliverablesTable, 
+        ordersTable, 
+        openaiApiKey
+    ], 
+    permissions: [
+        {
+            actions: ["dynamodb:*"], 
+            resources: [deliverablesTable.arn, ordersTable.arn]
+        }
+    ], 
+    timeout: "10 minutes"
+})
+

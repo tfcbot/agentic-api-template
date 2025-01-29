@@ -1,13 +1,14 @@
 {
-    "extends": "@tsconfig/node20/tsconfig.json",
-    "compilerOptions": {
-      "module": "NodeNext",
-      "moduleResolution": "Bundler",
+  "extends": "@tsconfig/node22/tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
       "paths": {
         "@agent-plane/*": ["../../packages/core/src/features/*"], 
         "@control-plane/*": ["../../packages/core/src/control-plane/*"], 
         "@orchestrator/*": ["../../packages/core/src/orchestrator/*"],
         "@utils/*": ["../../packages/utils/src/*"],
       },
-    },
-  }
+  },
+  "include": ["src/**/*", "test/**/*", "sst-env.d.ts"]
+}
