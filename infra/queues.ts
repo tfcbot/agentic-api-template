@@ -45,20 +45,25 @@ new aws.iam.RolePolicy("QueueSubscriberPolicy", {
 
 export const DLQ = new sst.aws.Queue("DLQ")
 export const websiteReviewQueue = new sst.aws.Queue("WebsiteReviewQueue", {
-    fifo: true
+    fifo: true,
+    visibilityTimeout: "900 seconds"
 })
 export const valueStrategyQueue = new sst.aws.Queue("ValueStrategyQueue", {
-    fifo: true
+    fifo: true,
+    visibilityTimeout: "900 seconds"
 })   
 export const techStrategyQueue = new sst.aws.Queue("TechStrategyQueue", {
-    fifo: true
+    fifo: true,
+    visibilityTimeout: "900 seconds"
 })
 export const growthStrategyQueue = new sst.aws.Queue("GrowthStrategyQueue", {
-    fifo: true
+    fifo: true,
+    visibilityTimeout: "900 seconds"
 })
 
 export const orderManagerQueue = new sst.aws.Queue("OrderManagerQueue", {
-    fifo: true
+    fifo: true,
+    visibilityTimeout: "900 seconds"
 })
 
     
@@ -75,6 +80,7 @@ websiteReviewQueue.subscribe({
             }
         ]
     }, 
+
 )
 
 
@@ -91,7 +97,7 @@ valueStrategyQueue.subscribe({
             resources: [deliverablesTable.arn, ordersTable.arn]
         }
     ],
-    timeout: "10 minutes"
+    timeout: "900 seconds"
 })
 
 techStrategyQueue.subscribe({
@@ -107,7 +113,7 @@ techStrategyQueue.subscribe({
             resources: [deliverablesTable.arn, ordersTable.arn]
         }
     ],
-    timeout: "10 minutes"
+    timeout: "900 seconds"
 })
 
 growthStrategyQueue.subscribe({
@@ -123,6 +129,6 @@ growthStrategyQueue.subscribe({
             resources: [deliverablesTable.arn, ordersTable.arn]
         }
     ], 
-    timeout: "10 minutes"
+    timeout: "900 seconds"
 })
 
