@@ -2,21 +2,12 @@
 /* tslint:disable */
 /* eslint-disable */
 /* deno-fmt-ignore-file */
-import "sst"
-export {}
+
 declare module "sst" {
   export interface Resource {
-    "Agents": {
-      "tableName": string
-      "type": "aws.dynamodb/table.Table"
-    }
     "ApiKeyStreamProcessor": {
       "name": string
       "type": "sst.aws.Function"
-    }
-    "ApiKeys": {
-      "tableName": string
-      "type": "aws.dynamodb/table.Table"
     }
     "BackendApi": {
       "type": "sst.aws.ApiGatewayV2"
@@ -42,10 +33,6 @@ declare module "sst" {
       "type": "sst.aws.Queue"
       "url": string
     }
-    "Deliverables": {
-      "tableName": string
-      "type": "aws.dynamodb/table.Table"
-    }
     "GrowthStrategyQueue": {
       "type": "sst.aws.Queue"
       "url": string
@@ -65,10 +52,6 @@ declare module "sst" {
     "OrderTopic": {
       "arn": string
       "type": "sst.aws.SnsTopic"
-    }
-    "Orders": {
-      "tableName": string
-      "type": "aws.dynamodb/table.Table"
     }
     "ProcessDeliverableStreamProcessor": {
       "name": string
@@ -98,17 +81,9 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
-    "Users": {
-      "tableName": string
-      "type": "aws.dynamodb/table.Table"
-    }
     "ValueStrategyQueue": {
       "type": "sst.aws.Queue"
       "url": string
-    }
-    "WebsiteReview": {
-      "tableName": string
-      "type": "aws.dynamodb/table.Table"
     }
     "WebsiteReviewQueue": {
       "type": "sst.aws.Queue"
@@ -116,3 +91,7 @@ declare module "sst" {
     }
   }
 }
+/// <reference path="sst-env.d.ts" />
+
+import "sst"
+export {}

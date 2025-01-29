@@ -21,7 +21,8 @@ const onboardingStreamProcessor = new sst.aws.Function("OnboardingStreamProcesso
             resources: [usersTable.streamArn]
         }, 
 
-    ]
+    ], 
+    timeout: "900 seconds"
 })
 
 
@@ -41,7 +42,8 @@ const createApiKeyStreamProcessor = new sst.aws.Function("CreateApiKeyStreamProc
             actions: ["dynamodb:*"],
             resources: [apiKeysTable.streamArn, usersTable.streamArn]
         }
-    ]
+    ], 
+    timeout: "900 seconds"
 })
 
 const createApiKeyStreamProcessorEventSourceMapping = new aws.lambda.EventSourceMapping("createApiKeyStreamProcessorEventSourceMapping", {
@@ -63,7 +65,8 @@ const apiKeyStreamProcessor = new sst.aws.Function("ApiKeyStreamProcessor", {
             actions: ["dynamodb:*"],
             resources: [apiKeysTable.streamArn]
         }
-    ]
+    ], 
+    timeout: "900 seconds"
 })
 
 const updateTokenKeyIdStreamProcessorEventSourceMapping = new aws.lambda.EventSourceMapping("updateTokenKeyIdStreamProcessorEventSourceMapping", {
@@ -82,7 +85,8 @@ const processDeliverableStreamProcessor = new sst.aws.Function("ProcessDeliverab
             actions: ["dynamodb:*"],
             resources: [ordersTable.arn, deliverablesTable.streamArn]
         }
-    ]
+    ], 
+    timeout: "900 seconds"
 })
 
 
