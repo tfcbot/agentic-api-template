@@ -15,7 +15,7 @@ class DeliverableRepository implements IDeliverableRepository {
     console.info("Getting deliverable from database via DeliverableRepository");
     try {
       const params = {
-        TableName: Resource.Deliverables.tableName,
+        TableName: Resource.Deliverables.name,
         IndexName: "OrderIdIndex",
         KeyConditionExpression: "orderId = :orderId",
         ExpressionAttributeValues: {
@@ -39,7 +39,7 @@ class DeliverableRepository implements IDeliverableRepository {
     console.info("Querying deliverables for order:", input.orderId);
     try {
       const params = {
-        TableName: Resource.Deliverables.tableName,
+        TableName: Resource.Deliverables.name,
         KeyConditionExpression: "orderId = :orderId",
         ExpressionAttributeValues: {
           ":orderId": input.orderId

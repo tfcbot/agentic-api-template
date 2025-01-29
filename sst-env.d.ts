@@ -5,9 +5,9 @@
 
 declare module "sst" {
   export interface Resource {
-    "ApiKeyStreamProcessor": {
+    "ApiKeys": {
       "name": string
-      "type": "sst.aws.Function"
+      "type": "sst.aws.Dynamo"
     }
     "BackendApi": {
       "type": "sst.aws.ApiGatewayV2"
@@ -25,21 +25,17 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
-    "CreateApiKeyStreamProcessor": {
-      "name": string
-      "type": "sst.aws.Function"
-    }
     "DLQ": {
       "type": "sst.aws.Queue"
       "url": string
     }
+    "Deliverables": {
+      "name": string
+      "type": "sst.aws.Dynamo"
+    }
     "GrowthStrategyQueue": {
       "type": "sst.aws.Queue"
       "url": string
-    }
-    "OnboardingStreamProcessor": {
-      "name": string
-      "type": "sst.aws.Function"
     }
     "OpenAIApiKey": {
       "type": "sst.sst.Secret"
@@ -52,10 +48,6 @@ declare module "sst" {
     "OrderTopic": {
       "arn": string
       "type": "sst.aws.SnsTopic"
-    }
-    "ProcessDeliverableStreamProcessor": {
-      "name": string
-      "type": "sst.aws.Function"
     }
     "StripePriceId": {
       "type": "sst.sst.Secret"
@@ -80,6 +72,10 @@ declare module "sst" {
     "UnkeyRootKey": {
       "type": "sst.sst.Secret"
       "value": string
+    }
+    "Users": {
+      "name": string
+      "type": "sst.aws.Dynamo"
     }
     "ValueStrategyQueue": {
       "type": "sst.aws.Queue"
