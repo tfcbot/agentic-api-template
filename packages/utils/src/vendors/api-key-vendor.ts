@@ -52,7 +52,7 @@ export class ApiKeyRepository implements IApiKeyRepository {
   async getUserDetailsByApiKey(command: GetUserDetailsByApiKeyCommand): Promise<ValidUser> {
     try {
       const params = {
-        TableName: Resource.ApiKeys.tableName,
+        TableName: Resource.ApiKeys.name,
         IndexName: "ApiKeyIndex",
         KeyConditionExpression: "apiKey = :apiKey",
         ExpressionAttributeValues: {
@@ -80,7 +80,7 @@ export class ApiKeyRepository implements IApiKeyRepository {
   async getUserDetailsByKeyId(command: GetUserDetailsByKeyIdCommand): Promise<ValidUser> {
     try {
       const params = {
-        TableName: Resource.ApiKeys.tableName,
+        TableName: Resource.ApiKeys.name,
         KeyConditionExpression: "keyId = :keyId",
         ExpressionAttributeValues: {
           ":keyId": command.keyId
@@ -107,7 +107,7 @@ export class ApiKeyRepository implements IApiKeyRepository {
   async saveApiKey(command: SaveApiKeyCommand): Promise<void> {
     try {
       const params = {
-        TableName: Resource.ApiKeys.tableName,
+        TableName: Resource.ApiKeys.name,
         Item: {
           keyId: command.keyId,
           userId: command.userId,

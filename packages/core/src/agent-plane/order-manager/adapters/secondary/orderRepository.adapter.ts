@@ -15,7 +15,7 @@ class OrderRepository implements IOrderRepository {
     console.info("Getting orders from database via OrderRepository");
     try {
       const params = {
-        TableName: Resource.Orders.tableName,
+        TableName: Resource.Orders.name,
         IndexName: "UserIdIndex",
         KeyConditionExpression: "userId = :userId",
         ExpressionAttributeValues: {
@@ -37,7 +37,7 @@ class OrderRepository implements IOrderRepository {
   async saveOrder(order: Order): Promise<void> {
     console.info("Saving order to database via OrderRepository");
     const params = {
-      TableName: Resource.Orders.tableName,
+      TableName: Resource.Orders.name,
       Item: order
     };
     await this.dbClient.send(new PutCommand(params));
@@ -46,7 +46,7 @@ class OrderRepository implements IOrderRepository {
   async updateOrder(order: UpdateOrderInput): Promise<void> {
     console.info("Updating order to database via OrderRepository");
     const params = {
-      TableName: Resource.Orders.tableName,
+      TableName: Resource.Orders.name,
       Key: {
         orderId: order.orderId
       },
