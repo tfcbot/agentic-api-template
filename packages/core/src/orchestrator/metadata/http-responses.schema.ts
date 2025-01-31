@@ -64,5 +64,7 @@ export const OrchestratorHttpResponses = {
       createHttpResponse(HttpStatusCode.CREATED, params),
     TechStrategyRequestReceived: (params: HttpResponseParams<OrderResponseBody>) => 
       createHttpResponse(HttpStatusCode.CREATED, params),
-  };  
+    EmailSequenceRequestReceived: (params: HttpResponseParams<OrderResponseBody>) => 
+      createHttpResponse(HttpStatusCode.CREATED, params),
+};  
   
