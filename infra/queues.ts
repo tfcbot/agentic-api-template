@@ -60,6 +60,10 @@ export const growthStrategyQueue = new sst.aws.Queue("GrowthStrategyQueue", {
     fifo: true,
     visibilityTimeout: "900 seconds"
 })
+export const emailSequenceQueue = new sst.aws.Queue("EmailSequenceQueue", {
+    fifo: true,
+    visibilityTimeout: "900 seconds"
+})
 
 export const orderManagerQueue = new sst.aws.Queue("OrderManagerQueue", {
     fifo: true,
@@ -129,6 +133,22 @@ growthStrategyQueue.subscribe({
             resources: [deliverablesTable.arn, ordersTable.arn]
         }
     ], 
+    timeout: "900 seconds"
+})
+
+emailSequenceQueue.subscribe({
+    handler: "./packages/functions/src/agent-plane.api.emailSequenceHandler",
+    link: [
+        deliverablesTable,
+        ordersTable,
+        openaiApiKey
+    ],
+    permissions: [
+        {
+            actions: ["dynamodb:*"],
+            resources: [deliverablesTable.arn, ordersTable.arn]
+        }
+    ],
     timeout: "900 seconds"
 })
 

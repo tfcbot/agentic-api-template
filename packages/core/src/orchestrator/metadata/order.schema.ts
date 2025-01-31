@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { RequestValueStrategyInputSchema } from './agent-plane.schema';
 import { RequestGrowthStrategyInputSchema } from './agent-plane.schema';
 import { RequestTechStrategyInputSchema } from './agent-plane.schema';
+import { RequestEmailSequenceInputSchema } from './agent-plane.schema';
 
 export enum Status {
     Pending = 'Pending',
@@ -16,13 +17,14 @@ export enum Queue {
     valueStrategy = 'valueStrategy',
     growthStrategy = 'growthStrategy',
     techStrategy = 'techStrategy',
+    emailSequence = 'emailSequence'
 }
 
 export enum Topic {
     orders = 'orders',
 }
 
-  export const OrderSchema = z.object({
+export const OrderSchema = z.object({
     topic: z.nativeEnum(Topic),
     queue: z.nativeEnum(Queue),
     createdAt: z.string().datetime(),
@@ -35,14 +37,12 @@ export enum Topic {
     })
 })
 
-
 export const WebsiteReviewOrderSchema = OrderSchema.extend({
   payload: z.object({
     userId: z.string(),
     url: z.string(),
   }),
 });
-
 
 export const ValueStrategyOrderSchema = OrderSchema.extend({
   payload: RequestValueStrategyInputSchema,
@@ -56,17 +56,20 @@ export const TechStrategyOrderSchema = OrderSchema.extend({
   payload: RequestTechStrategyInputSchema,
 });
 
+export const EmailSequenceOrderSchema = OrderSchema.extend({
+  payload: RequestEmailSequenceInputSchema,
+});
 
 export type WebsiteReviewOrder = z.infer<typeof WebsiteReviewOrderSchema>
 export type Order = z.infer<typeof OrderSchema>
 export type ValueStrategyOrder = z.infer<typeof ValueStrategyOrderSchema>
 export type GrowthStrategyOrder = z.infer<typeof GrowthStrategyOrderSchema>
 export type TechStrategyOrder = z.infer<typeof TechStrategyOrderSchema>
-
-
+export type EmailSequenceOrder = z.infer<typeof EmailSequenceOrderSchema>
 
 export type OrderType =
   | WebsiteReviewOrder
   | ValueStrategyOrder
   | GrowthStrategyOrder
-  | TechStrategyOrder;
+  | TechStrategyOrder
+  | EmailSequenceOrder;

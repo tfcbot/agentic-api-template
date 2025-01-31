@@ -14,6 +14,7 @@ import {
   secrets
  } from "./secrets";
 import { orderTopic } from "./topic";
+import { emailSequenceQueue } from "./queues";
 
 const BASE_DOMAIN = process.env.BASE_DOMAIN;
 
@@ -49,7 +50,7 @@ export const api = new sst.aws.ApiGatewayV2('BackendApi', {
     }
   }); 
 
-const queues = []
+const queues = [emailSequenceQueue]
 const topics = [orderTopic]
 const tables = [usersTable, websiteReviewTable, ordersTable, deliverablesTable]
 
@@ -124,6 +125,12 @@ api.route("GET /orders/deliverables/{orderId}", {
 api.route("GET /user/credits", {
   link: [...apiResources],
   handler: "./packages/functions/src/orchestrator.api.handleGetUserCredits",
+  timeout: "900 seconds"
+})
+
+api.route("POST /email-sequence", {
+  link: [...apiResources],
+  handler: "./packages/functions/src/orchestrator.api.handleRequestEmailSequence",
   timeout: "900 seconds"
 })
 

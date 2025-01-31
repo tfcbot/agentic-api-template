@@ -128,6 +128,12 @@ export const RequestGrowthStrategyInputSchema = BasePayloadSchema.extend({
   deliverableName: z.string()
 });
 
+export const RequestEmailSequenceInputSchema = BasePayloadSchema.extend({
+  deliverableName: z.string(),
+  idealCustomerProfile: z.string(),
+  emailSequenceType: z.enum(['Welcome Sequence', 'Sales Sequence', 'Onboarding Sequence', 'Engagement Sequence']),
+});
+
 
 
 
@@ -146,3 +152,4 @@ export type GetDeliverableInput = z.infer<typeof GetDeliverableInputSchema>;
 export type GetDeliverableOutput = z.infer<typeof GetDeliverableOutputSchema>;
 export type GetOrdersInput = z.infer<typeof GetOrdersInputSchema>;
 export type GetOrdersOutput = z.infer<typeof GetOrdersOutputSchema>;
+export type RequestEmailSequenceInput = z.infer<typeof RequestEmailSequenceInputSchema>;

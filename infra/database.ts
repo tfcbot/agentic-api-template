@@ -15,36 +15,25 @@ export const apiKeysTable = new sst.aws.Dynamo("ApiKeys", {
     stream: "new-and-old-images",
 })
 
-export const websiteReviewTable = new aws.dynamodb.Table("WebsiteReview", {
-    attributes: [
-        {name: "websiteId", type: "S"}
-    ],
-    hashKey: "websiteId",
-    billingMode: "PAY_PER_REQUEST",
+export const websiteReviewTable = new sst.aws.Dynamo("WebsiteReview", {
+    fields: {
+        websiteId: "string"
+    },
+    primaryIndex: {hashKey: "websiteId"},
 })
 
-export const agentsTable = new aws.dynamodb.Table("Agents", {
-    attributes: [
-        {name: "agentId", type: "S"}
-    ],
-    hashKey: "agentId",
-    billingMode: "PAY_PER_REQUEST",
-})
-
-export const ordersTable = new aws.dynamodb.Table("Orders", {
-    attributes: [
-        {name: "orderId", type: "S"},
-        {name: "userId", type: "S"}
-    ],
-    hashKey: "orderId",
-    billingMode: "PAY_PER_REQUEST",
-    globalSecondaryIndexes: [
-        {
+export const ordersTable = new sst.aws.Dynamo("Orders", {
+    fields: {
+        orderId: "string",
+        userId: "string"
+    },
+    primaryIndex: {hashKey: "orderId"},
+    globalIndexes: {
+        UserIdIndex: {
             hashKey: "userId",
-            name: "UserIdIndex",
-            projectionType: "ALL"
         }
-    ]
+    },
+    stream: "new-and-old-images",
 })
 
 export const deliverablesTable = new sst.aws.Dynamo("Deliverables", {
