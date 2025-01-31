@@ -7,6 +7,7 @@ import { getDeliverableAdapter } from "@orchestrator/adapters/primary/get-delive
 import { requestGrowthStrategyAdapter } from "@orchestrator/adapters/primary/request-growth-strategy.adapter";
 import { requestTechStrategyAdapter } from "@orchestrator/adapters/primary/request-tech-strategy.adapter";
 import { requestValueStrategyAdapter } from "@orchestrator/adapters/primary/request-value-strategy.adapter";
+import { requestEmailSequenceAdapter } from "@orchestrator/adapters/primary/request-email-sequence.adapter";
 
 export const handleRequestWebsiteReview = createHandler(requestWebsiteReviewAdapter);
 export const handleGetUserCredits = createHandler(getRemainingCreditsAdapter);
@@ -15,3 +16,4 @@ export const handleGetDeliverable = createHandler(getDeliverableAdapter);
 export const handleRequestGrowthStrategy = createHandler(requestGrowthStrategyAdapter);
 export const handleRequestTechStrategy = createHandler(requestTechStrategyAdapter);
 export const handleRequestValueStrategy = createHandler(requestValueStrategyAdapter);
+export const handleRequestEmailSequence = createHandler(requestEmailSequenceAdapter);

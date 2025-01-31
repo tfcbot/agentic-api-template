@@ -33,6 +33,10 @@ declare module "sst" {
       "name": string
       "type": "sst.aws.Dynamo"
     }
+    "EmailSequenceQueue": {
+      "type": "sst.aws.Queue"
+      "url": string
+    }
     "GrowthStrategyQueue": {
       "type": "sst.aws.Queue"
       "url": string
@@ -48,6 +52,10 @@ declare module "sst" {
     "OrderTopic": {
       "arn": string
       "type": "sst.aws.SnsTopic"
+    }
+    "Orders": {
+      "name": string
+      "type": "sst.aws.Dynamo"
     }
     "StripePriceId": {
       "type": "sst.sst.Secret"
@@ -80,6 +88,10 @@ declare module "sst" {
     "ValueStrategyQueue": {
       "type": "sst.aws.Queue"
       "url": string
+    }
+    "WebsiteReview": {
+      "name": string
+      "type": "sst.aws.Dynamo"
     }
     "WebsiteReviewQueue": {
       "type": "sst.aws.Queue"

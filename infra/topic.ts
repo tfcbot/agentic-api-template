@@ -1,4 +1,4 @@
-import { growthStrategyQueue, valueStrategyQueue, websiteReviewQueue, techStrategyQueue, orderManagerQueue } from "./queues"
+import { growthStrategyQueue, valueStrategyQueue, websiteReviewQueue, techStrategyQueue, orderManagerQueue, emailSequenceQueue } from "./queues"
 
 
 // Topics
@@ -46,5 +46,15 @@ orderTopic.subscribeQueue(
       filter: {
           "queue": ["techStrategy"]
       }, 
+  }
+)
+
+orderTopic.subscribeQueue(
+  "emailSequence", 
+  emailSequenceQueue.arn, 
+  {
+      filter: {
+          "queue": ["emailSequence"]
+      }
   }
 )
