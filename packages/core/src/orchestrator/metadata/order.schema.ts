@@ -17,11 +17,13 @@ export enum Queue {
     valueStrategy = 'valueStrategy',
     growthStrategy = 'growthStrategy',
     techStrategy = 'techStrategy',
-    emailSequence = 'emailSequence'
+    emailSequence = 'emailSequence',
+    onboarding = 'onboarding'
 }
 
 export enum Topic {
-    orders = 'orders',
+  orders = 'orders',
+  tasks = 'tasks'
 }
 
 export const OrderSchema = z.object({

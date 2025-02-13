@@ -13,7 +13,7 @@ import {
   stripeWebhookSecret,
   secrets
  } from "./secrets";
-import { orderTopic } from "./topic";
+import { orderTopic, taskTopic } from "./topic";
 import { emailSequenceQueue } from "./queues";
 
 const BASE_DOMAIN = process.env.BASE_DOMAIN;
@@ -51,7 +51,7 @@ export const api = new sst.aws.ApiGatewayV2('BackendApi', {
   }); 
 
 const queues = [emailSequenceQueue]
-const topics = [orderTopic]
+const topics = [orderTopic, taskTopic]
 const tables = [usersTable, websiteReviewTable, ordersTable, deliverablesTable]
 
 
@@ -134,3 +134,9 @@ api.route("POST /email-sequence", {
   timeout: "900 seconds"
 })
 
+
+api.route("POST /onboard-user", {
+  link: [...apiResources],
+  handler: "./packages/functions/src/orchestrator.api.handleOnboardUser",
+  timeout: "900 seconds"
+})
