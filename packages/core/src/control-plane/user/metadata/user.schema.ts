@@ -69,13 +69,12 @@ const UserSettingsJobSchema = z.object({
     createdAt: z.string(),
     updatedAt: z.string()
 });
-
 const UpdateUserOnboardingDetailsInputSchema = z.object({
     userId: z.string(),
-    currentRole: z.string(),
-    useCase: z.string(),
     onboardingComplete: z.boolean(),
+    onboardingDetails: z.any()
 });
+
 
 
 // Types

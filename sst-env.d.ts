@@ -41,6 +41,10 @@ declare module "sst" {
       "type": "sst.aws.Queue"
       "url": string
     }
+    "OnboardUserQueue": {
+      "type": "sst.aws.Queue"
+      "url": string
+    }
     "OpenAIApiKey": {
       "type": "sst.sst.Secret"
       "value": string
@@ -68,6 +72,10 @@ declare module "sst" {
     "StripeWebhookSecret": {
       "type": "sst.sst.Secret"
       "value": string
+    }
+    "TaskTopic": {
+      "arn": string
+      "type": "sst.aws.SnsTopic"
     }
     "TechStrategyQueue": {
       "type": "sst.aws.Queue"

@@ -12,7 +12,7 @@ export const onboardUserAdapter = async (event: APIGatewayProxyEventV2): Promise
   try {
     const svm = new SaaSIdentityVendingMachine();
     const validUser: ValidUser = await svm.getValidUser(event);
-
+    
     if (!event.body) {
       throw createError(HttpStatusCode.BAD_REQUEST, "Missing request body");
     }

@@ -3,7 +3,7 @@
 export default $config({
   app(input) {
     return {
-      name: "agentic-api-template",
+      name: "mytubeteam-api",
       removal: input?.stage === "prod" ? "retain" : "remove",
       
       home: "aws",
