@@ -36,6 +36,10 @@ export const GetDeliverableResponseBodySchema = z.object({
     data: DeliverableResponseBodySchema,
 });
 
+export const OnboardingMessagePublishedResponseBodySchema = z.object({
+    message: z.string(),
+});
+
 export type WebsiteReviewRequestReceivedResponseBody = z.infer<typeof WebsiteReviewRequestReceivedResponseBodySchema>;
 export type UserWebsiteReviewsResponseBody = z.infer<typeof UserWebsiteReviewsResponseBodySchema>;
 export type UserRemainingCreditsResponseBody = z.infer<typeof UserRemainingCreditsResponseBodySchema>;
@@ -43,6 +47,7 @@ export type OrderResponseBody = z.infer<typeof OrderResponseBodySchema>;
 export type DeliverableResponseBody = z.infer<typeof DeliverableResponseBodySchema>;
 export type GetOrdersResponseBody = z.infer<typeof GetOrdersResponseBodySchema>;
 export type GetDeliverableResponseBody = z.infer<typeof GetDeliverableResponseBodySchema>;
+export type OnboardingMessagePublishedResponseBody = z.infer<typeof OnboardingMessagePublishedResponseBodySchema>;
 
 export const OrchestratorHttpResponses = {
     ...HttpResponses,
@@ -65,6 +70,8 @@ export const OrchestratorHttpResponses = {
     TechStrategyRequestReceived: (params: HttpResponseParams<OrderResponseBody>) => 
       createHttpResponse(HttpStatusCode.CREATED, params),
     EmailSequenceRequestReceived: (params: HttpResponseParams<OrderResponseBody>) => 
+      createHttpResponse(HttpStatusCode.CREATED, params),
+    OnboardingMessagePublished: (params: HttpResponseParams<OnboardingMessagePublishedResponseBody>) => 
       createHttpResponse(HttpStatusCode.CREATED, params),
 };  
   

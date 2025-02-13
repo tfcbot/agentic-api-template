@@ -8,7 +8,9 @@ import { requestGrowthStrategyAdapter } from "@orchestrator/adapters/primary/req
 import { requestTechStrategyAdapter } from "@orchestrator/adapters/primary/request-tech-strategy.adapter";
 import { requestValueStrategyAdapter } from "@orchestrator/adapters/primary/request-value-strategy.adapter";
 import { requestEmailSequenceAdapter } from "@orchestrator/adapters/primary/request-email-sequence.adapter";
+import { onboardUserAdapter } from "@orchestrator/adapters/primary/onboard-user.adapter";
 
+export const handleOnboardUser = createHandler(onboardUserAdapter);
 export const handleRequestWebsiteReview = createHandler(requestWebsiteReviewAdapter);
 export const handleGetUserCredits = createHandler(getRemainingCreditsAdapter);
 export const handleGetOrders = createHandler(getOrdersAdapter);

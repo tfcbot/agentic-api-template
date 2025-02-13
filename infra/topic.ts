@@ -1,10 +1,22 @@
-import { growthStrategyQueue, valueStrategyQueue, websiteReviewQueue, techStrategyQueue, orderManagerQueue, emailSequenceQueue } from "./queues"
+import { 
+  growthStrategyQueue, 
+  valueStrategyQueue, 
+  websiteReviewQueue, 
+  techStrategyQueue, 
+  emailSequenceQueue, 
+  onboardUserQueue 
+} from "./queues"
 
 
 // Topics
 export const orderTopic = new sst.aws.SnsTopic("OrderTopic", {
   fifo: true
 })
+
+export const taskTopic = new sst.aws.SnsTopic("TaskTopic", {
+  fifo: true
+})
+
 
 
 // ... existing code ...
@@ -56,5 +68,15 @@ orderTopic.subscribeQueue(
       filter: {
           "queue": ["emailSequence"]
       }
+  }
+)
+
+taskTopic.subscribeQueue(
+  "onboarding",
+   onboardUserQueue.arn,
+  {
+    filter: {
+      "queue": ["onboarding"]
+    }
   }
 )

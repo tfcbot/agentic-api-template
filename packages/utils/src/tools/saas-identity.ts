@@ -37,7 +37,6 @@ export class SaaSIdentityVendingMachine implements ISaasIdentityVendingMachine {
         try {
             const token = event.headers['authorization']?.split(' ')[1] || '';
             const decodedJwt = await this.decodeJwt(token);
-           
             const parsedJwt = DecodedJwtSchema.parse(decodedJwt)
             const userDetails: ValidUser = {
                 userId: parsedJwt.sub,

@@ -1,5 +1,5 @@
-import { websiteReviewTable, deliverablesTable, ordersTable } from "./database"
-import { openaiApiKey, secrets } from "./secrets"
+import { websiteReviewTable, deliverablesTable, ordersTable, usersTable } from "./database"
+import { openaiApiKey, secrets, stripeSecretKey, unkeyApiId, unkeyRootKey, stripeWebhookSecret } from "./secrets"
 
 
 const subscriberRole = new aws.iam.Role("QueueSubscriberRole", {
@@ -70,7 +70,8 @@ export const orderManagerQueue = new sst.aws.Queue("OrderManagerQueue", {
     visibilityTimeout: "900 seconds"
 })
 
-    
+export const onboardUserQueue = new sst.aws.Queue("OnboardUserQueue")
+
 websiteReviewQueue.subscribe({
         handler: "./packages/functions/src/agent-plane.api.websiteReviewHandler", 
         link: [
@@ -152,3 +153,19 @@ emailSequenceQueue.subscribe({
     timeout: "900 seconds"
 })
 
+onboardUserQueue.subscribe({
+    handler: "./packages/functions/src/control-plane.api.onboardUserHandler",
+    link: [
+       usersTable,
+       stripeSecretKey, 
+       unkeyApiId,
+       unkeyRootKey,
+       stripeWebhookSecret
+    ],
+    permissions: [
+        {
+            actions: ["dynamodb:*"],
+            resources: [usersTable.arn]
+        }
+    ]
+})
